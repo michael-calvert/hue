@@ -42,7 +42,7 @@ ${ commonheader(_('Search'), "search", user, "120px") | n,unicode }
   <div class="row-fluid">
     <div class="span10 offset1 center">
 
-      <i class="fa fa-search waiting"></i>
+      <i class="icon-search waiting"></i>
       <h1>${ _('It seems there is nothing to search on ...') }</h1>
       % if user.is_superuser:
       <h1>
