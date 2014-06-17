@@ -58,9 +58,8 @@ from django.utils.translation import ugettext as _
   <style type="text/css">
     % if conf.CUSTOM.BANNER_TOP_HTML.get():
       body {
+        padding-top: ${str(int(padding[:-2]) + 40) + 'px'};
         display: none;
-        visibility: hidden;
-        padding-top: ${str(int(padding[:-2]) + 30) + 'px'};
       }
       .banner {
         height: 40px;
@@ -80,7 +79,6 @@ from django.utils.translation import ugettext as _
     % else:
       body {
         display: none;
-        visibility: hidden;
         padding-top: ${padding};
       }
     % endif
@@ -107,6 +105,13 @@ from django.utils.translation import ugettext as _
       labels: {
         GO_TO_COLUMN: "${_('Go to column:')}",
         PLACEHOLDER: "${_('column name...')}"
+      }
+    };
+
+    jHueTourGlobals = {
+      labels: {
+        AVAILABLE_TOURS: "${_('Available tours')}",
+        NO_AVAILABLE_TOURS: "${_('None for this page.')}"
       }
     };
 
@@ -160,18 +165,10 @@ from django.utils.translation import ugettext as _
   <script src="/static/js/popover-extra-placements.js"></script>
 
   <script type="text/javascript" charset="utf-8">
-    $(document).ready(function () {
-      // forces IE's ajax calls not to cache
-      if ($.browser.msie) {
-        $.ajaxSetup({ cache: false });
-      }
-
+    $(document).ready(function() {
       // prevents framebusting and clickjacking
       if (self == top){
-        $("body").css({
-          'display': 'block',
-          'visibility': 'visible'
-        });
+        $("body").show();
       }
       else {
         top.location = self.location;
@@ -271,31 +268,11 @@ from django.utils.translation import ugettext as _
 </head>
 <body>
 
-% if conf.CUSTOM.BANNER_TOP_HTML.get():
-  <div id="banner-top" class="banner">
-    ${ conf.CUSTOM.BANNER_TOP_HTML.get() | n,unicode }
-  </div>
-% endif
-
-<%
-  def count_apps(apps, app_list):
-    count = 0
-    found_app = ""
-    for app in app_list:
-      if app in apps:
-       found_app = app
-       count += 1
-    return found_app, count
-%>
-
-<div class="navigator">
-  <div class="pull-right">
-
-  % if user.is_authenticated() and section != 'login':
-  <ul class="nav nav-pills">
-    <li class="divider-vertical"></li>
-    % if 'filebrowser' in apps:
-    <li><a title="${_('Manage HDFS')}" rel="navigator-tooltip" href="/${apps['filebrowser'].display_name}"><i class="fa fa-file"></i><span class="hideable">&nbsp;${_('File Browser')}&nbsp;</span></a></li>
+<div class="navbar navbar-fixed-top">
+    % if conf.CUSTOM.BANNER_TOP_HTML.get():
+    <div id="banner-top" class="banner">
+        ${conf.CUSTOM.BANNER_TOP_HTML.get() | n,unicode }
+    </div>
     % endif
     % if 'jobbrowser' in apps:
     <li><a title="${_('Manage jobs')}" rel="navigator-tooltip" href="/${apps['jobbrowser'].display_name}"><i class="fa fa-list-alt"></i><span class="hideable">&nbsp;${_('Job Browser')}&nbsp;</span><span id="jobBrowserCount" class="badge badge-warning hide" style="padding-top:0;padding-bottom: 0"></span></a></li>

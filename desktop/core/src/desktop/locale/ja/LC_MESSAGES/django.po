@@ -39,53 +39,45 @@ msgstr "パーミッションが更新されました。"
 msgid "load_apps has already been called."
 msgstr "load_apps はすでに呼び出されています。"
 
-#: src/desktop/conf.py:46
+#: src/desktop/conf.py:32
+msgid "If set to true, CherryPy will be used. Otherwise, Spawning will be used as the webserver."
+msgstr "true に設定すると CherryPy が使用されます。false に設定すると、Spawning が Web サーバーとして使用されます。"
+
+#: src/desktop/conf.py:38
 msgid "HTTP host to bind to."
 msgstr "バインド先の HTTP ホストです。"
 
-#: src/desktop/conf.py:52
+#: src/desktop/conf.py:44
 msgid "HTTP port to bind to."
 msgstr "バインド先の HTTP ポートです。"
 
-#: src/desktop/conf.py:58
-msgid "HTTP methods the server will be allowed to service."
-msgstr "サーバーで処理できる HTTP メソッドです。"
-
-#: src/desktop/conf.py:65
+#: src/desktop/conf.py:50
 msgid "Filename of SSL Certificate"
 msgstr "SSL 証明書のファイル名"
 
-#: src/desktop/conf.py:70
+#: src/desktop/conf.py:55
 msgid "Filename of SSL RSA Private Key"
 msgstr "SSL RSA 秘密鍵のファイル名"
 
-#: src/desktop/conf.py:75
-msgid "List of allowed and disallowed ciphers"
-msgstr "使用できる暗号と使用できない暗号のリスト"
-
-#: src/desktop/conf.py:80
-msgid "LDAP password of the hue user used for LDAP authentications. For example for LDAP Authentication with HiveServer2."
-msgstr "LDAP 認証で使用する Hue ユーザーの LDAP パスワードです。たとえば、HiveServer2 の LDAP 認証で使用します。"
-
-#: src/desktop/conf.py:86
+#: src/desktop/conf.py:60
 msgid "If set to false, runcpserver will not actually start the web server.  Used if Apache is being used as a WSGI container."
 msgstr "false に設定すると、runcpserver からは Web サーバーが起動しなくなります。WSGI コンテナとして Apache を使用している場合に使用されます。"
 
-#: src/desktop/conf.py:92
+#: src/desktop/conf.py:66
 msgid "Number of threads used by the CherryPy web server."
 msgstr "CherryPy Web サーバーで使用するスレッドの数です。"
 
-#: src/desktop/conf.py:98
+#: src/desktop/conf.py:72
 msgid "Used in hashing algorithms for sessions."
 msgstr "セッションのハッシュアルゴリズムで使用します。"
 
-#: src/desktop/conf.py:103
+#: src/desktop/conf.py:77
 msgid "Number of user access to remember per view per user."
 msgstr "ユーザーごとのビュー単位で記録されるユーザーアクセス数です。"
 
-#: src/desktop/conf.py:109
+#: src/desktop/conf.py:83
 msgid "Help improve Hue with anonymous usage analytics.Use Google Analytics to see how many times an application or specific section of an application is used, nothing more."
-msgstr "匿名の使用分析によって Hue の品質向上にご協力ください。Hue では Google Analytics を使用して、アプリケーションやアプリケーションの特定のセクションが何回使用されているかを把握します。それ以上のことはありません。"
+msgstr "匿名の利用状況分析で Hue の向上に力を貸してください。Google アナリティクスを使用して、アプリケーションまたはアプリケーションの特定のセクションが使用される頻度を確認してください。それ以外は必要ありません。"
 
 #: src/desktop/conf.py:116
 msgid "Use poll(2) in Hue thrift pool."
@@ -142,8 +134,8 @@ msgstr "Hue からのさまざまな自動通知で使用するデフォルト�
 #: src/desktop/conf.py:227
 msgid "Configuration options for specifying the Desktop Database.\n"
 "          For more info, see http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine"
-msgstr "Desktop Database を指定する設定オプションです。\n"
-"           詳細については、http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine を参照してください。"
+msgstr "Desktop Database.を指定する設定オプション\n"
+"          詳細については、http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine を確認してください。"
 
 #: src/desktop/conf.py:232
 msgid "Database engine, such as postgresql_psycopg2, mysql, or sqlite3."
@@ -199,7 +191,7 @@ msgstr "セッションの長さの cookie を使用します。ユーザーが�
 msgid "Configuration options for specifying Hue's Kerberos integration for\n"
 "          secured Hadoop clusters."
 msgstr "セキュアな Hadoop クラスタに向けて Hue の Kerberos 統合を指定する\n"
-"           設定オプションです。"
+"          設定オプションです。"
 
 #: src/desktop/conf.py:315
 msgid "Path to a Kerberos keytab file containing Hue's service credentials."
@@ -495,32 +487,32 @@ msgstr "keytab には 0600 のパーミッションが必要です（%o を持�
 msgid "Permission denied (%(action)s/%(app)s)."
 msgstr "パーミッションが拒否されました（%(action)s/%(app)s）。"
 
-#: src/desktop/middleware.py:142
+#: src/desktop/middleware.py:161
 #, python-format
 msgid "Cannot find HDFS called \"%(fs_ref)s\"."
 msgstr "\"%(fs_ref)s\"という HDFS が見つかりません。"
 
-#: src/desktop/middleware.py:250
+#: src/desktop/middleware.py:265
 #, python-format
 msgid "%(module)s isn't a middleware module."
 msgstr "%(module)s はミドルウェアモジュールではありません。"
 
-#: src/desktop/middleware.py:255
+#: src/desktop/middleware.py:270
 #, python-format
 msgid "Error importing middleware %(module)s: \"%(error)s\"."
 msgstr "ミドルウェア \"%(module)s\" のインポートでエラー \"%(error)s\" が発生しました。"
 
-#: src/desktop/middleware.py:259
+#: src/desktop/middleware.py:274
 #, python-format
 msgid "Middleware module \"%(module)s\" does not define a \"%(class)s\" class."
 msgstr "ミドルウェアモジュール \"%(module)s\" では \"%(class)s\" クラスを定義しません。"
 
-#: src/desktop/middleware.py:271
+#: src/desktop/middleware.py:286
 #, python-format
 msgid "AppSpecificMiddleware module \"%(module)s\" has a process_request function which is impossible."
 msgstr "AppSpecificMiddleware モジュール \"%(module)s\" には、実行不可能な process_request 関数が含まれています。"
 
-#: src/desktop/middleware.py:331
+#: src/desktop/middleware.py:337
 #, python-format
 msgid "You do not have permission to access the %(app_name)s application."
 msgstr "%(app_name)s アプリケーションにアクセスするパーミッションがありません。"
@@ -706,7 +698,7 @@ msgstr "\"error\" メソッドは実装されていません"
 #: src/desktop/lib/security_util.py:33
 #, python-format
 msgid "Can't replace %s pattern since host is null."
-msgstr "ホストが null のため、%s パターンを置き換えできません。"
+msgstr "ホストが Null であるため、%s パターンを置き換えられません。"
 
 #: src/desktop/management/commands/config_dump.py:39
 msgid "Dumping configuration..."
@@ -795,6 +787,7 @@ msgid "Web server for Hue."
 msgstr "Hue の Web サーバーです。"
 
 #: src/desktop/management/commands/runpylint.py:28
+#, fuzzy
 msgid "\n"
 "  Runs pylint on desktop and app code.\n"
 "\n"
@@ -810,16 +803,16 @@ msgid "\n"
 "  "
 msgstr "\n"
 "  デスクトップおよびアプリコードで pylint を実行します。\n"
-" \n"
-"   引数を指定しなかった場合、および \"all\" を指定した場合、インストールされた\n"
-"   すべてのアプリケーションで pylint が実行されます。それ以外の場合は、実行\n"
-"   するモジュール、および pylint への他のパラメータを指定します。pylint の引数\n"
-"   セクションの前に \"--\" を付けると、Django の manage.py はその引数を伝えます。\n"
-" \n"
-"   例：\n"
-"     python core/manage.py runpylint all -- -f parseable\n"
-"     python core/manage.py runpylint filebrowser\n"
-"     python core/manage.py runpylint\n"
+"\n"
+"  引数を指定しなかった場合、および \"all\" を指定した場合、インストールされた\n"
+"  すべてのアプリケーションで pylint が実行されます。それ以外の場合は、実行\n"
+"  するモジュール、および pylint への他のパラメータを指定します。pylint の引数\n"
+"  セクションの前に \"--\" を付けると、Django の manage.py はその引数を伝えます。\n"
+"\n"
+"  例：\n"
+"    python core/manage.py runpylint all -- -f parseable\n"
+"    python core/manage.py runpylint filebrowser\n"
+"    python core/manage.py runpylint\n"
 "  "
 
 #: src/desktop/management/commands/runpylint.py:61
@@ -839,23 +832,28 @@ msgstr "ページが見つかりません。"
 msgid "We're sorry, but the requested page could not be found:"
 msgstr "申し訳ありませんが、要求されたページが見つかりませんでした。"
 
-#: src/desktop/templates/500.mako:29
+#: src/desktop/templates/500.mako:23 src/desktop/templates/error.mako:22
+msgid "Error"
+msgstr "エラー"
+
+#: src/desktop/templates/500.mako:26
 msgid "Server Error (500)"
 msgstr "サーバーエラー（500）"
 
-#: src/desktop/templates/500.mako:30
+#: src/desktop/templates/500.mako:27
 msgid "Sorry, there's been an error. An email was sent to your administrators. Thank you for your patience."
 msgstr "申し訳ありません。エラーが発生しました。管理者に電子メールが送信されました。お待たせしました。"
 
-#: src/desktop/templates/500.mako:33
+#: src/desktop/templates/500.mako:30
 msgid "See the stacktrace"
-msgstr "スタックトレースを参照してください"
+msgstr "stacktrace の確認"
 
-#: src/desktop/templates/500.mako:33 src/desktop/templates/popup_error.mako:44
+#: src/desktop/templates/500.mako:30 src/desktop/templates/popup_error.mako:37
 msgid "More Info"
 msgstr "詳細情報"
 
-#: src/desktop/templates/500.mako:36 src/desktop/templates/500.mako:62
+#: src/desktop/templates/500.mako:33 src/desktop/templates/500.mako:59
+#, fuzzy
 msgid "View server logs"
 msgstr "サーバーログの表示"
 
@@ -922,15 +920,15 @@ msgstr "設定チェックで問題は見つかりませんでした。"
 msgid "Back"
 msgstr "戻る"
 
-#: src/desktop/templates/common_header.mako:94
+#: src/desktop/templates/common_header.mako:82
 msgid "Select this folder"
 msgstr "このフォルダを選択"
 
-#: src/desktop/templates/common_header.mako:95
+#: src/desktop/templates/common_header.mako:83
 msgid "Create folder"
 msgstr "フォルダを作成"
 
-#: src/desktop/templates/common_header.mako:96
+#: src/desktop/templates/common_header.mako:84
 msgid "Folder name"
 msgstr "フォルダ名"
 
@@ -939,76 +937,44 @@ msgstr "フォルダ名"
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: src/desktop/templates/common_header.mako:98
+#: src/desktop/templates/common_header.mako:86
 msgid "The file has not been found"
 msgstr "ファイルが見つかりません"
 
-#: src/desktop/templates/common_header.mako:99
+#: src/desktop/templates/common_header.mako:87
 msgid "Upload a file"
 msgstr "ファイルをアップロード"
 
-#: src/desktop/templates/common_header.mako:100
+#: src/desktop/templates/common_header.mako:88
 msgid "Failed"
 msgstr "失敗しました"
 
-#: src/desktop/templates/common_header.mako:107
+#: src/desktop/templates/common_header.mako:95
 msgid "Go to column:"
 msgstr "列に移動："
 
-#: src/desktop/templates/common_header.mako:108
+#: src/desktop/templates/common_header.mako:96
 msgid "column name..."
 msgstr "列名..."
 
-#: src/desktop/templates/common_header.mako:114
+#: src/desktop/templates/common_header.mako:102
 msgid "Available tours"
-msgstr "使用可能なツアー"
+msgstr "利用可能なツアー"
 
-#: src/desktop/templates/common_header.mako:115
+#: src/desktop/templates/common_header.mako:103
 msgid "None for this page."
 msgstr "このページにはありません。"
 
-#: src/desktop/templates/common_header.mako:116
-msgid "Read more about it..."
-msgstr "詳細..."
+#: src/desktop/templates/common_header.mako:157
+msgid "About Hue"
+msgstr "Hue のバージョン情報"
 
-#: src/desktop/templates/common_header.mako:117
-msgid "Demo tutorials"
-msgstr "デモチュートリアル"
+#: src/desktop/templates/common_header.mako:165
+msgid "Profile"
+msgstr "プロファイル"
 
-#: src/desktop/templates/common_header.mako:297
-msgid "Manage HDFS"
-msgstr "HDFS を管理"
-
-#: src/desktop/templates/common_header.mako:297
-msgid "File Browser"
-msgstr "File Browser"
-
-#: src/desktop/templates/common_header.mako:300
-msgid "Manage jobs"
-msgstr "ジョブを管理"
-
-#: src/desktop/templates/common_header.mako:300
-msgid "Job Browser"
-msgstr "Job Browser"
-
-#: src/desktop/templates/common_header.mako:303
-msgid "Administration"
-msgstr "管理"
-
-#: src/desktop/templates/common_header.mako:305
-msgid "Edit Profile"
-msgstr "プロファイルを編集"
-
-#: src/desktop/templates/common_header.mako:307
-msgid "Manage users"
-msgstr "ユーザーを管理"
-
-#: src/desktop/templates/common_header.mako:312
-msgid "Documentation"
-msgstr "ドキュメンテーション"
-
-#: src/desktop/templates/common_header.mako:315
-msgid "Sign out"
+#: src/desktop/templates/common_header.mako:167
+msgid "Sign Out"
 msgstr "サインアウト"
 
 #: src/desktop/templates/common_header.mako:327
@@ -1131,9 +1097,9 @@ msgstr "デフォルト："
 msgid "Error!"
 msgstr "エラーが発生しました。"
 
-#: src/desktop/templates/home.mako:21
-msgid "Welcome Home"
-msgstr "おかえりなさい"
+#: src/desktop/templates/home.mako:37
+msgid "Welcome Home."
+msgstr "おかえりなさい。"
 
 #: src/desktop/templates/home.mako:120
 msgid "Actions"
@@ -1426,13 +1392,9 @@ msgstr "データベースが見つかりません。"
 
 #: src/desktop/templates/logs.mako:68
 msgid "Search in the logs"
-msgstr "ログを検索"
+msgstr "ログで検索"
 
-#: src/desktop/templates/logs.mako:71
-msgid "Wrap logs"
-msgstr "ログをラップ"
-
-#: src/desktop/templates/logs.mako:72
+#: src/desktop/templates/logs.mako:65
 msgid "Download entire log as zip"
 msgstr "ログ全体を zip としてダウンロード"
 

@@ -26,15 +26,11 @@ msgstr "Fehler beim Zugriff auf Solr"
 
 #: src/search/conf.py:25
 msgid "URL of the Solr Server."
-msgstr "URL des Solr-Servers."
+msgstr "URL des Solr-Server."
 
 #: src/search/conf.py:30
 msgid "Query sent when no term is entered."
-msgstr "Wenn kein Begriff eingegeben wird, wird eine Abfrage gesendet."
-
-#: src/search/conf.py:35
-msgid "Whether Solr requires client to perform Kerberos authentication."
-msgstr "Ob Solr für die Durchführung der Kerberos-Authentifizierung einen Client benötigt."
+msgstr "Abfrage gesendet, ohne dass ein Begriff eingegeben wurde."
 
 #: src/search/decorators.py:35 src/search/decorators.py:49
 msgid "Permission denied. You are not an Administrator."
@@ -42,19 +38,19 @@ msgstr "Berechtigung verweigert. Sie sind kein Administrator."
 
 #: src/search/models.py:233
 msgid "Solr index name pointing to"
-msgstr "Solr-Indexname verweist auf"
+msgstr "Solr-Indexname mit Verweis auf"
 
 #: src/search/models.py:234
 msgid "Friendlier name in UI"
-msgstr "Benutzerfreundlicherer Name in UI"
+msgstr "Benutzerfreundlicherer Name in der UI"
 
 #: src/search/models.py:236
 msgid "Collection with cores data"
-msgstr "Sammlung mit Kerndaten"
+msgstr "Sammlung mit Core-Daten"
 
 #: src/search/models.py:236
 msgid "Solr json"
-msgstr "Solr JSON"
+msgstr "Solr json"
 
 #: src/search/models.py:238 src/search/templates/layout.mako:81
 #: src/search/templates/search.mako:545
@@ -71,11 +67,11 @@ msgstr "Für das Hervorheben der Ergebnisse erfordert das Solr-Schema ein ID-Fel
 
 #: src/search/search_controller.py:58
 msgid " (Copy)"
-msgstr " (Kopieren)"
+msgstr " (Kopie)"
 
 #: src/search/views.py:142 src/search/views.py:174
 msgid "There is no collection to search."
-msgstr "Es ist keine zu durchsuchende Sammlung vorhanden."
+msgstr "Es ist keine Sammlung für die Suche vorhanden."
 
 #: src/search/views.py:172
 msgid "Page saved !"
@@ -176,7 +172,7 @@ msgstr "Sammlungsmanager"
 
 #: src/search/templates/layout.mako:40
 msgid "Search Admin"
-msgstr "Suchadministrator"
+msgstr "Suche-Admin"
 
 #: src/search/templates/layout.mako:79
 msgid "Collection"
@@ -221,7 +217,7 @@ msgstr "Erneut twittern"
 
 #: src/search/templates/no_collections.mako:46
 msgid "It seems there is nothing to search on ..."
-msgstr "Es ist anscheinend nichts zum Durchsuchen vorhanden..."
+msgstr "Es ist anscheinend kein Element für die Suche vorhanden ..."
 
 #: src/search/templates/no_collections.mako:49
 msgid "... First create a search dashboard with "

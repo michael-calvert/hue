@@ -27,7 +27,7 @@ msgstr "Se o Oozie precisa de um cliente para realizar a autenticação no Kerbe
 
 #: src/liboozie/conf.py:40
 msgid "Location on HDFS where the workflows/coordinators are deployed when submitted by a non-owner."
-msgstr "Localização no HDFS em que os fluxos de trabalho/coordinators são implantados quando enviados por um não proprietário."
+msgstr "Localização no HDFS em que os fluxos de trabalho/coordenadores são implantados quando enviados por um não proprietário."
 
 #: src/liboozie/conf.py:68
 msgid "The Oozie server is not available"
