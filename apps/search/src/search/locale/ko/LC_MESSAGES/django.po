@@ -26,15 +26,11 @@ msgstr "Solr에 액세스하는 중 오류 발생"
 
 #: src/search/conf.py:25
 msgid "URL of the Solr Server."
-msgstr "Solr Server의 URL입니다."
+msgstr "Solr 서버의 URL입니다."
 
 #: src/search/conf.py:30
 msgid "Query sent when no term is entered."
-msgstr "기간을 입력하지 않은 경우 보낸 쿼리입니다."
-
-#: src/search/conf.py:35
-msgid "Whether Solr requires client to perform Kerberos authentication."
-msgstr "Solr에서 클라이언트의 Kerberos 인증 수행을 요구하는지 여부를 나타냅니다."
+msgstr "입력된 용어가 없을 때 쿼리가 전송됩니다."
 
 #: src/search/decorators.py:35 src/search/decorators.py:49
 msgid "Permission denied. You are not an Administrator."
@@ -42,15 +38,15 @@ msgstr "권한이 거부되었습니다. 관리자가 아닙니다."
 
 #: src/search/models.py:233
 msgid "Solr index name pointing to"
-msgstr "가리키는 Solr 인덱스 이름"
+msgstr "Solr 인덱스 이름 지정 대생:"
 
 #: src/search/models.py:234
 msgid "Friendlier name in UI"
-msgstr "친숙한 UI 이름"
+msgstr "UI에 사용자 이름"
 
 #: src/search/models.py:236
 msgid "Collection with cores data"
-msgstr "코어 데이터가 있는 컬렉션"
+msgstr "코어 데이터가 있는 수집"
 
 #: src/search/models.py:236
 msgid "Solr json"
@@ -75,7 +71,7 @@ msgstr " (복사)"
 
 #: src/search/views.py:142 src/search/views.py:174
 msgid "There is no collection to search."
-msgstr "검색할 컬렉션이 없습니다."
+msgstr "검색할 수집이 없습니다."
 
 #: src/search/views.py:172
 msgid "Page saved !"
@@ -148,7 +144,7 @@ msgstr "삭제 확인"
 
 #: src/search/templates/admin_collections.mako:106
 msgid "Are you sure you want to delete this collection?"
-msgstr "이 컬렉션을 삭제하시겠습니까?"
+msgstr "이 수집을 삭제하시겠습니까?"
 
 #: src/search/templates/admin_collections.mako:109
 msgid "No"
@@ -160,11 +156,11 @@ msgstr "예"
 
 #: src/search/templates/admin_collections.mako:179
 msgid "Collection deleted successfully."
-msgstr "컬렉션이 삭제되었습니다."
+msgstr "수집을 성공적으로 삭제했습니다."
 
 #: src/search/templates/admin_collections.mako:183
 msgid "Collection copied successfully."
-msgstr "컬렉션이 복사되었습니다."
+msgstr "수집을 성공적으로 복사했습니다."
 
 #: src/search/templates/layout.mako:32
 msgid "Search page"
@@ -172,11 +168,11 @@ msgstr "페이지 검색"
 
 #: src/search/templates/layout.mako:33
 msgid "Collection manager"
-msgstr "컬렉션 관리자"
+msgstr "Collection Manager"
 
 #: src/search/templates/layout.mako:40
 msgid "Search Admin"
-msgstr "검색 관리"
+msgstr "관리자 검색"
 
 #: src/search/templates/layout.mako:79
 msgid "Collection"
@@ -184,7 +180,7 @@ msgstr "컬렉션"
 
 #: src/search/templates/layout.mako:84
 msgid "Search it"
-msgstr "검색 항목"
+msgstr "검색"
 
 #: src/search/templates/layout.mako:87
 msgid "Template"
@@ -192,7 +188,7 @@ msgstr "템플릿"
 
 #: src/search/templates/layout.mako:89
 msgid "1. Snippet"
-msgstr "1. 조각"
+msgstr "1. 코드 조각"
 
 #: src/search/templates/layout.mako:92
 msgid "2. Facets"
@@ -209,7 +205,7 @@ msgstr "4. 강조 표시"
 #: src/search/templates/macros.mako:197
 #, python-format
 msgid "Retweeted %s times"
-msgstr "%s회 Twitter에 다시 올림"
+msgstr "%s회 리트윗됨"
 
 #: src/search/templates/macros.mako:207
 msgid "Reply"
@@ -217,11 +213,11 @@ msgstr "회신"
 
 #: src/search/templates/macros.mako:213
 msgid "Retweet"
-msgstr "Twitter에 다시 올리기"
+msgstr "리트윗"
 
 #: src/search/templates/no_collections.mako:46
 msgid "It seems there is nothing to search on ..."
-msgstr "검색할 항목이 없는 것 같습니다..."
+msgstr "검색할 항목이 없는 것 같습니다."
 
 #: src/search/templates/no_collections.mako:49
 msgid "... First create a search dashboard with "

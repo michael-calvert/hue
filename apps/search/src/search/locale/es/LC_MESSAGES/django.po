@@ -30,11 +30,7 @@ msgstr "URL del servidor Solr."
 
 #: src/search/conf.py:30
 msgid "Query sent when no term is entered."
-msgstr "Solicitud que se envía cuando no se introduce ningún término."
-
-#: src/search/conf.py:35
-msgid "Whether Solr requires client to perform Kerberos authentication."
-msgstr "Si Solr necesita que el cliente realice la autenticación de Kerberos."
+msgstr "La solicitud se envía si no se introduce ningún término."
 
 #: src/search/decorators.py:35 src/search/decorators.py:49
 msgid "Permission denied. You are not an Administrator."
@@ -42,11 +38,11 @@ msgstr "Permiso denegado. No es el administrador."
 
 #: src/search/models.py:233
 msgid "Solr index name pointing to"
-msgstr "Nombre del índice Solr que apunta a"
+msgstr "El nombre del índice Solr apunta a"
 
 #: src/search/models.py:234
 msgid "Friendlier name in UI"
-msgstr "Nombre descriptivo en interfaz de usuario"
+msgstr "Nombre cordial en interfaz de usuario"
 
 #: src/search/models.py:236
 msgid "Collection with cores data"
@@ -63,7 +59,7 @@ msgstr "Propiedades"
 
 #: src/search/models.py:239
 msgid "Hue properties (e.g. results by pages number)"
-msgstr "Propiedades de Hue (p. ej., resultados por número de páginas)"
+msgstr "Propiedades de Hue (ej. resultados por número de páginas)"
 
 #: src/search/models.py:516
 msgid "The Solr schema requires an id field for performing the result highlighting"
@@ -75,7 +71,7 @@ msgstr " (Copiar)"
 
 #: src/search/views.py:142 src/search/views.py:174
 msgid "There is no collection to search."
-msgstr "No hay ninguna recopilación que buscar."
+msgstr "No hay ninguna recolección para buscar."
 
 #: src/search/views.py:172
 msgid "Page saved !"
@@ -148,7 +144,7 @@ msgstr "Confirmar eliminación"
 
 #: src/search/templates/admin_collections.mako:106
 msgid "Are you sure you want to delete this collection?"
-msgstr "¿Está seguro de que desea eliminar esta recopilación?"
+msgstr "¿Está seguro de que desea eliminar esta recolección?"
 
 #: src/search/templates/admin_collections.mako:109
 msgid "No"
@@ -160,11 +156,11 @@ msgstr "Sí"
 
 #: src/search/templates/admin_collections.mako:179
 msgid "Collection deleted successfully."
-msgstr "Recopilación eliminada correctamente."
+msgstr "Recolección eliminada correctamente."
 
 #: src/search/templates/admin_collections.mako:183
 msgid "Collection copied successfully."
-msgstr "Recopilación copiada correctamente."
+msgstr "Recolección copiada correctamente."
 
 #: src/search/templates/layout.mako:32
 msgid "Search page"
@@ -172,7 +168,7 @@ msgstr "Buscar página"
 
 #: src/search/templates/layout.mako:33
 msgid "Collection manager"
-msgstr "Administrador de recopilaciones"
+msgstr "Administrador de recopilación"
 
 #: src/search/templates/layout.mako:40
 msgid "Search Admin"

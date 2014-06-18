@@ -26,6 +26,11 @@ msgid "Port of the Impala Server."
 msgstr "Impala 서버의 포트입니다."
 
 #: src/impala/conf.py:40
+#, fuzzy
+msgid "Beeswax or Hive Server 2 Thrift API used. Choices are: 'beeswax' or 'hiveserver2'."
+msgstr "Beeswax 또는 Hive Server 2 Thrift API를 사용 중입니다. 'beeswax' 또는 'hiveserver2' 중에서 선택할 수 있습니다."
+
+#: src/impala/conf.py:45
 msgid "Kerberos principal name for Impala. Typically 'impala/hostname.foo.com'."
 msgstr "Impala의 Kerberos 원칙 이름입니다. 일반적으로 'impala/hostname.foo.com'입니다."
 
@@ -47,5 +52,9 @@ msgstr "사용자가 편집기 페이지를 나가면 Hue가 Impala 쿼리를 �
 
 #: src/impala/conf.py:86
 msgid "No available Impalad to send queries to."
-msgstr "쿼리를 보낼 사용 가능한 Impalad가 없습니다."
+msgstr "쿼리를 전송할 사용 가능한 Impalad가 없습니다."
+
+#: src/impala/views.py:35
+msgid "A POST request is required."
+msgstr "POST 요청이 필요합니다."
 

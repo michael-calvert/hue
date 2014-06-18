@@ -46,7 +46,7 @@ msgid "The file to rename."
 msgstr "名前を変更するファイル。"
 
 #: src/filebrowser/forms.py:78
-#: src/filebrowser/templates/listdir_components.mako:258
+#: src/filebrowser/templates/listdir_components.mako:237
 msgid "New name"
 msgstr "新しい名前"
 
@@ -111,7 +111,7 @@ msgid "Path in which to create the directory"
 msgstr "ディレクトリの作成先とするパス"
 
 #: src/filebrowser/forms.py:138
-#: src/filebrowser/templates/listdir_components.mako:465
+#: src/filebrowser/templates/listdir_components.mako:444
 msgid "Directory Name"
 msgstr "ディレクトリ名"
 
@@ -120,7 +120,7 @@ msgid "Path in which to create the file"
 msgstr "ファイルの作成先とするパス"
 
 #: src/filebrowser/forms.py:143
-#: src/filebrowser/templates/listdir_components.mako:489
+#: src/filebrowser/templates/listdir_components.mako:468
 msgid "File Name"
 msgstr "ファイル名"
 
@@ -128,11 +128,10 @@ msgstr "ファイル名"
 msgid "Path to change user/group ownership"
 msgstr "ユーザー/グループの所有権を変更するパス"
 
-#: src/filebrowser/forms.py:150
-#: src/filebrowser/templates/fb_components.mako:123
-#: src/filebrowser/templates/listdir_components.mako:136
-#: src/filebrowser/templates/listdir_components.mako:289
-#: src/filebrowser/templates/listdir_components.mako:322
+#: src/filebrowser/forms.py:150 src/filebrowser/templates/display.mako:80
+#: src/filebrowser/templates/listdir_components.mako:115
+#: src/filebrowser/templates/listdir_components.mako:268
+#: src/filebrowser/templates/listdir_components.mako:301
 msgid "User"
 msgstr "ユーザー"
 
@@ -140,11 +139,10 @@ msgstr "ユーザー"
 msgid "OtherUser"
 msgstr "別のユーザー"
 
-#: src/filebrowser/forms.py:152
-#: src/filebrowser/templates/fb_components.mako:125
-#: src/filebrowser/templates/listdir_components.mako:137
-#: src/filebrowser/templates/listdir_components.mako:291
-#: src/filebrowser/templates/listdir_components.mako:323
+#: src/filebrowser/forms.py:152 src/filebrowser/templates/display.mako:82
+#: src/filebrowser/templates/listdir_components.mako:116
+#: src/filebrowser/templates/listdir_components.mako:270
+#: src/filebrowser/templates/listdir_components.mako:302
 msgid "Group"
 msgstr "グループ"
 
@@ -153,8 +151,8 @@ msgid "OtherGroup"
 msgstr "別のグループ"
 
 #: src/filebrowser/forms.py:154
-#: src/filebrowser/templates/listdir_components.mako:294
-#: src/filebrowser/templates/listdir_components.mako:358
+#: src/filebrowser/templates/listdir_components.mako:273
+#: src/filebrowser/templates/listdir_components.mako:337
 msgid "Recursive"
 msgstr "再帰的"
 
@@ -199,7 +197,7 @@ msgstr "ファイルが %(encoding)s でエンコードされていないので�
 
 #: src/filebrowser/views.py:249
 msgid "No path specified"
-msgstr "パスが指定されていません"
+msgstr "指定されたパスはありません"
 
 #: src/filebrowser/views.py:262
 #, python-format
@@ -357,7 +355,7 @@ msgstr "アップロードに失敗しました：%(data)s。"
 #: src/filebrowser/views.py:1208
 #, python-format
 msgid "No \"%(sep)s\" allowed in the filename %(name)s.sep"
-msgstr "\"%(sep)s\" はファイル名 %(name)s.sep では使用できません"
+msgstr "\"%(sep)s\" はファイル名 %(name)s.sep に使用できません"
 
 #: src/filebrowser/views.py:1217 src/filebrowser/views.py:1224
 msgid "Could not extract contents of file."
@@ -372,7 +370,7 @@ msgid "Must implement 'extract' method."
 msgstr "'extract' メソッドを実装する必要があります。"
 
 #: src/filebrowser/templates/display.mako:31
-#: src/filebrowser/templates/edit.mako:33
+#: src/filebrowser/templates/edit.mako:32
 #, python-format
 msgid "%(filename)s - File Viewer"
 msgstr "%(filename)s - File Viewer"
@@ -501,12 +499,8 @@ msgstr "プレビューを中止"
 msgid "Edit file"
 msgstr "ファイルを編集"
 
-#: src/filebrowser/templates/fb_components.mako:110
-msgid "View file"
-msgstr "ファイルを表示"
-
-#: src/filebrowser/templates/fb_components.mako:113
-#: src/filebrowser/templates/listdir.mako:58
+#: src/filebrowser/templates/display.mako:71
+#: src/filebrowser/templates/listdir.mako:57
 msgid "Download"
 msgstr "ダウンロード"
 
@@ -518,72 +512,147 @@ msgstr "ファイルの場所を表示"
 msgid "Refresh"
 msgstr "更新"
 
-#: src/filebrowser/templates/fb_components.mako:118
+#: src/filebrowser/templates/display.mako:75
 msgid "Info"
 msgstr "情報"
 
-#: src/filebrowser/templates/fb_components.mako:121
+#: src/filebrowser/templates/display.mako:78
 msgid "Last modified"
 msgstr "前回の変更"
 
-#: src/filebrowser/templates/fb_components.mako:127
-#: src/filebrowser/templates/listdir_components.mako:135
+#: src/filebrowser/templates/display.mako:84
+#: src/filebrowser/templates/listdir_components.mako:114
 msgid "Size"
 msgstr "サイズ"
 
-#: src/filebrowser/templates/fb_components.mako:129
+#: src/filebrowser/templates/display.mako:86
 msgid "Mode"
 msgstr "モード"
+
+#: src/filebrowser/templates/display.mako:105
+msgid "Viewing Bytes:"
+msgstr "バイトの表示："
+
+#: src/filebrowser/templates/display.mako:110
+#, python-format
+msgid "(%(length)s B block size)"
+msgstr "（%(length)s バイトのブロックサイズ）"
+
+#: src/filebrowser/templates/display.mako:121
+msgid "Warning: some binary data has been masked out with '&#xfffd'."
+msgstr "警告：'&#xfffd' でマスクされているバイナリデータがあります。"
+
+#: src/filebrowser/templates/edit.mako:45
+msgid "Browse location"
+msgstr "場所を参照"
+
+#: src/filebrowser/templates/edit.mako:63
+#: src/filebrowser/templates/edit.mako:88
+msgid "Save"
+msgstr "保存"
+
+#: src/filebrowser/templates/edit.mako:64
+#: src/filebrowser/templates/edit.mako:73
+msgid "Save as"
+msgstr "名前を付けて保存"
+
+#: src/filebrowser/templates/edit.mako:76
+#: src/filebrowser/templates/saveas.mako:33
+#, fuzzy
+msgid "Enter the location where you would like to save the file."
+msgstr "ファイルの保存先を入力してください。"
+
+#: src/filebrowser/templates/edit.mako:83
+#: src/filebrowser/templates/listdir_components.mako:241
+#: src/filebrowser/templates/listdir_components.mako:280
+#: src/filebrowser/templates/listdir_components.mako:369
+#: src/filebrowser/templates/listdir_components.mako:395
+msgid "Name is required."
+msgstr "名前が必要です。"
+
+#: src/filebrowser/templates/edit.mako:87
+#: src/filebrowser/templates/listdir_components.mako:223
+#: src/filebrowser/templates/listdir_components.mako:248
+#: src/filebrowser/templates/listdir_components.mako:282
+#: src/filebrowser/templates/listdir_components.mako:345
+#: src/filebrowser/templates/listdir_components.mako:371
+#: src/filebrowser/templates/listdir_components.mako:397
+#: src/filebrowser/templates/listdir_components.mako:454
+#: src/filebrowser/templates/listdir_components.mako:478
+#: src/filebrowser/templates/listdir_components.mako:1240
+#: src/filebrowser/templates/listdir_components.mako:1290
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: src/filebrowser/templates/fb_components.mako:24
+#: src/filebrowser/templates/fb_components.mako:39
+msgid "Home"
+msgstr "ホーム"
+
+#: src/filebrowser/templates/fb_components.mako:26
+msgid "Edit path"
+msgstr "パスを編集"
+
+#: src/filebrowser/templates/fb_components.mako:34
+#: src/filebrowser/templates/fb_components.mako:35
+#, fuzzy
+msgid "View trash"
+msgstr "ゴミ箱を表示する"
 
 #: src/filebrowser/templates/fileop.mako:26
 msgid "File Operation"
 msgstr "ファイル操作"
 
-#: src/filebrowser/templates/listdir.mako:36
+#: src/filebrowser/templates/listdir.mako:30
+msgid "File Browser"
+msgstr "File Browser"
+
+#: src/filebrowser/templates/listdir.mako:35
 msgid "Search for file name"
 msgstr "ファイル名を検索"
 
-#: src/filebrowser/templates/listdir.mako:41
-#: src/filebrowser/templates/listdir_components.mako:270
+#: src/filebrowser/templates/listdir.mako:40
+#: src/filebrowser/templates/listdir_components.mako:249
 msgid "Rename"
 msgstr "名前の変更"
 
-#: src/filebrowser/templates/listdir.mako:42
-#: src/filebrowser/templates/listdir_components.mako:393
+#: src/filebrowser/templates/listdir.mako:41
+#: src/filebrowser/templates/listdir_components.mako:372
 msgid "Move"
 msgstr "移動"
 
-#: src/filebrowser/templates/listdir.mako:43
-#: src/filebrowser/templates/listdir_components.mako:419
+#: src/filebrowser/templates/listdir.mako:42
+#: src/filebrowser/templates/listdir_components.mako:398
 msgid "Copy"
 msgstr "コピー"
 
-#: src/filebrowser/templates/listdir.mako:46
+#: src/filebrowser/templates/listdir.mako:45
 msgid "Chown / Chmod"
 msgstr "Chown／Chmod"
 
-#: src/filebrowser/templates/listdir.mako:47
+#: src/filebrowser/templates/listdir.mako:46
 msgid "Chmod / Chown"
 msgstr "Chmod／Chown"
 
-#: src/filebrowser/templates/listdir.mako:51
+#: src/filebrowser/templates/listdir.mako:50
+#, fuzzy
 msgid "Change owner/group"
-msgstr "所有者／グループを変更"
+msgstr "所有者／グループの変更"
 
-#: src/filebrowser/templates/listdir.mako:51
+#: src/filebrowser/templates/listdir.mako:50
 msgid "Change owner / group"
 msgstr "所有者／グループを変更"
 
-#: src/filebrowser/templates/listdir.mako:52
-#: src/filebrowser/templates/listdir.mako:56
+#: src/filebrowser/templates/listdir.mako:51
+#: src/filebrowser/templates/listdir.mako:55
 msgid "Change permissions"
 msgstr "パーミッションを変更"
 
-#: src/filebrowser/templates/listdir.mako:59
+#: src/filebrowser/templates/listdir.mako:58
 msgid "Restore from trash"
 msgstr "ゴミ箱から復元する"
 
-#: src/filebrowser/templates/listdir.mako:59
+#: src/filebrowser/templates/listdir.mako:58
 msgid "Restore"
 msgstr "復元"
 
@@ -592,15 +661,9 @@ msgid "Move to trash"
 msgstr "ゴミ箱に移動"
 
 #: src/filebrowser/templates/listdir.mako:67
+#: src/filebrowser/templates/listdir.mako:73
 msgid "Delete forever"
 msgstr "完全に削除"
-
-#: src/filebrowser/templates/listdir.mako:71
-#: src/filebrowser/templates/listdir.mako:73
-#: src/filebrowser/templates/listdir_components.mako:304
-#: src/filebrowser/templates/listdir_components.mako:367
-msgid "Submit"
-msgstr "サブミット"
 
 #: src/filebrowser/templates/listdir.mako:79
 msgid "Empty trash"
@@ -620,8 +683,8 @@ msgid "Archive"
 msgstr "アーカイブ"
 
 #: src/filebrowser/templates/listdir.mako:88
-msgid "Zip/Tgz file"
-msgstr "Zip／Tgz ファイル"
+msgid "Zip file"
+msgstr "zip ファイル"
 
 #: src/filebrowser/templates/listdir.mako:93
 msgid "New"
@@ -636,26 +699,27 @@ msgid "Directory"
 msgstr "ディレクトリ"
 
 #: src/filebrowser/templates/listdir.mako:109
+#, fuzzy
 msgid "This is Hadoop trash. Files will be under a checkpoint, or timestamp named, directory."
 msgstr "これは Hadoop のゴミ箱です。ファイルはチェックポイント、またはタイムスタンプの名前が付けられた、ディレクトリ下に入れられます。"
 
-#: src/filebrowser/templates/listdir_components.mako:134
+#: src/filebrowser/templates/listdir_components.mako:113
 msgid "Name"
 msgstr "名前"
 
-#: src/filebrowser/templates/listdir_components.mako:138
+#: src/filebrowser/templates/listdir_components.mako:117
 msgid "Permissions"
 msgstr "パーミッション"
 
-#: src/filebrowser/templates/listdir_components.mako:139
+#: src/filebrowser/templates/listdir_components.mako:118
 msgid "Date"
 msgstr "日付"
 
-#: src/filebrowser/templates/listdir_components.mako:184
+#: src/filebrowser/templates/listdir_components.mako:163
 msgid "Beginning of List"
 msgstr "リストの先頭"
 
-#: src/filebrowser/templates/listdir_components.mako:185
+#: src/filebrowser/templates/listdir_components.mako:164
 msgid "Previous Page"
 msgstr "前のページ"
 
@@ -663,215 +727,226 @@ msgstr "前のページ"
 msgid "Next Page"
 msgstr "次のページ"
 
-#: src/filebrowser/templates/listdir_components.mako:189
+#: src/filebrowser/templates/listdir_components.mako:168
 msgid "End of List"
 msgstr "リストの末尾"
 
-#: src/filebrowser/templates/listdir_components.mako:192
+#: src/filebrowser/templates/listdir_components.mako:171
 msgid "Show"
 msgstr "表示"
 
-#: src/filebrowser/templates/listdir_components.mako:194
+#: src/filebrowser/templates/listdir_components.mako:173
 msgid "items per page"
 msgstr "ページあたりのアイテム数"
 
-#: src/filebrowser/templates/listdir_components.mako:195
+#: src/filebrowser/templates/listdir_components.mako:174
 msgid "Showing"
 msgstr "表示しています"
 
-#: src/filebrowser/templates/listdir_components.mako:195
+#: src/filebrowser/templates/listdir_components.mako:174
 msgid "to"
 msgstr "～"
 
-#: src/filebrowser/templates/listdir_components.mako:195
-#: src/filebrowser/templates/listdir_components.mako:196
+#: src/filebrowser/templates/listdir_components.mako:174
+#: src/filebrowser/templates/listdir_components.mako:175
 msgid "of"
 msgstr "／"
 
-#: src/filebrowser/templates/listdir_components.mako:195
+#: src/filebrowser/templates/listdir_components.mako:174
 msgid "items, page"
 msgstr "件のアイテム、ページ"
 
-#: src/filebrowser/templates/listdir_components.mako:203
+#: src/filebrowser/templates/listdir_components.mako:182
 msgid "Confirm Delete"
 msgstr "削除を確認"
 
-#: src/filebrowser/templates/listdir_components.mako:206
+#: src/filebrowser/templates/listdir_components.mako:185
 msgid "Are you sure you want to delete these files?"
 msgstr "これらのファイルを削除してもよろしいですか?"
 
-#: src/filebrowser/templates/listdir_components.mako:210
-#: src/filebrowser/templates/listdir_components.mako:227
+#: src/filebrowser/templates/listdir_components.mako:189
+#: src/filebrowser/templates/listdir_components.mako:206
 msgid "No"
 msgstr "いいえ"
 
-#: src/filebrowser/templates/listdir_components.mako:211
-#: src/filebrowser/templates/listdir_components.mako:228
+#: src/filebrowser/templates/listdir_components.mako:190
+#: src/filebrowser/templates/listdir_components.mako:207
 msgid "Yes"
 msgstr "はい"
 
-#: src/filebrowser/templates/listdir_components.mako:220
+#: src/filebrowser/templates/listdir_components.mako:199
 msgid "Confirm Restore"
 msgstr "復元を確認"
 
-#: src/filebrowser/templates/listdir_components.mako:223
+#: src/filebrowser/templates/listdir_components.mako:202
 msgid "Are you sure you want to restore these files?"
 msgstr "これらのファイルを復元してもよろしいですか?"
 
-#: src/filebrowser/templates/listdir_components.mako:237
+#: src/filebrowser/templates/listdir_components.mako:216
 msgid "Confirm Empty Trash"
 msgstr "ゴミ箱を空にする操作を確認"
 
-#: src/filebrowser/templates/listdir_components.mako:240
+#: src/filebrowser/templates/listdir_components.mako:219
 msgid "Are you sure you want to permanently delete all your trash?"
 msgstr "ゴミ箱にあるものを完全に削除してもよろしいですか?"
 
-#: src/filebrowser/templates/listdir_components.mako:245
+#: src/filebrowser/templates/listdir_components.mako:224
 msgid "Delete"
 msgstr "削除"
 
-#: src/filebrowser/templates/listdir_components.mako:255
+#: src/filebrowser/templates/listdir_components.mako:234
 msgid "Renaming:"
 msgstr "名前変更中："
 
-#: src/filebrowser/templates/listdir_components.mako:265
-#: src/filebrowser/templates/listdir_components.mako:473
-#: src/filebrowser/templates/listdir_components.mako:497
+#: src/filebrowser/templates/listdir_components.mako:244
+#: src/filebrowser/templates/listdir_components.mako:452
+#: src/filebrowser/templates/listdir_components.mako:476
 msgid "already exists."
 msgstr "すでに存在しています。"
 
-#: src/filebrowser/templates/listdir_components.mako:284
+#: src/filebrowser/templates/listdir_components.mako:263
+#, fuzzy
 msgid "Change Owner/Group"
-msgstr "所有者／グループを変更"
+msgstr "所有者／グループの変更"
 
-#: src/filebrowser/templates/listdir_components.mako:287
+#: src/filebrowser/templates/listdir_components.mako:266
 #, python-format
 msgid "Note: Only the Hadoop superuser, \"%(superuser)s\" on this file system, may change the owner of a file."
-msgstr "注意：このファイルシステムでは、Hadoop スーパーユーザー \"%(superuser)s\" のみがファイルの所有者を変更できます。"
+msgstr "注意：このファイルシステムでは \"%(superuser)s\" である Hadoop スーパーユーザーのみがファイルの所有者を変更できます。"
 
-#: src/filebrowser/templates/listdir_components.mako:315
+#: src/filebrowser/templates/listdir_components.mako:283
+#: src/filebrowser/templates/listdir_components.mako:346
+msgid "Submit"
+msgstr "サブミット"
+
+#: src/filebrowser/templates/listdir_components.mako:294
 msgid "Change Permissions:"
 msgstr "パーミッションを変更："
 
-#: src/filebrowser/templates/listdir_components.mako:324
+#: src/filebrowser/templates/listdir_components.mako:303
 msgid "Other"
 msgstr "その他"
 
-#: src/filebrowser/templates/listdir_components.mako:331
+#: src/filebrowser/templates/listdir_components.mako:310
 msgid "Read"
 msgstr "読み取り"
 
-#: src/filebrowser/templates/listdir_components.mako:338
+#: src/filebrowser/templates/listdir_components.mako:317
 msgid "Write"
 msgstr "書き込み"
 
-#: src/filebrowser/templates/listdir_components.mako:345
+#: src/filebrowser/templates/listdir_components.mako:324
 msgid "Execute"
 msgstr "実行"
 
-#: src/filebrowser/templates/listdir_components.mako:352
+#: src/filebrowser/templates/listdir_components.mako:331
 msgid "Sticky"
 msgstr "Sticky"
 
-#: src/filebrowser/templates/listdir_components.mako:377
+#: src/filebrowser/templates/listdir_components.mako:356
 msgid "Move:"
 msgstr "移動："
 
-#: src/filebrowser/templates/listdir_components.mako:381
-#: src/filebrowser/templates/listdir_components.mako:407
+#: src/filebrowser/templates/listdir_components.mako:360
+#: src/filebrowser/templates/listdir_components.mako:386
 msgid "Destination"
 msgstr "宛先"
 
-#: src/filebrowser/templates/listdir_components.mako:403
+#: src/filebrowser/templates/listdir_components.mako:382
 msgid "Copy:"
 msgstr "コピー："
 
-#: src/filebrowser/templates/listdir_components.mako:428
-#: src/filebrowser/templates/listdir_components.mako:444
+#: src/filebrowser/templates/listdir_components.mako:407
+#: src/filebrowser/templates/listdir_components.mako:423
 msgid "Uploading to:"
 msgstr "次の場所にアップロード中："
 
-#: src/filebrowser/templates/listdir_components.mako:433
-#: src/filebrowser/templates/listdir_components.mako:450
+#: src/filebrowser/templates/listdir_components.mako:412
+#: src/filebrowser/templates/listdir_components.mako:429
 msgid "Enable JavaScript to use the file uploader."
 msgstr "ファイルアップロードを使用するには、JavaScript を有効にしてください。"
 
-#: src/filebrowser/templates/listdir_components.mako:445
+#: src/filebrowser/templates/listdir_components.mako:424
 msgid "The file will then be extracted in the path specified above."
-msgstr "そうすると、上記で指定したパスにファイルが抽出されます。"
+msgstr "すると、上記で指定したパスにファイルが抽出されます。"
 
-#: src/filebrowser/templates/listdir_components.mako:462
+#: src/filebrowser/templates/listdir_components.mako:441
 msgid "Create Directory"
 msgstr "ディレクトリの作成"
 
-#: src/filebrowser/templates/listdir_components.mako:470
+#: src/filebrowser/templates/listdir_components.mako:449
 msgid "Directory name is required."
 msgstr "ディレクトリ名が必要です。"
 
-#: src/filebrowser/templates/listdir_components.mako:476
-#: src/filebrowser/templates/listdir_components.mako:500
+#: src/filebrowser/templates/listdir_components.mako:455
+#: src/filebrowser/templates/listdir_components.mako:479
+#, fuzzy
 msgid "Create"
 msgstr "作成"
 
-#: src/filebrowser/templates/listdir_components.mako:486
+#: src/filebrowser/templates/listdir_components.mako:465
 msgid "Create File"
 msgstr "ファイルを作成"
 
-#: src/filebrowser/templates/listdir_components.mako:494
+#: src/filebrowser/templates/listdir_components.mako:473
 msgid "File name is required."
 msgstr "ファイル名が必要です。"
 
-#: src/filebrowser/templates/listdir_components.mako:569
+#: src/filebrowser/templates/listdir_components.mako:546
 msgid "User is required."
 msgstr "ユーザーが必要です。"
 
-#: src/filebrowser/templates/listdir_components.mako:575
+#: src/filebrowser/templates/listdir_components.mako:552
 msgid "Group is required."
 msgstr "グループが必要です。"
 
-#: src/filebrowser/templates/listdir_components.mako:582
+#: src/filebrowser/templates/listdir_components.mako:559
 msgid "Specify another group."
 msgstr "別のグループを指定してください。"
 
-#: src/filebrowser/templates/listdir_components.mako:589
+#: src/filebrowser/templates/listdir_components.mako:566
 msgid "Specify another user."
 msgstr "別のユーザーを指定してください。"
 
-#: src/filebrowser/templates/listdir_components.mako:783
-msgid "Did you know? You can use the tab key or CTRL + Space to autocomplete file and folder names"
-msgstr "ご存知ですか？ Tab キーを使用するか、CTRL キーを押しながら Space キーを押して、ファイル名やフォルダ名のオートコンプリートが可能です"
+#: src/filebrowser/templates/listdir_components.mako:763
+msgid "Did you know?"
+msgstr "便利な使い方"
 
-#: src/filebrowser/templates/listdir_components.mako:789
+#: src/filebrowser/templates/listdir_components.mako:764
+msgid "You can activate HDFS trash by setting fs.trash.interval in core-site.xml."
+msgstr "core-site.xml で fs.trash.interval を設定して、HDFS のゴミ箱をアクティブにできます。"
+
+#: src/filebrowser/templates/listdir_components.mako:773
 msgid "There was a problem with your request."
 msgstr "要求に問題がありました。"
 
-#: src/filebrowser/templates/listdir_components.mako:864
+#: src/filebrowser/templates/listdir_components.mako:840
 msgid "This folder"
 msgstr "このフォルダ"
 
-#: src/filebrowser/templates/listdir_components.mako:867
+#: src/filebrowser/templates/listdir_components.mako:843
 msgid "One level up"
 msgstr "1 レベル上へ"
 
-#: src/filebrowser/templates/listdir_components.mako:1269
-#: src/filebrowser/templates/listdir_components.mako:1319
+#: src/filebrowser/templates/listdir_components.mako:1232
+#: src/filebrowser/templates/listdir_components.mako:1282
 msgid "Drop files here to upload"
 msgstr "ここにファイルをドロップしてアップロード"
 
-#: src/filebrowser/templates/listdir_components.mako:1270
+#: src/filebrowser/templates/listdir_components.mako:1233
 msgid "Select files"
 msgstr "ファイルを選択"
 
-#: src/filebrowser/templates/listdir_components.mako:1278
-#: src/filebrowser/templates/listdir_components.mako:1328
+#: src/filebrowser/templates/listdir_components.mako:1241
+#: src/filebrowser/templates/listdir_components.mako:1291
 msgid "Failed"
 msgstr "失敗しました"
 
-#: src/filebrowser/templates/listdir_components.mako:1287
+#: src/filebrowser/templates/listdir_components.mako:1250
 msgid "Error: "
 msgstr "エラー： "
 
-#: src/filebrowser/templates/listdir_components.mako:1320
+#: src/filebrowser/templates/listdir_components.mako:1283
 msgid "Upload a zip file"
 msgstr "zip ファイルをアップロード"
 
@@ -879,3 +954,5 @@ msgstr "zip ファイルをアップロード"
 msgid "Save File As..."
 msgstr "名前を付けてファイルを保存..."
 
+#~ msgid "Upload failed: %(data)s"
+#~ msgstr "アップロードに失敗しました：%(data)s"
