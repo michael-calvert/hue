@@ -42,19 +42,19 @@ msgstr "Autorisation refusée. Vous n'êtes pas un administrateur."
 
 #: src/search/models.py:233
 msgid "Solr index name pointing to"
-msgstr "Nom d'index Solr pointant vers"
+msgstr "Le nom de l'index Solr pointe vers"
 
 #: src/search/models.py:234
 msgid "Friendlier name in UI"
-msgstr "Nom plus amical dans IU"
+msgstr "Nom plus convivial dans l'IU"
 
 #: src/search/models.py:236
 msgid "Collection with cores data"
-msgstr "Collection avec données de cœurs"
+msgstr "Collection avec des données de coeurs"
 
 #: src/search/models.py:236
 msgid "Solr json"
-msgstr "json Solr"
+msgstr "Solr json"
 
 #: src/search/models.py:238 src/search/templates/layout.mako:81
 #: src/search/templates/search.mako:545
@@ -63,7 +63,7 @@ msgstr "Propriétés"
 
 #: src/search/models.py:239
 msgid "Hue properties (e.g. results by pages number)"
-msgstr "Propriétés Hue (par ex., les résultats par numéro de page)"
+msgstr "Propriétés de Hue (par ex. résultats par nombre de pages)"
 
 #: src/search/models.py:516
 msgid "The Solr schema requires an id field for performing the result highlighting"
@@ -160,11 +160,11 @@ msgstr "Oui"
 
 #: src/search/templates/admin_collections.mako:179
 msgid "Collection deleted successfully."
-msgstr "Collection supprimée."
+msgstr "Collections supprimées avec succès."
 
 #: src/search/templates/admin_collections.mako:183
 msgid "Collection copied successfully."
-msgstr "Collection copiée."
+msgstr "Collections copiées avec succès."
 
 #: src/search/templates/layout.mako:32
 msgid "Search page"
@@ -172,11 +172,11 @@ msgstr "Rechercher une page"
 
 #: src/search/templates/layout.mako:33
 msgid "Collection manager"
-msgstr "Gestionnaire de collections"
+msgstr "Gestionnaire de collection"
 
 #: src/search/templates/layout.mako:40
 msgid "Search Admin"
-msgstr "Rechercher un administrateur"
+msgstr "Rechercher administrateur"
 
 #: src/search/templates/layout.mako:79
 msgid "Collection"
@@ -184,7 +184,7 @@ msgstr "Collection"
 
 #: src/search/templates/layout.mako:84
 msgid "Search it"
-msgstr "Rechercher"
+msgstr "Le rechercher"
 
 #: src/search/templates/layout.mako:87
 msgid "Template"
@@ -192,7 +192,7 @@ msgstr "Modèle"
 
 #: src/search/templates/layout.mako:89
 msgid "1. Snippet"
-msgstr "1. Extrait"
+msgstr "1. Fragment de code"
 
 #: src/search/templates/layout.mako:92
 msgid "2. Facets"
@@ -204,12 +204,12 @@ msgstr "3. Tri"
 
 #: src/search/templates/layout.mako:98
 msgid "4. Highlighting"
-msgstr "4. Surbrillance"
+msgstr "4. Mise en évidence"
 
 #: src/search/templates/macros.mako:197
 #, python-format
 msgid "Retweeted %s times"
-msgstr "Retweeté %s fois"
+msgstr "Retwitté %s fois"
 
 #: src/search/templates/macros.mako:207
 msgid "Reply"
@@ -217,11 +217,11 @@ msgstr "Répondre"
 
 #: src/search/templates/macros.mako:213
 msgid "Retweet"
-msgstr "Retweeter"
+msgstr "Retwitter"
 
 #: src/search/templates/no_collections.mako:46
 msgid "It seems there is nothing to search on ..."
-msgstr "Il semble qu'il n'y ait pas d'éléments sur lesquels baser la recherche..."
+msgstr "Il semblerait qu'il n'y ait rien à rechercher..."
 
 #: src/search/templates/no_collections.mako:49
 msgid "... First create a search dashboard with "

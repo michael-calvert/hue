@@ -26,6 +26,11 @@ msgid "Port of the Impala Server."
 msgstr "Port du serveur Impala."
 
 #: src/impala/conf.py:40
+#, fuzzy
+msgid "Beeswax or Hive Server 2 Thrift API used. Choices are: 'beeswax' or 'hiveserver2'."
+msgstr "API Thrift de Beeswax ou Hive Server 2 utilisée. Les choix possibles sont : \"beeswax\" ou \"hiveserver2\"."
+
+#: src/impala/conf.py:45
 msgid "Kerberos principal name for Impala. Typically 'impala/hostname.foo.com'."
 msgstr "Nom Kerberos principal pour Impala. En général 'impala/nomhôte.foo.com'."
 
@@ -47,5 +52,9 @@ msgstr "Hue tente de fermer la requête Impala lorsque l'utilisateur quitte la p
 
 #: src/impala/conf.py:86
 msgid "No available Impalad to send queries to."
-msgstr "Aucun Impalad auquel envoyer des requêtes n'est disponible."
+msgstr "Aucun Impalad disponible pour l'envoi de requêtes."
+
+#: src/impala/views.py:35
+msgid "A POST request is required."
+msgstr "Requête POST requise."
 

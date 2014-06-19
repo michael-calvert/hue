@@ -26,6 +26,11 @@ msgid "Port of the Impala Server."
 msgstr "Impala 服务器端口。"
 
 #: src/impala/conf.py:40
+#, fuzzy
+msgid "Beeswax or Hive Server 2 Thrift API used. Choices are: 'beeswax' or 'hiveserver2'."
+msgstr "已使用 Beeswax 或 Hive Server 2 Thrift API。选择是：'beeswax' 或 'hiveserver2'。"
+
+#: src/impala/conf.py:45
 msgid "Kerberos principal name for Impala. Typically 'impala/hostname.foo.com'."
 msgstr "Impala 的 Kerberos 主体名称。通常为“impala/hostname.foo.com”。"
 
@@ -47,5 +52,9 @@ msgstr "当用户离开编辑器页面时，Hue 将尝试关闭 Impala 查询。
 
 #: src/impala/conf.py:86
 msgid "No available Impalad to send queries to."
-msgstr "没有可向其发送请求的 Impalad。"
+msgstr "没有可向其发送查询的 Impalad。"
+
+#: src/impala/views.py:35
+msgid "A POST request is required."
+msgstr "需要 POST 请求。"
 

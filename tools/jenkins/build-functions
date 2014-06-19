@@ -137,6 +137,11 @@ build_oozie() {
 
   $OOZIE_HOME/bin/oozie-setup.sh prepare-war
   $OOZIE_HOME/bin/ooziedb.sh create -sqlfile oozie.sql -run
+
+  # Debug logging for Oozie
+  sed -i'.bk' 's/log4j.logger.org.apache.oozie=.*/log4j.logger.org.apache.oozie=DEBUG, oozie/g' $OOZIE_CONF_DIR/oozie-log4j.properties
+  sed -i'.bk' 's/log4j.logger.org.apache.hadoop=.*/log4j.logger.org.apache.hadoop=DEBUG, oozie/g' $OOZIE_CONF_DIR/oozie-log4j.properties
+  sed -i'.bk' 's/log4j.logger.org.apache.hadoop.security.authentication.server=.*/log4j.logger.org.apache.hadoop.security.authentication.server=DEBUG, oozie/g' $OOZIE_CONF_DIR/oozie-log4j.properties
 }
 
 

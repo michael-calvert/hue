@@ -39,53 +39,45 @@ msgstr "권한이 업데이트되었습니다."
 msgid "load_apps has already been called."
 msgstr "load_apps가 이미 호출되었습니다."
 
-#: src/desktop/conf.py:46
+#: src/desktop/conf.py:32
+msgid "If set to true, CherryPy will be used. Otherwise, Spawning will be used as the webserver."
+msgstr "TRUE로 설정되면 CherryPy가 사용됩니다. 그 외의 경우에는 Spawning이 웹 서버로 사용됩니다."
+
+#: src/desktop/conf.py:38
 msgid "HTTP host to bind to."
 msgstr "바인딩하는 HTTP 호스트입니다."
 
-#: src/desktop/conf.py:52
+#: src/desktop/conf.py:44
 msgid "HTTP port to bind to."
 msgstr "바인딩하는 HTTP 포트입니다."
 
-#: src/desktop/conf.py:58
-msgid "HTTP methods the server will be allowed to service."
-msgstr "서버에서 서비스할 수 있는 HTTP 메소드입니다."
-
-#: src/desktop/conf.py:65
+#: src/desktop/conf.py:50
 msgid "Filename of SSL Certificate"
 msgstr "SSL 인증서 파일 이름"
 
-#: src/desktop/conf.py:70
+#: src/desktop/conf.py:55
 msgid "Filename of SSL RSA Private Key"
 msgstr "SSL RSA 개인 키 파일 이름"
 
-#: src/desktop/conf.py:75
-msgid "List of allowed and disallowed ciphers"
-msgstr "허용 및 허용 안 된 암호 목록"
-
-#: src/desktop/conf.py:80
-msgid "LDAP password of the hue user used for LDAP authentications. For example for LDAP Authentication with HiveServer2."
-msgstr "LDAP 인증에 사용된 Hue 사용자의 LDAP 암호입니다(예: HiveServer2를 사용한 LDAP 인증)."
-
-#: src/desktop/conf.py:86
+#: src/desktop/conf.py:60
 msgid "If set to false, runcpserver will not actually start the web server.  Used if Apache is being used as a WSGI container."
 msgstr "FALSE로 설정되면 runcpserver가 실제로 웹 서버를 시작하지 않습니다. Apache가 WSGI 컨테이너로 사용되는 경우에만 사용됩니다."
 
-#: src/desktop/conf.py:92
+#: src/desktop/conf.py:66
 msgid "Number of threads used by the CherryPy web server."
 msgstr "CherryPy 웹 서버가 사용하는 스레드 수입니다."
 
-#: src/desktop/conf.py:98
+#: src/desktop/conf.py:72
 msgid "Used in hashing algorithms for sessions."
 msgstr "세션의 해싱 알고리즘에 사용됩니다."
 
-#: src/desktop/conf.py:103
+#: src/desktop/conf.py:77
 msgid "Number of user access to remember per view per user."
 msgstr "사용자별 뷰당 기억해야 할 사용자 액세스 수입니다."
 
-#: src/desktop/conf.py:109
+#: src/desktop/conf.py:83
 msgid "Help improve Hue with anonymous usage analytics.Use Google Analytics to see how many times an application or specific section of an application is used, nothing more."
-msgstr "익명 사용 분석은 Hue를 개선시키는 데 도움이 됩니다. Google Analytics를 사용하여 애플리케이션이나 애플리케이션의 특정 섹션이 사용되는 빈도를 확인하십시오."
+msgstr "익명 사용 분석으로 Hue의 기능 향상에 도움을 주십시오. Google Analytics를 사용하여 어떤 애플리케이션 또는 애플리케이션의 특정 섹션이 얼마나 많이 사용되었는지 확인합니다."
 
 #: src/desktop/conf.py:116
 msgid "Use poll(2) in Hue thrift pool."
@@ -142,8 +134,7 @@ msgstr "Hue의 여러 자동 알림에 사용하는 기본 Email 주소입니다
 #: src/desktop/conf.py:227
 msgid "Configuration options for specifying the Desktop Database.\n"
 "          For more info, see http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine"
-msgstr "Desktop Database를 지정하는 구성 옵션입니다.\n"
-"          자세한 내용은 http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine을 참조하십시오."
+msgstr "Desktop Database를 지정하는 구성 옵션입니다. 자세한 내용은 http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine을 참조하십시오."
 
 #: src/desktop/conf.py:232
 msgid "Database engine, such as postgresql_psycopg2, mysql, or sqlite3."
@@ -495,32 +486,32 @@ msgstr "Keytab에는 0600 권한(%o 보유)이 있어야 합니다."
 msgid "Permission denied (%(action)s/%(app)s)."
 msgstr "권한 거부됨(%(action)s/%(app)s)."
 
-#: src/desktop/middleware.py:142
+#: src/desktop/middleware.py:161
 #, python-format
 msgid "Cannot find HDFS called \"%(fs_ref)s\"."
 msgstr "\"%(fs_ref)s\" HDFS를 찾을 수 없습니다."
 
-#: src/desktop/middleware.py:250
+#: src/desktop/middleware.py:265
 #, python-format
 msgid "%(module)s isn't a middleware module."
 msgstr "%(module)s은(는) 미들웨어 모듈이 아닙니다."
 
-#: src/desktop/middleware.py:255
+#: src/desktop/middleware.py:270
 #, python-format
 msgid "Error importing middleware %(module)s: \"%(error)s\"."
 msgstr "미들웨어 %(module)s을(를) 가져오는 중 오류 발생: \"%(error)s\""
 
-#: src/desktop/middleware.py:259
+#: src/desktop/middleware.py:274
 #, python-format
 msgid "Middleware module \"%(module)s\" does not define a \"%(class)s\" class."
 msgstr "미들웨어 모듈 \"%(module)s\"은(는) \"%(class)s\" 클래스를 정의하지 않습니다."
 
-#: src/desktop/middleware.py:271
+#: src/desktop/middleware.py:286
 #, python-format
 msgid "AppSpecificMiddleware module \"%(module)s\" has a process_request function which is impossible."
 msgstr "AppSpecificMiddleware 모듈 \"%(module)s\"에 process_request 함수가 있는데, 이는 허용되지 않습니다."
 
-#: src/desktop/middleware.py:331
+#: src/desktop/middleware.py:337
 #, python-format
 msgid "You do not have permission to access the %(app_name)s application."
 msgstr "%(app_name)s 애플리케이션에 대한 액세스 권한이 없습니다."
@@ -706,7 +697,7 @@ msgstr "\"error\" 메소드가 구현되지 않았습니다."
 #: src/desktop/lib/security_util.py:33
 #, python-format
 msgid "Can't replace %s pattern since host is null."
-msgstr "호스트가 null이므로 %s 패턴을 교체할 수 없습니다."
+msgstr "호스트가 Null이므로 %s 패턴을 대체할 수 없습니다."
 
 #: src/desktop/management/commands/config_dump.py:39
 msgid "Dumping configuration..."
@@ -735,7 +726,7 @@ msgstr "--%(param)s은(는) 필수 입력 사항입니다."
 #: src/desktop/management/commands/config_upgrade.py:60
 #, python-format
 msgid "Invalid mapping %(mapping)s in %(file)s."
-msgstr "%(file)s의 %(mapping)s 매핑이 올바르지 않습니다."
+msgstr "%(file)s의 %(mapping)s 매핑이 잘못되었습니다."
 
 #: src/desktop/management/commands/create_desktop_app.py:31
 msgid "Creates a Hue application directory structure."
@@ -795,6 +786,7 @@ msgid "Web server for Hue."
 msgstr "Hue의 웹 서버입니다."
 
 #: src/desktop/management/commands/runpylint.py:28
+#, fuzzy
 msgid "\n"
 "  Runs pylint on desktop and app code.\n"
 "\n"
@@ -810,14 +802,14 @@ msgid "\n"
 "  "
 msgstr "\n"
 "  pylint를 desktop 및 app 코드로 실행합니다.\n"
-" \n"
-"   인수를 사용하지 않거나 \"all\"을 사용하면 설치된 모든\n"
-"   앱에서 pylint가 실행됩니다. 그렇게 하지 않으려면 실행할 모듈 및\n"
-"   다른 매개변수를 pylint에 지정하십시오. pylint 인수 영역 앞에 \"--\" 접두사를 사용하면\n"
-"   Django의 manage.py가 인수를 전달합니다.\n"
-" \n"
-"   예:\n"
-"     python core/manage.py runpylint all -- -f parseable\n"
+"\n"
+"  인수를 사용하지 않거나 \"all\"을 사용하면 설치된 모든\n"
+"  앱에서 pylint가 실행됩니다. 그렇게 하지 않으려면 실행할 모듈 및\n"
+"  다른 매개변수를 pylint에 지정하십시오. pylint 인수 영역 앞에 \"--\" 접두사를 사용하면\n"
+"  Django의 manage.py가 인수를 전달합니다.\n"
+"\n"
+"  예:\n"
+"    python core/manage.py runpylint all -- -f parseable\n"
 "    python core/manage.py runpylint filebrowser\n"
 "    python core/manage.py runpylint\n"
 "  "
@@ -839,23 +831,28 @@ msgstr "페이지를 찾을 수 없습니다."
 msgid "We're sorry, but the requested page could not be found:"
 msgstr "죄송합니다. 요청한 페이지를 찾을 수 없습니다."
 
-#: src/desktop/templates/500.mako:29
+#: src/desktop/templates/500.mako:23 src/desktop/templates/error.mako:22
+msgid "Error"
+msgstr "오류"
+
+#: src/desktop/templates/500.mako:26
 msgid "Server Error (500)"
 msgstr "서버 오류(500)"
 
-#: src/desktop/templates/500.mako:30
+#: src/desktop/templates/500.mako:27
 msgid "Sorry, there's been an error. An email was sent to your administrators. Thank you for your patience."
-msgstr "죄송합니다. 오류가 발생했습니다. 관리자에게 이메일이 전송되었습니다. 기다려 주셔서 감사합니다."
+msgstr "죄송합니다. 오류가 발생했습니다. 관리자에게 Email을 전송했습니다."
 
-#: src/desktop/templates/500.mako:33
+#: src/desktop/templates/500.mako:30
 msgid "See the stacktrace"
-msgstr "stacktrace 참조"
+msgstr "Stacktrace 보기"
 
-#: src/desktop/templates/500.mako:33 src/desktop/templates/popup_error.mako:44
+#: src/desktop/templates/500.mako:30 src/desktop/templates/popup_error.mako:37
 msgid "More Info"
 msgstr "자세한 정보"
 
-#: src/desktop/templates/500.mako:36 src/desktop/templates/500.mako:62
+#: src/desktop/templates/500.mako:33 src/desktop/templates/500.mako:59
+#, fuzzy
 msgid "View server logs"
 msgstr "서버 로그 보기"
 
@@ -922,15 +919,15 @@ msgstr "모두 정상입니다. 구성 검사를 통과했습니다."
 msgid "Back"
 msgstr "뒤로"
 
-#: src/desktop/templates/common_header.mako:94
+#: src/desktop/templates/common_header.mako:82
 msgid "Select this folder"
 msgstr "이 폴더 선택"
 
-#: src/desktop/templates/common_header.mako:95
+#: src/desktop/templates/common_header.mako:83
 msgid "Create folder"
 msgstr "폴더 생성"
 
-#: src/desktop/templates/common_header.mako:96
+#: src/desktop/templates/common_header.mako:84
 msgid "Folder name"
 msgstr "폴더 이름"
 
@@ -939,76 +936,44 @@ msgstr "폴더 이름"
 msgid "Cancel"
 msgstr "취소"
 
-#: src/desktop/templates/common_header.mako:98
+#: src/desktop/templates/common_header.mako:86
 msgid "The file has not been found"
 msgstr "파일을 찾을 수 없음"
 
-#: src/desktop/templates/common_header.mako:99
+#: src/desktop/templates/common_header.mako:87
 msgid "Upload a file"
 msgstr "파일 업로드"
 
-#: src/desktop/templates/common_header.mako:100
+#: src/desktop/templates/common_header.mako:88
 msgid "Failed"
 msgstr "실패함"
 
-#: src/desktop/templates/common_header.mako:107
+#: src/desktop/templates/common_header.mako:95
 msgid "Go to column:"
 msgstr "다음 열로 이동:"
 
-#: src/desktop/templates/common_header.mako:108
+#: src/desktop/templates/common_header.mako:96
 msgid "column name..."
 msgstr "열 이름..."
 
-#: src/desktop/templates/common_header.mako:114
+#: src/desktop/templates/common_header.mako:102
 msgid "Available tours"
-msgstr "사용 가능한 둘러보기"
+msgstr "사용 가능한 투어"
 
-#: src/desktop/templates/common_header.mako:115
+#: src/desktop/templates/common_header.mako:103
 msgid "None for this page."
-msgstr "이 페이지에는 없습니다."
+msgstr "이 페이지에 해당 사항 없음"
 
-#: src/desktop/templates/common_header.mako:116
-msgid "Read more about it..."
-msgstr "자세한 정보..."
+#: src/desktop/templates/common_header.mako:157
+msgid "About Hue"
+msgstr "Hue 정보"
 
-#: src/desktop/templates/common_header.mako:117
-msgid "Demo tutorials"
-msgstr "데모 자습서"
+#: src/desktop/templates/common_header.mako:165
+msgid "Profile"
+msgstr "프로필"
 
-#: src/desktop/templates/common_header.mako:297
-msgid "Manage HDFS"
-msgstr "HDFS 관리"
-
-#: src/desktop/templates/common_header.mako:297
-msgid "File Browser"
-msgstr "파일 브라우저"
-
-#: src/desktop/templates/common_header.mako:300
-msgid "Manage jobs"
-msgstr "Job 관리"
-
-#: src/desktop/templates/common_header.mako:300
-msgid "Job Browser"
-msgstr "Job Browser"
-
-#: src/desktop/templates/common_header.mako:303
-msgid "Administration"
-msgstr "관리"
-
-#: src/desktop/templates/common_header.mako:305
-msgid "Edit Profile"
-msgstr "프로필 편집"
-
-#: src/desktop/templates/common_header.mako:307
-msgid "Manage users"
-msgstr "사용자 관리"
-
-#: src/desktop/templates/common_header.mako:312
-msgid "Documentation"
-msgstr "문서"
-
-#: src/desktop/templates/common_header.mako:315
-msgid "Sign out"
+#: src/desktop/templates/common_header.mako:167
+msgid "Sign Out"
 msgstr "로그아웃"
 
 #: src/desktop/templates/common_header.mako:327
@@ -1131,8 +1096,8 @@ msgstr "기본값:"
 msgid "Error!"
 msgstr "오류!"
 
-#: src/desktop/templates/home.mako:21
-msgid "Welcome Home"
+#: src/desktop/templates/home.mako:37
+msgid "Welcome Home."
 msgstr "환영합니다."
 
 #: src/desktop/templates/home.mako:120
@@ -1428,11 +1393,7 @@ msgstr "데이터베이스가 없습니다!"
 msgid "Search in the logs"
 msgstr "로그에서 검색"
 
-#: src/desktop/templates/logs.mako:71
-msgid "Wrap logs"
-msgstr "로그 줄 바꿈"
-
-#: src/desktop/templates/logs.mako:72
+#: src/desktop/templates/logs.mako:65
 msgid "Download entire log as zip"
 msgstr "전체 로그를 zip 파일로 다운로드"
 

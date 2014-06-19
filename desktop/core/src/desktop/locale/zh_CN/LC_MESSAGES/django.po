@@ -39,53 +39,45 @@ msgstr "权限已更新！"
 msgid "load_apps has already been called."
 msgstr "已调用 load_apps。"
 
-#: src/desktop/conf.py:46
+#: src/desktop/conf.py:32
+msgid "If set to true, CherryPy will be used. Otherwise, Spawning will be used as the webserver."
+msgstr "如果设置为 true，将使用 CherryPy。否则，Spawning 将被用作 Web 服务器。"
+
+#: src/desktop/conf.py:38
 msgid "HTTP host to bind to."
 msgstr "要绑定的 HTTP 主机。"
 
-#: src/desktop/conf.py:52
+#: src/desktop/conf.py:44
 msgid "HTTP port to bind to."
 msgstr "要绑定的 HTTP 端口。"
 
-#: src/desktop/conf.py:58
-msgid "HTTP methods the server will be allowed to service."
-msgstr "将允许服务器提供服务的 HTTP 方法。"
-
-#: src/desktop/conf.py:65
+#: src/desktop/conf.py:50
 msgid "Filename of SSL Certificate"
 msgstr "SSL 证书的文件名"
 
-#: src/desktop/conf.py:70
+#: src/desktop/conf.py:55
 msgid "Filename of SSL RSA Private Key"
 msgstr "SSL RSA 私钥的文件名"
 
-#: src/desktop/conf.py:75
-msgid "List of allowed and disallowed ciphers"
-msgstr "允许和禁止的密码列表"
-
-#: src/desktop/conf.py:80
-msgid "LDAP password of the hue user used for LDAP authentications. For example for LDAP Authentication with HiveServer2."
-msgstr "Hue 用户用于 LDAP 身份验证的 LDAP 密码。例如，使用 HiveServer2 进行 LDAP 身份验证。"
-
-#: src/desktop/conf.py:86
+#: src/desktop/conf.py:60
 msgid "If set to false, runcpserver will not actually start the web server.  Used if Apache is being used as a WSGI container."
 msgstr "如果设置为 false，runcpserver 实际上将不启动 Web 服务器。如果 Apache 正用作 WSGI 容器，则使用它。"
 
-#: src/desktop/conf.py:92
+#: src/desktop/conf.py:66
 msgid "Number of threads used by the CherryPy web server."
 msgstr "CherryPy Web 服务器使用的线程数。"
 
-#: src/desktop/conf.py:98
+#: src/desktop/conf.py:72
 msgid "Used in hashing algorithms for sessions."
 msgstr "在会话的散列算法中使用。"
 
-#: src/desktop/conf.py:103
+#: src/desktop/conf.py:77
 msgid "Number of user access to remember per view per user."
 msgstr "要记住的每用户视图的用户访问数。"
 
-#: src/desktop/conf.py:109
+#: src/desktop/conf.py:83
 msgid "Help improve Hue with anonymous usage analytics.Use Google Analytics to see how many times an application or specific section of an application is used, nothing more."
-msgstr "使用匿名使用分析帮助改进 Hue。使用 Google Analytics 查看应用程序或应用程序特定部分的使用次数，就这么简单。"
+msgstr "借助匿名使用分析改善 Hue 的性能。使用 Google 分析查看某一应用或应用具体部分的使用次数，仅此而已。"
 
 #: src/desktop/conf.py:116
 msgid "Use poll(2) in Hue thrift pool."
@@ -142,8 +134,8 @@ msgstr "用于来自 Hue 的各种自动通知的默认电子邮件地址。"
 #: src/desktop/conf.py:227
 msgid "Configuration options for specifying the Desktop Database.\n"
 "          For more info, see http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine"
-msgstr "用于指定桌面数据库的配置选项。\n"
-"          有关详细信息，请参阅 http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine"
+msgstr "用于指定 Desktop 数据库的配置选项。\n"
+"有关详细信息，请参阅 http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine"
 
 #: src/desktop/conf.py:232
 msgid "Database engine, such as postgresql_psycopg2, mysql, or sqlite3."
@@ -471,7 +463,7 @@ msgstr "仅部分配置了 LDAP。必须提供 NT 域或用户名搜索模式。
 
 #: src/desktop/conf.py:752
 msgid "The LDAP username pattern should contain the special<username> replacement string for authentication."
-msgstr "LDAP 用户名模式应包含用于身份验证的特殊 <username> 替换字符串。"
+msgstr "LDAP 用户名模式应包含用于身份验证的特殊 <用户名> 替换字符串。"
 
 #: src/desktop/conf.py:768
 msgid "Secret key should be configured as a random string."
@@ -495,32 +487,32 @@ msgstr "Keytab 应具有 0600 权限（具有 %o）。"
 msgid "Permission denied (%(action)s/%(app)s)."
 msgstr "权限被拒绝 (%(action)s/%(app)s)。"
 
-#: src/desktop/middleware.py:142
+#: src/desktop/middleware.py:161
 #, python-format
 msgid "Cannot find HDFS called \"%(fs_ref)s\"."
 msgstr "找不到名为 \"%(fs_ref)s\" 的 HDFS。"
 
-#: src/desktop/middleware.py:250
+#: src/desktop/middleware.py:265
 #, python-format
 msgid "%(module)s isn't a middleware module."
 msgstr "%(module)s 不是中间件模块。"
 
-#: src/desktop/middleware.py:255
+#: src/desktop/middleware.py:270
 #, python-format
 msgid "Error importing middleware %(module)s: \"%(error)s\"."
 msgstr "导入中间件 %(module)s 时出错：\"%(error)s\"。"
 
-#: src/desktop/middleware.py:259
+#: src/desktop/middleware.py:274
 #, python-format
 msgid "Middleware module \"%(module)s\" does not define a \"%(class)s\" class."
 msgstr "中间件模块 \"%(module)s\" 未定义 \"%(class)s\" 类。"
 
-#: src/desktop/middleware.py:271
+#: src/desktop/middleware.py:286
 #, python-format
 msgid "AppSpecificMiddleware module \"%(module)s\" has a process_request function which is impossible."
 msgstr "AppSpecificMiddleware 模块 \"%(module)s\" 具有无法实现的 process_request 函数。"
 
-#: src/desktop/middleware.py:331
+#: src/desktop/middleware.py:337
 #, python-format
 msgid "You do not have permission to access the %(app_name)s application."
 msgstr "您无权访问 %(app_name)s 应用程序。"
@@ -706,7 +698,7 @@ msgstr "未实施“错误”方法"
 #: src/desktop/lib/security_util.py:33
 #, python-format
 msgid "Can't replace %s pattern since host is null."
-msgstr "由于主机为空，无法替换 %s 模式。"
+msgstr "无法替换 %s 模式，因为主机无效。"
 
 #: src/desktop/management/commands/config_dump.py:39
 msgid "Dumping configuration..."
@@ -795,6 +787,7 @@ msgid "Web server for Hue."
 msgstr "Hue 的 Web 服务器。"
 
 #: src/desktop/management/commands/runpylint.py:28
+#, fuzzy
 msgid "\n"
 "  Runs pylint on desktop and app code.\n"
 "\n"
@@ -810,11 +803,12 @@ msgid "\n"
 "  "
 msgstr "\n"
 "  在桌面和应用程序代码上运行 pylint。\n"
-" \n"
-"  在没有自变量或者使用“all”的情况下，将在所有\n"
-"  已安装的应用程序上运行 pylint。否则，指定要运行的模块以及其他 pylint 参数。请注意，您需要在\n"
-"  pylint 自变量节的前面添加“--”，以便 Django 的 manage.py 对其进行传递。\n"
-" \n"
+"\n"
+"  在没有自变量或者使用“all”的情况下，将在所有已安装的应用程序上\n"
+"  运行 pylint。否则，指定要运行的模块以及其他 pylint 参数。\n"
+"  请注意，您需要在 pylint 自变量节的前面添加“--”，\n"
+"  以便 Django 的 manage.py 对其进行传递。\n"
+"\n"
 "  示例：\n"
 "    python core/manage.py runpylint all -- -f parseable\n"
 "    python core/manage.py runpylint filebrowser\n"
@@ -838,23 +832,28 @@ msgstr "未找到页面。"
 msgid "We're sorry, but the requested page could not be found:"
 msgstr "很抱歉，找不到请求的页面："
 
-#: src/desktop/templates/500.mako:29
+#: src/desktop/templates/500.mako:23 src/desktop/templates/error.mako:22
+msgid "Error"
+msgstr "错误"
+
+#: src/desktop/templates/500.mako:26
 msgid "Server Error (500)"
 msgstr "服务器错误 (500)"
 
-#: src/desktop/templates/500.mako:30
+#: src/desktop/templates/500.mako:27
 msgid "Sorry, there's been an error. An email was sent to your administrators. Thank you for your patience."
-msgstr "很抱歉，发生错误。已向您的管理员发送了一封电子邮件。感谢您的耐心等候。"
+msgstr "很抱歉，发生错误。已向您的管理员发送一封电子邮件。感谢您的耐心等候。"
 
-#: src/desktop/templates/500.mako:33
+#: src/desktop/templates/500.mako:30
 msgid "See the stacktrace"
-msgstr "请参见 StackTrace"
+msgstr "查看 stacktrace"
 
-#: src/desktop/templates/500.mako:33 src/desktop/templates/popup_error.mako:44
+#: src/desktop/templates/500.mako:30 src/desktop/templates/popup_error.mako:37
 msgid "More Info"
 msgstr "更多信息"
 
-#: src/desktop/templates/500.mako:36 src/desktop/templates/500.mako:62
+#: src/desktop/templates/500.mako:33 src/desktop/templates/500.mako:59
+#, fuzzy
 msgid "View server logs"
 msgstr "查看服务器日志"
 
@@ -921,15 +920,15 @@ msgstr "一切正常。已通过配置检查。"
 msgid "Back"
 msgstr "返回"
 
-#: src/desktop/templates/common_header.mako:94
+#: src/desktop/templates/common_header.mako:82
 msgid "Select this folder"
 msgstr "选择此文件夹"
 
-#: src/desktop/templates/common_header.mako:95
+#: src/desktop/templates/common_header.mako:83
 msgid "Create folder"
 msgstr "创建文件夹"
 
-#: src/desktop/templates/common_header.mako:96
+#: src/desktop/templates/common_header.mako:84
 msgid "Folder name"
 msgstr "文件夹名称"
 
@@ -938,76 +937,44 @@ msgstr "文件夹名称"
 msgid "Cancel"
 msgstr "取消"
 
-#: src/desktop/templates/common_header.mako:98
+#: src/desktop/templates/common_header.mako:86
 msgid "The file has not been found"
 msgstr "未找到文件"
 
-#: src/desktop/templates/common_header.mako:99
+#: src/desktop/templates/common_header.mako:87
 msgid "Upload a file"
 msgstr "上传文件"
 
-#: src/desktop/templates/common_header.mako:100
+#: src/desktop/templates/common_header.mako:88
 msgid "Failed"
 msgstr "失败"
 
-#: src/desktop/templates/common_header.mako:107
+#: src/desktop/templates/common_header.mako:95
 msgid "Go to column:"
 msgstr "转到列："
 
-#: src/desktop/templates/common_header.mako:108
+#: src/desktop/templates/common_header.mako:96
 msgid "column name..."
 msgstr "列名称..."
 
-#: src/desktop/templates/common_header.mako:114
+#: src/desktop/templates/common_header.mako:102
 msgid "Available tours"
 msgstr "可用导览"
 
-#: src/desktop/templates/common_header.mako:115
+#: src/desktop/templates/common_header.mako:103
 msgid "None for this page."
-msgstr "没有可用于此页面的导览。"
+msgstr "该页面无内容。"
 
-#: src/desktop/templates/common_header.mako:116
-msgid "Read more about it..."
-msgstr "阅读更多内容..."
+#: src/desktop/templates/common_header.mako:157
+msgid "About Hue"
+msgstr "关于 Hue"
 
-#: src/desktop/templates/common_header.mako:117
-msgid "Demo tutorials"
-msgstr "演示教程"
+#: src/desktop/templates/common_header.mako:165
+msgid "Profile"
+msgstr "配置文件"
 
-#: src/desktop/templates/common_header.mako:297
-msgid "Manage HDFS"
-msgstr "管理 HDFS"
-
-#: src/desktop/templates/common_header.mako:297
-msgid "File Browser"
-msgstr "File Browser"
-
-#: src/desktop/templates/common_header.mako:300
-msgid "Manage jobs"
-msgstr "管理作业"
-
-#: src/desktop/templates/common_header.mako:300
-msgid "Job Browser"
-msgstr "Job Browser"
-
-#: src/desktop/templates/common_header.mako:303
-msgid "Administration"
-msgstr "管理"
-
-#: src/desktop/templates/common_header.mako:305
-msgid "Edit Profile"
-msgstr "编辑配置文件"
-
-#: src/desktop/templates/common_header.mako:307
-msgid "Manage users"
-msgstr "管理用户"
-
-#: src/desktop/templates/common_header.mako:312
-msgid "Documentation"
-msgstr "文档"
-
-#: src/desktop/templates/common_header.mako:315
-msgid "Sign out"
+#: src/desktop/templates/common_header.mako:167
+msgid "Sign Out"
 msgstr "注销"
 
 #: src/desktop/templates/common_header.mako:327
@@ -1130,9 +1097,9 @@ msgstr "默认值："
 msgid "Error!"
 msgstr "错误！"
 
-#: src/desktop/templates/home.mako:21
-msgid "Welcome Home"
-msgstr "欢迎主页"
+#: src/desktop/templates/home.mako:37
+msgid "Welcome Home."
+msgstr "欢迎主页。"
 
 #: src/desktop/templates/home.mako:120
 msgid "Actions"
@@ -1405,7 +1372,7 @@ msgstr "登录以继续使用 Hue"
 
 #: src/desktop/templates/login.mako:196
 msgid "Since this is your first time logging in, pick any username and password. Be sure to remember these, as"
-msgstr "由于这是您的首次登录，因此请选择任意用户名和密码。务必牢记此用户名和密码，因为"
+msgstr "由于这是您的首次登录，请选择任意用户名和密码。请牢记此用户和密码，因为"
 
 #: src/desktop/templates/login.mako:197
 msgid "they will become your Hue superuser credentials."
@@ -1425,13 +1392,9 @@ msgstr "很抱歉，找不到数据库！"
 
 #: src/desktop/templates/logs.mako:68
 msgid "Search in the logs"
-msgstr "在日志中搜索"
+msgstr "搜索日志"
 
-#: src/desktop/templates/logs.mako:71
-msgid "Wrap logs"
-msgstr "打包日志"
-
-#: src/desktop/templates/logs.mako:72
+#: src/desktop/templates/logs.mako:65
 msgid "Download entire log as zip"
 msgstr "以 zip 格式下载整个日志"
 

@@ -39,53 +39,45 @@ msgstr "Berechtigungen aktualisiert!"
 msgid "load_apps has already been called."
 msgstr "load_apps wurde bereits aufgerufen."
 
-#: src/desktop/conf.py:46
+#: src/desktop/conf.py:32
+msgid "If set to true, CherryPy will be used. Otherwise, Spawning will be used as the webserver."
+msgstr "Wenn als wahr gesetzt, wird CherryPy verwendet. Andernfalls wird Spawning als Webserver verwendet."
+
+#: src/desktop/conf.py:38
 msgid "HTTP host to bind to."
 msgstr "Zu verbindender HTTP-Host."
 
-#: src/desktop/conf.py:52
+#: src/desktop/conf.py:44
 msgid "HTTP port to bind to."
 msgstr "Zu verbindender HTTP-Port."
 
-#: src/desktop/conf.py:58
-msgid "HTTP methods the server will be allowed to service."
-msgstr "HTTP-Methoden, die der Server einsetzen kann."
-
-#: src/desktop/conf.py:65
+#: src/desktop/conf.py:50
 msgid "Filename of SSL Certificate"
 msgstr "Dateiname von SSL-Zertifikat"
 
-#: src/desktop/conf.py:70
+#: src/desktop/conf.py:55
 msgid "Filename of SSL RSA Private Key"
 msgstr "Dateiname von SSL-RSA-Privater-Schlüssel"
 
-#: src/desktop/conf.py:75
-msgid "List of allowed and disallowed ciphers"
-msgstr "Liste der zugelassenen und nicht zugelassenen Zeichen"
-
-#: src/desktop/conf.py:80
-msgid "LDAP password of the hue user used for LDAP authentications. For example for LDAP Authentication with HiveServer2."
-msgstr "LDAP-Kennwort des für LDAP-Authentifizierungen verwendeten Hue-Benutzers. Beispielsweise für die LDAP-Authentifizierung mit HiveServer2."
-
-#: src/desktop/conf.py:86
+#: src/desktop/conf.py:60
 msgid "If set to false, runcpserver will not actually start the web server.  Used if Apache is being used as a WSGI container."
 msgstr "Wenn als falsch gesetzt, startet runcpserver den Webserver tatsächlich nicht. Wird verwendet, wenn Apache als ein WSGI-Container verwendet wird."
 
-#: src/desktop/conf.py:92
+#: src/desktop/conf.py:66
 msgid "Number of threads used by the CherryPy web server."
 msgstr "Anzahl der von CherryPy Webserver verwendeten Threads."
 
-#: src/desktop/conf.py:98
+#: src/desktop/conf.py:72
 msgid "Used in hashing algorithms for sessions."
 msgstr "In Hashing-Algorithmen für Sessions verwendet."
 
-#: src/desktop/conf.py:103
+#: src/desktop/conf.py:77
 msgid "Number of user access to remember per view per user."
 msgstr "Anzahl der zu erfassenden Benutzerzugriffe pro Anzeige pro Benutzer."
 
-#: src/desktop/conf.py:109
+#: src/desktop/conf.py:83
 msgid "Help improve Hue with anonymous usage analytics.Use Google Analytics to see how many times an application or specific section of an application is used, nothing more."
-msgstr "Helfen Sie dabei, Hue durch anonyme Nutzungsanalysen zu verbessern. Mit Google Analytics zeigen Sie ausschließlich an, wie oft eine Anwendung oder ein bestimmter Abschnitt einer Anwendung verwendet wird."
+msgstr "Tragen Sie mithilfe anonymer Nutzungsanalysen zur Verbesserung von Hue bei. Nutzen Sie Google Analytics, um zu erfassen, wie häufig eine Anwendung oder ein bestimmter Bereich einer Anwendung genutzt wird."
 
 #: src/desktop/conf.py:116
 msgid "Use poll(2) in Hue thrift pool."
@@ -143,7 +135,7 @@ msgstr "Für verschiedene automatisierte Benachrichtigungen von Hue zu verwenden
 msgid "Configuration options for specifying the Desktop Database.\n"
 "          For more info, see http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine"
 msgstr "Konfigurationsoptionen für die Angabe der Desktop-Datenbank.\n"
-"           Für weitere Infos siehe http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine"
+"          Für weitere Infos siehe http://docs.djangoproject.com/en/1.1/ref/settings/#database-engine"
 
 #: src/desktop/conf.py:232
 msgid "Database engine, such as postgresql_psycopg2, mysql, or sqlite3."
@@ -199,7 +191,7 @@ msgstr "Verwenden Sie Cookies mit Sitzungslänge. Der Benutzer wird abgemeldet, 
 msgid "Configuration options for specifying Hue's Kerberos integration for\n"
 "          secured Hadoop clusters."
 msgstr "Konfigurationsoptionen für Spezifizierung der Kerberos-Integration von Hue\n"
-"           für gesicherte Hadoop-Cluster."
+"          für gesicherte Hadoop-Cluster."
 
 #: src/desktop/conf.py:315
 msgid "Path to a Kerberos keytab file containing Hue's service credentials."
@@ -259,7 +251,7 @@ msgstr "Klasse, die besondere Zugriffsmethoden für Benutzerobjekte definiert."
 
 #: src/desktop/conf.py:397
 msgid "The service to use when querying PAM. The service usually corresponds to a single filename in /etc/pam.d"
-msgstr "Der Dienst, der bei der Abfrage von PAN verwendet werden soll. Der Dienst entspricht in der Regel einem einzelnen Dateinamen unter /etc/pam.d."
+msgstr "Der Dienst, der bei der Abfrage von PAN verwendet werden soll. Der Dienst entspricht in der Regel einem einzelnen Dateinamen unter /etc/pam.d"
 
 #: src/desktop/conf.py:401
 msgid "When using the desktop.auth.backend.RemoteUserDjangoBackend, this sets the normalized name of the header that contains the remote user. The HTTP header in the request is converted to a key by converting all characters to uppercase, replacing any hyphens with underscores and adding an HTTP_ prefix to the name. So, for example, if the header is called Remote-User that would be configured as HTTP_REMOTE_USER"
@@ -495,32 +487,32 @@ msgstr "Keytab sollte 0600 Berechtigungen haben (hat %o)."
 msgid "Permission denied (%(action)s/%(app)s)."
 msgstr "Berechtigung verweigert (%(action)s/%(app)s)."
 
-#: src/desktop/middleware.py:142
+#: src/desktop/middleware.py:161
 #, python-format
 msgid "Cannot find HDFS called \"%(fs_ref)s\"."
 msgstr "HDFS mit Namen \"%(fs_ref)s\" kann nicht gefunden werden."
 
-#: src/desktop/middleware.py:250
+#: src/desktop/middleware.py:265
 #, python-format
 msgid "%(module)s isn't a middleware module."
 msgstr "%(module)s ist kein Middleware-Modul."
 
-#: src/desktop/middleware.py:255
+#: src/desktop/middleware.py:270
 #, python-format
 msgid "Error importing middleware %(module)s: \"%(error)s\"."
 msgstr "Fehler beim Importieren von Middleware %(module)s: \"%(error)s\"."
 
-#: src/desktop/middleware.py:259
+#: src/desktop/middleware.py:274
 #, python-format
 msgid "Middleware module \"%(module)s\" does not define a \"%(class)s\" class."
 msgstr "Middleware-Modul \"%(module)s\" definiert keine \"%(class)s\"-Klasse."
 
-#: src/desktop/middleware.py:271
+#: src/desktop/middleware.py:286
 #, python-format
 msgid "AppSpecificMiddleware module \"%(module)s\" has a process_request function which is impossible."
 msgstr "AppSpecificMiddleware-Modul \"%(module)s\" hat eine process_request-Funktion, die unmöglich ist."
 
-#: src/desktop/middleware.py:331
+#: src/desktop/middleware.py:337
 #, python-format
 msgid "You do not have permission to access the %(app_name)s application."
 msgstr "Sie haben keine Berechtigung für den Zugriff auf die Anwendung %(app_name)s."
@@ -713,7 +705,7 @@ msgstr "\"error\"-Methode ist nicht implementiert"
 #: src/desktop/lib/security_util.py:33
 #, python-format
 msgid "Can't replace %s pattern since host is null."
-msgstr "%s-Muster kann nicht ersetzt werden, weil der Host null ist."
+msgstr "Muster %s kann nicht ersetzt werden, da der Host null ist."
 
 #: src/desktop/management/commands/config_dump.py:39
 msgid "Dumping configuration..."
@@ -775,14 +767,6 @@ msgstr "Der Vorlagenpfad %(path)r ist nicht vorhanden."
 msgid "%(name)r is not a valid application name. Use only numbers, letters and underscores."
 msgstr "%(name)r ist kein gültiger Anwendungsname. Verwenden Sie nur Ziffern, Buchstaben und Unterstriche."
 
-#: src/desktop/management/commands/create_proxy_app.py:31
-msgid "Creates a Hue proxy application directory structure."
-msgstr "Erzeugt eine Hue-Proxy-Anwendungsverzeichnisstruktur."
-
-#: src/desktop/management/commands/create_proxy_app.py:37
-msgid "Expected arguments: app_name app_web_url [app_dir]"
-msgstr "Erwartete Argumente: app_name [app_dir] app_web_url [app_dir]"
-
 #: src/desktop/management/commands/create_test_fs.py:31
 #, python-format
 msgid "Created fs in: %(dir)s"
@@ -802,6 +786,7 @@ msgid "Web server for Hue."
 msgstr "Webserver für Hue."
 
 #: src/desktop/management/commands/runpylint.py:28
+#, fuzzy
 msgid "\n"
 "  Runs pylint on desktop and app code.\n"
 "\n"
@@ -817,22 +802,26 @@ msgid "\n"
 "  "
 msgstr "\n"
 "  Führt pylint auf Desktop- und Anwendungscode aus.\n"
-" \n"
-"   Ohne Argumente oder mit \"all\" führt dies pylint auf allen\n"
-"   installierten Anwendungen aus. Geben Sie andernfalls auszuführende\n"
-"   Module sowie andere Parameter für pylint an. Denken Sie daran, dem\n"
-"   Abschnitt der pylint-Argumente ein \"--\" voranzustellen, damit Djangos manage.py sie weitergibt.\n"
-" \n"
-"   Beispiele:\n"
-"     python core/manage.py runpylint all -- -f parseable\n"
-"     python core/manage.py runpylint filebrowser\n"
-"     python core/manage.py runpylint\n"
+"\n"
+"  Ohne Argumente oder mit \"all\" führt dies pylint auf allen\n"
+"  installierten Anwendungen aus. Geben Sie andernfalls auszuführende Module sowie \n"
+"  andere Parameter für pylint an. Denken Sie daran, dem Abschnitt der\n"
+"  pylint-Argumente ein \"--\" voranzustellen, damit Djangos manage.py sie weitergibt.\n"
+"\n"
+"  Beispiele:\n"
+"    python core/manage.py runpylint all -- -f parseable\n"
+"    python core/manage.py runpylint filebrowser\n"
+"    python core/manage.py runpylint\n"
 "  "
 
 #: src/desktop/management/commands/runpylint.py:61
 #, python-format
 msgid "Cannot find pylint at '%(path)s'. Please install pylint first."
-msgstr "Kann pylint unter \"%(path)s\" nicht finden. Bitte installieren Sie zunächst pylint."
+msgstr "Kann pylint unter '%(path)s' nicht finden. Bitte installieren Sie zunächst pylint."
+
+#: src/desktop/management/commands/runspawningserver.py:70
+msgid "Spawning Server for Hue."
+msgstr "Spawning-Server für Hue."
 
 #: src/desktop/templates/404.mako:20
 msgid "Not Found"
@@ -846,25 +835,30 @@ msgstr "Seite nicht gefunden."
 msgid "We're sorry, but the requested page could not be found:"
 msgstr "Es ist leider ein Fehler aufgetreten. Die angeforderte Seite wurde nicht gefunden:"
 
-#: src/desktop/templates/500.mako:29
+#: src/desktop/templates/500.mako:23 src/desktop/templates/error.mako:22
+msgid "Error"
+msgstr "Fehler"
+
+#: src/desktop/templates/500.mako:26
 msgid "Server Error (500)"
 msgstr "Serverfehler (500)"
 
-#: src/desktop/templates/500.mako:30
+#: src/desktop/templates/500.mako:27
 msgid "Sorry, there's been an error. An email was sent to your administrators. Thank you for your patience."
 msgstr "Es ist leider ein Fehler aufgetreten. An Ihre Administratoren wurde eine E-Mail gesendet. Danke für Ihre Geduld."
 
-#: src/desktop/templates/500.mako:33
+#: src/desktop/templates/500.mako:30
 msgid "See the stacktrace"
-msgstr "Siehe Stacktrace"
+msgstr "Stacktrace anzeigen"
 
-#: src/desktop/templates/500.mako:33 src/desktop/templates/popup_error.mako:44
+#: src/desktop/templates/500.mako:30 src/desktop/templates/popup_error.mako:37
 msgid "More Info"
 msgstr "Weitere Informationen"
 
-#: src/desktop/templates/500.mako:36 src/desktop/templates/500.mako:62
+#: src/desktop/templates/500.mako:33 src/desktop/templates/500.mako:59
+#, fuzzy
 msgid "View server logs"
-msgstr "Serverprotokolle anzeigen"
+msgstr "Server-Protokolle anzeigen"
 
 #: src/desktop/templates/500.mako:36 src/desktop/templates/500.mako:62
 #: src/desktop/templates/popup_error.mako:47
@@ -929,15 +923,15 @@ msgstr "Alles OK. Konfigurationsprüfung bestanden."
 msgid "Back"
 msgstr "Zurück"
 
-#: src/desktop/templates/common_header.mako:94
+#: src/desktop/templates/common_header.mako:82
 msgid "Select this folder"
 msgstr "Diesen Ordner auswählen"
 
-#: src/desktop/templates/common_header.mako:95
+#: src/desktop/templates/common_header.mako:83
 msgid "Create folder"
 msgstr "Ordner erstellen"
 
-#: src/desktop/templates/common_header.mako:96
+#: src/desktop/templates/common_header.mako:84
 msgid "Folder name"
 msgstr "Ordnername"
 
@@ -946,76 +940,44 @@ msgstr "Ordnername"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: src/desktop/templates/common_header.mako:98
+#: src/desktop/templates/common_header.mako:86
 msgid "The file has not been found"
 msgstr "Die Datei wurde nicht gefunden."
 
-#: src/desktop/templates/common_header.mako:99
+#: src/desktop/templates/common_header.mako:87
 msgid "Upload a file"
 msgstr "Eine Datei hochladen"
 
-#: src/desktop/templates/common_header.mako:100
+#: src/desktop/templates/common_header.mako:88
 msgid "Failed"
 msgstr "Fehlgeschlagen"
 
-#: src/desktop/templates/common_header.mako:107
+#: src/desktop/templates/common_header.mako:95
 msgid "Go to column:"
 msgstr "Gehe zu Spalte:"
 
-#: src/desktop/templates/common_header.mako:108
+#: src/desktop/templates/common_header.mako:96
 msgid "column name..."
 msgstr "Spaltenname..."
 
-#: src/desktop/templates/common_header.mako:114
+#: src/desktop/templates/common_header.mako:102
 msgid "Available tours"
-msgstr "Verfügbare Touren"
+msgstr "Vorhandene Touren"
 
-#: src/desktop/templates/common_header.mako:115
+#: src/desktop/templates/common_header.mako:103
 msgid "None for this page."
 msgstr "Keine für diese Seite."
 
-#: src/desktop/templates/common_header.mako:116
-msgid "Read more about it..."
-msgstr "Weitere Informationen..."
+#: src/desktop/templates/common_header.mako:157
+msgid "About Hue"
+msgstr "Über Hue"
 
-#: src/desktop/templates/common_header.mako:117
-msgid "Demo tutorials"
-msgstr "Demo-Tutorials"
+#: src/desktop/templates/common_header.mako:165
+msgid "Profile"
+msgstr "Profil"
 
-#: src/desktop/templates/common_header.mako:297
-msgid "Manage HDFS"
-msgstr "HDFS verwalten"
-
-#: src/desktop/templates/common_header.mako:297
-msgid "File Browser"
-msgstr "Datei-Browser"
-
-#: src/desktop/templates/common_header.mako:300
-msgid "Manage jobs"
-msgstr "Jobs verwalten"
-
-#: src/desktop/templates/common_header.mako:300
-msgid "Job Browser"
-msgstr "Job-Browser"
-
-#: src/desktop/templates/common_header.mako:303
-msgid "Administration"
-msgstr "Administration"
-
-#: src/desktop/templates/common_header.mako:305
-msgid "Edit Profile"
-msgstr "Datei bearbeiten"
-
-#: src/desktop/templates/common_header.mako:307
-msgid "Manage users"
-msgstr "Benutzer verwalten"
-
-#: src/desktop/templates/common_header.mako:312
-msgid "Documentation"
-msgstr "Dokumentation"
-
-#: src/desktop/templates/common_header.mako:315
-msgid "Sign out"
+#: src/desktop/templates/common_header.mako:167
+msgid "Sign Out"
 msgstr "Abmelden"
 
 #: src/desktop/templates/common_header.mako:327
@@ -1138,8 +1100,8 @@ msgstr "Standard:"
 msgid "Error!"
 msgstr "Fehler!"
 
-#: src/desktop/templates/home.mako:21
-msgid "Welcome Home"
+#: src/desktop/templates/home.mako:37
+msgid "Welcome Home."
 msgstr "Herzlich Willkommen"
 
 #: src/desktop/templates/home.mako:120
@@ -1435,11 +1397,7 @@ msgstr "Keine Datenbank gefunden!"
 msgid "Search in the logs"
 msgstr "In den Protokollen suchen"
 
-#: src/desktop/templates/logs.mako:71
-msgid "Wrap logs"
-msgstr "Wrap-Protokolle"
-
-#: src/desktop/templates/logs.mako:72
+#: src/desktop/templates/logs.mako:65
 msgid "Download entire log as zip"
 msgstr "Gesamtes Protokoll als zip herunterladen"
 
