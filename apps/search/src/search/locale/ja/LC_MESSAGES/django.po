@@ -26,15 +26,11 @@ msgstr "Solr へのアクセス中のエラー"
 
 #: src/search/conf.py:25
 msgid "URL of the Solr Server."
-msgstr "Solr サーバーの URL です。"
+msgstr "Solr サーバーの URL。"
 
 #: src/search/conf.py:30
 msgid "Query sent when no term is entered."
-msgstr "用語が入力されずにクエリが送信されました。"
-
-#: src/search/conf.py:35
-msgid "Whether Solr requires client to perform Kerberos authentication."
-msgstr "Solr が Kerberos 認証の実行をクライアントに要求するかどうかの指定です。"
+msgstr "用語が入力されないときはクエリが送信されます。"
 
 #: src/search/decorators.py:35 src/search/decorators.py:49
 msgid "Permission denied. You are not an Administrator."
@@ -42,7 +38,7 @@ msgstr "パーミッションが拒否されました。管理者ではありま
 
 #: src/search/models.py:233
 msgid "Solr index name pointing to"
-msgstr "Solr インデックス名が指している先"
+msgstr "次を指す Solr インデックス名"
 
 #: src/search/models.py:234
 msgid "Friendlier name in UI"
@@ -50,11 +46,11 @@ msgstr "UI のわかりやすい名前"
 
 #: src/search/models.py:236
 msgid "Collection with cores data"
-msgstr "コアデータを含むコレクション"
+msgstr "コアデータによるコレクション"
 
 #: src/search/models.py:236
 msgid "Solr json"
-msgstr "Solr JSON"
+msgstr "Solr json"
 
 #: src/search/models.py:238 src/search/templates/layout.mako:81
 #: src/search/templates/search.mako:545
@@ -63,7 +59,7 @@ msgstr "プロパティ"
 
 #: src/search/models.py:239
 msgid "Hue properties (e.g. results by pages number)"
-msgstr "Hue プロパティ（例：ページ番号による結果）"
+msgstr "Hue のプロパティ（例：ページ番号による結果）"
 
 #: src/search/models.py:516
 msgid "The Solr schema requires an id field for performing the result highlighting"
@@ -75,7 +71,7 @@ msgstr " （コピー）"
 
 #: src/search/views.py:142 src/search/views.py:174
 msgid "There is no collection to search."
-msgstr "検索するコレクションがありません。"
+msgstr "検索するコレクションはありません。"
 
 #: src/search/views.py:172
 msgid "Page saved !"
@@ -160,11 +156,11 @@ msgstr "はい"
 
 #: src/search/templates/admin_collections.mako:179
 msgid "Collection deleted successfully."
-msgstr "コレクションは正常に削除されました。"
+msgstr "コレクションが正常に削除されました。"
 
 #: src/search/templates/admin_collections.mako:183
 msgid "Collection copied successfully."
-msgstr "コレクションは正常にコピーされました。"
+msgstr "コレクションが正常にコピーされました。"
 
 #: src/search/templates/layout.mako:32
 msgid "Search page"
@@ -172,11 +168,11 @@ msgstr "検索ページ"
 
 #: src/search/templates/layout.mako:33
 msgid "Collection manager"
-msgstr "Collection Manager"
+msgstr "コレクションマネージャ"
 
 #: src/search/templates/layout.mako:40
 msgid "Search Admin"
-msgstr "Search Admin"
+msgstr "管理者の検索"
 
 #: src/search/templates/layout.mako:79
 msgid "Collection"
@@ -192,7 +188,7 @@ msgstr "テンプレート"
 
 #: src/search/templates/layout.mako:89
 msgid "1. Snippet"
-msgstr "1. スニペット"
+msgstr "1. Snippet"
 
 #: src/search/templates/layout.mako:92
 msgid "2. Facets"
@@ -209,11 +205,11 @@ msgstr "4. 反転表示"
 #: src/search/templates/macros.mako:197
 #, python-format
 msgid "Retweeted %s times"
-msgstr "リツイート数 %s"
+msgstr "%s 回リツイート済み"
 
 #: src/search/templates/macros.mako:207
 msgid "Reply"
-msgstr "リプライ"
+msgstr "返信"
 
 #: src/search/templates/macros.mako:213
 msgid "Retweet"
@@ -221,7 +217,7 @@ msgstr "リツイート"
 
 #: src/search/templates/no_collections.mako:46
 msgid "It seems there is nothing to search on ..."
-msgstr "検索対象はないようです ..."
+msgstr "検索対象がありません..."
 
 #: src/search/templates/no_collections.mako:49
 msgid "... First create a search dashboard with "

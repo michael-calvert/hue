@@ -56,7 +56,7 @@ msgstr "Vous devez indiquer un mot de passe lors de la création d'un utilisateu
 
 #: src/useradmin/forms.py:123
 msgid "Required. 30 characters or fewer with username. 64 characters or fewer with DN. No whitespaces or colons."
-msgstr "Requis. 30 caractères maximum pour le nom d'utilisateur. 64 caractères maximum pour le nom distinctif. Espaces ou deux-points non autorisés."
+msgstr "Requis. Le nom d'utilisateur ne doit comporter que 30 caractères maximum. Le nom distinctif ne doit comporter que 64 caractères maximum. Espaces ou deux points non autorisés."
 
 #: src/useradmin/forms.py:125 src/useradmin/forms.py:168
 msgid "Distinguished name"
@@ -75,12 +75,12 @@ msgstr "Créez un répertoire racine pour l'utilisateur s'il n'en existe pas enc
 #: src/useradmin/forms.py:147
 #, python-format
 msgid "Too long: 64 characters or fewer and not %s."
-msgstr "Trop long : 64 caractères maximum (et non %s)."
+msgstr "Trop long : 64 caractères maximum ; %s non autorisés."
 
 #: src/useradmin/forms.py:153
 #, python-format
 msgid "Too long: 30 characters or fewer and not %s."
-msgstr "Trop long : 30 caractères maximum (et non %s)."
+msgstr "Trop long : 30 caractères maximum ; %s non autorisés."
 
 #: src/useradmin/forms.py:163
 msgid "Name"
@@ -124,8 +124,8 @@ msgstr "Importez des utilisateurs non importés ou nouveaux depuis tous les sous
 
 #: src/useradmin/forms.py:198
 #, python-format
-msgid "Too long: 80 characters or fewer and not %s"
-msgstr "Trop long : 80 caractères maximum (et non %s)."
+msgid "Too long: 30 characters or fewer and not %s"
+msgstr "Trop long : 30 caractères maximum ; %s non autorisés."
 
 #: src/useradmin/forms.py:220
 msgid "Group name may only contain letters, numbers, hyphens or underscores."
@@ -151,7 +151,7 @@ msgstr "Créer des répertoires racines"
 msgid "Create home directory for every user, if one doesn't already exist."
 msgstr "Créez un répertoire racine pour chaque utilisateur s'il n'en existe pas encore."
 
-#: src/useradmin/models.py:128
+#: src/useradmin/models.py:126
 #, python-format
 msgid "You do not have permissions to %(description)s."
 msgstr "Vous n'êtes pas autorisé à %(description)s."
@@ -281,7 +281,7 @@ msgstr "Utilisateur %s synchronisé depuis Unix"
 #: src/useradmin/views.py:530
 #, python-format
 msgid "There was a naming conflict while importing user %(username)s"
-msgstr "Un conflit de dénomination est survenu lors de l'importation de l'utilisateur %(username)s"
+msgstr "Un conflit d'attribution de nom s'est produit lors de l'importation de l'utilisateur %(username)s"
 
 #: src/useradmin/views.py:672 src/useradmin/views.py:721
 #, python-format
@@ -398,7 +398,7 @@ msgstr "Confirmer"
 
 #: src/useradmin/templates/confirm.mako:25
 #: src/useradmin/templates/delete_group.mako:26
-#: src/useradmin/templates/list_users.mako:128
+#: src/useradmin/templates/list_users.mako:107
 msgid "Yes"
 msgstr "Oui"
 
@@ -411,7 +411,7 @@ msgid "?"
 msgstr "?"
 
 #: src/useradmin/templates/delete_group.mako:25
-#: src/useradmin/templates/list_users.mako:127
+#: src/useradmin/templates/list_users.mako:106
 msgid "No"
 msgstr "Non"
 
@@ -491,13 +491,13 @@ msgstr "Etape 1: Informations de connexion (obligatoire)"
 msgid "Step 2: Names and Groups"
 msgstr "Etape 2 : Noms et groupes"
 
-#: src/useradmin/templates/edit_user.mako:39
+#: src/useradmin/templates/edit_user.mako:41
 msgid "Step 2: Names"
 msgstr "Etape 2 : Noms"
 
-#: src/useradmin/templates/edit_user.mako:42
+#: src/useradmin/templates/edit_user.mako:43
 msgid "Step 3: Advanced"
-msgstr "Etape 3: Avancé"
+msgstr "Etape 3 : Avancé"
 
 #: src/useradmin/templates/edit_user.mako:74
 msgid "Back"
@@ -507,8 +507,8 @@ msgstr "Précédent"
 msgid "Next"
 msgstr "Suivant"
 
-#: src/useradmin/templates/edit_user.mako:80
-#: src/useradmin/templates/list_users.mako:45
+#: src/useradmin/templates/edit_user.mako:83
+#: src/useradmin/templates/list_users.mako:42
 msgid "Add user"
 msgstr "Ajouter un utilisateur"
 
@@ -524,119 +524,117 @@ msgstr "Administrateur"
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: src/useradmin/templates/layout.mako:64
-#: src/useradmin/templates/list_permissions.mako:44
-#: src/useradmin/templates/list_users.mako:75
+#: src/useradmin/templates/layout.mako:52
+#: src/useradmin/templates/list_permissions.mako:42
+#: src/useradmin/templates/list_users.mako:59
 msgid "Groups"
 msgstr "Groupes"
 
-#: src/useradmin/templates/layout.mako:65
-#: src/useradmin/templates/list_groups.mako:69
+#: src/useradmin/templates/layout.mako:53
+#: src/useradmin/templates/list_groups.mako:56
 msgid "Permissions"
 msgstr "Autorisations"
 
-#: src/useradmin/templates/list_groups.mako:35
+#: src/useradmin/templates/list_groups.mako:33
 msgid "Search for name, members, etc..."
-msgstr "Rechercher un nom, des membres, etc."
+msgstr "Rechercher un nom, un membre, etc."
 
-#: src/useradmin/templates/list_groups.mako:39
-#: src/useradmin/templates/list_groups.mako:40
-#: src/useradmin/templates/list_users.mako:39
-#: src/useradmin/templates/list_users.mako:40
+#: src/useradmin/templates/list_groups.mako:37
+#: src/useradmin/templates/list_users.mako:37
 msgid "Delete"
 msgstr "Supprimer"
 
-#: src/useradmin/templates/list_groups.mako:49
+#: src/useradmin/templates/list_groups.mako:43
 msgid "Add/Sync LDAP group"
 msgstr "Ajouter/Synchroniser un groupe LDAP"
 
-#: src/useradmin/templates/list_groups.mako:67
+#: src/useradmin/templates/list_groups.mako:54
 msgid "Group Name"
 msgstr "Nom de groupe"
 
-#: src/useradmin/templates/list_groups.mako:68
+#: src/useradmin/templates/list_groups.mako:55
 msgid "Members"
 msgstr "Membres"
 
-#: src/useradmin/templates/list_groups.mako:85
+#: src/useradmin/templates/list_groups.mako:69
 #, python-format
 msgid "Edit %(groupname)s"
 msgstr "Modifier %(groupname)s"
 
-#: src/useradmin/templates/list_groups.mako:101
+#: src/useradmin/templates/list_groups.mako:83
 msgid "There are no groups matching the search criteria."
 msgstr "Aucun groupe ne correspond aux critères de recherche."
 
-#: src/useradmin/templates/list_groups.mako:129
-#: src/useradmin/templates/list_permissions.mako:91
-#: src/useradmin/templates/list_users.mako:167
+#: src/useradmin/templates/list_groups.mako:111
+#: src/useradmin/templates/list_permissions.mako:85
+#: src/useradmin/templates/list_users.mako:145
 msgid "No data available"
 msgstr "Aucune donnée disponible"
 
-#: src/useradmin/templates/list_groups.mako:130
-#: src/useradmin/templates/list_permissions.mako:92
-#: src/useradmin/templates/list_users.mako:168
+#: src/useradmin/templates/list_groups.mako:112
+#: src/useradmin/templates/list_permissions.mako:86
+#: src/useradmin/templates/list_users.mako:146
 msgid "No matching records"
 msgstr "Aucun enregistrement correspondant"
 
-#: src/useradmin/templates/list_permissions.mako:35
+#: src/useradmin/templates/list_permissions.mako:33
 msgid "Search for application, group, etc..."
-msgstr "Rechercher une application, un groupe, etc."
+msgstr "Rechercher une application, un groupe, etc..."
 
-#: src/useradmin/templates/list_permissions.mako:42
+#: src/useradmin/templates/list_permissions.mako:40
 msgid "Application"
 msgstr "Application"
 
-#: src/useradmin/templates/list_permissions.mako:43
+#: src/useradmin/templates/list_permissions.mako:41
 msgid "Permission"
 msgstr "Autorisation"
 
-#: src/useradmin/templates/list_permissions.mako:53
+#: src/useradmin/templates/list_permissions.mako:50
 msgid "Edit permission"
 msgstr "Modifier une autorisation"
 
-#: src/useradmin/templates/list_permissions.mako:69
+#: src/useradmin/templates/list_permissions.mako:64
 msgid "There are no permissions matching the search criteria."
 msgstr "Aucune autorisation ne correspond aux critères de recherche."
 
-#: src/useradmin/templates/list_users.mako:35
+#: src/useradmin/templates/list_users.mako:33
 msgid "Search for name, group, etc..."
 msgstr "Rechercher un nom, un groupe, etc."
 
-#: src/useradmin/templates/list_users.mako:49
+#: src/useradmin/templates/list_users.mako:43
 msgid "Add/Sync LDAP user"
 msgstr "Ajouter/Synchroniser un utilisateur LDAP"
 
-#: src/useradmin/templates/list_users.mako:52
+#: src/useradmin/templates/list_users.mako:44
 msgid "Sync LDAP users/groups"
 msgstr "Synchroniser des utilisateurs/groupes LDAP"
 
-#: src/useradmin/templates/list_users.mako:72
+#: src/useradmin/templates/list_users.mako:56
 msgid "First Name"
 msgstr "Prénom"
 
-#: src/useradmin/templates/list_users.mako:73
+#: src/useradmin/templates/list_users.mako:57
 msgid "Last Name"
 msgstr "Nom"
 
-#: src/useradmin/templates/list_users.mako:74
+#: src/useradmin/templates/list_users.mako:58
 msgid "E-mail"
 msgstr "Courriel"
 
-#: src/useradmin/templates/list_users.mako:76
+#: src/useradmin/templates/list_users.mako:60
 msgid "Last Login"
 msgstr "Dernière connexion"
 
-#: src/useradmin/templates/list_users.mako:90
+#: src/useradmin/templates/list_users.mako:73
 #, python-format
 msgid "Edit %(username)s"
 msgstr "Modifier %(username)s"
 
-#: src/useradmin/templates/list_users.mako:109
+#: src/useradmin/templates/list_users.mako:90
 msgid "There are no users matching the search criteria."
 msgstr "Aucun utilisateur ne correspond aux critères de recherche."
 
-#: src/useradmin/templates/list_users.mako:124
+#: src/useradmin/templates/list_users.mako:103
 msgid "Are you sure you want to delete the selected user(s)?"
 msgstr "Voulez-vous vraiment supprimer le(s) utilisateur(s) sélectionné(s) ?"
 

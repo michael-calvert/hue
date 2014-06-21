@@ -324,7 +324,7 @@ class Collection(models.Model):
     return reverse('search:index') + '?collection=%s' % self.id
 
   def fields(self, user):
-    return sorted([str(field.get('name', '')) for field in self.fields_data(user)])
+    return sorted([field.get('name') for field in self.fields_data(user)])
 
   def fields_data(self, user):
     schema_fields = SolrApi(SOLR_URL.get(), user).fields(self.name)

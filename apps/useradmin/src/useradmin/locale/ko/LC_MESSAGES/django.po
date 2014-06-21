@@ -56,7 +56,7 @@ msgstr "새 사용자를 생성할 때 암호를 지정해야 합니다."
 
 #: src/useradmin/forms.py:123
 msgid "Required. 30 characters or fewer with username. 64 characters or fewer with DN. No whitespaces or colons."
-msgstr "필수 입력 항목입니다. 사용자 이름에는 30자 이하로 입력하십시오. 공백이나 콜론은 허용되지 않습니다."
+msgstr "필수 입력 항목입니다. 사용자 이름은 30자 이하, DN은 64자 이하여야 합니다. 공백이나 콜론은 허용되지 않습니다."
 
 #: src/useradmin/forms.py:125 src/useradmin/forms.py:168
 msgid "Distinguished name"
@@ -124,8 +124,8 @@ msgstr "모든 하위 그룹에서 새 사용자 또는 가져오지 않은 사�
 
 #: src/useradmin/forms.py:198
 #, python-format
-msgid "Too long: 80 characters or fewer and not %s"
-msgstr "너무 깁니다. 80자 이하여야 하며, %s은(는) 사용할 수 없습니다."
+msgid "Too long: 30 characters or fewer and not %s"
+msgstr "너무 깁니다. 30자 이하여야 하며, %s는 허용되지 않습니다."
 
 #: src/useradmin/forms.py:220
 msgid "Group name may only contain letters, numbers, hyphens or underscores."
@@ -151,7 +151,7 @@ msgstr "홈 디렉토리 생성"
 msgid "Create home directory for every user, if one doesn't already exist."
 msgstr "이미 있는 경우를 제외하고 모든 사용자의 홈 디렉토리를 생성합니다."
 
-#: src/useradmin/models.py:128
+#: src/useradmin/models.py:126
 #, python-format
 msgid "You do not have permissions to %(description)s."
 msgstr "%(description)s에 대한 권한이 없습니다."
@@ -398,7 +398,7 @@ msgstr "확인"
 
 #: src/useradmin/templates/confirm.mako:25
 #: src/useradmin/templates/delete_group.mako:26
-#: src/useradmin/templates/list_users.mako:128
+#: src/useradmin/templates/list_users.mako:107
 msgid "Yes"
 msgstr "예"
 
@@ -411,7 +411,7 @@ msgid "?"
 msgstr "?"
 
 #: src/useradmin/templates/delete_group.mako:25
-#: src/useradmin/templates/list_users.mako:127
+#: src/useradmin/templates/list_users.mako:106
 msgid "No"
 msgstr "아니요"
 
@@ -491,11 +491,11 @@ msgstr "1단계: 자격 증명(필수)"
 msgid "Step 2: Names and Groups"
 msgstr "2단계: 이름 및 그룹"
 
-#: src/useradmin/templates/edit_user.mako:39
+#: src/useradmin/templates/edit_user.mako:41
 msgid "Step 2: Names"
 msgstr "2단계: 이름"
 
-#: src/useradmin/templates/edit_user.mako:42
+#: src/useradmin/templates/edit_user.mako:43
 msgid "Step 3: Advanced"
 msgstr "3단계: 고급"
 
@@ -507,8 +507,8 @@ msgstr "뒤로"
 msgid "Next"
 msgstr "다음"
 
-#: src/useradmin/templates/edit_user.mako:80
-#: src/useradmin/templates/list_users.mako:45
+#: src/useradmin/templates/edit_user.mako:83
+#: src/useradmin/templates/list_users.mako:42
 msgid "Add user"
 msgstr "사용자 추가"
 
@@ -524,119 +524,117 @@ msgstr "사용자 관리자"
 msgid "Users"
 msgstr "사용자"
 
-#: src/useradmin/templates/layout.mako:64
-#: src/useradmin/templates/list_permissions.mako:44
-#: src/useradmin/templates/list_users.mako:75
+#: src/useradmin/templates/layout.mako:52
+#: src/useradmin/templates/list_permissions.mako:42
+#: src/useradmin/templates/list_users.mako:59
 msgid "Groups"
 msgstr "그룹"
 
-#: src/useradmin/templates/layout.mako:65
-#: src/useradmin/templates/list_groups.mako:69
+#: src/useradmin/templates/layout.mako:53
+#: src/useradmin/templates/list_groups.mako:56
 msgid "Permissions"
 msgstr "권한"
 
-#: src/useradmin/templates/list_groups.mako:35
+#: src/useradmin/templates/list_groups.mako:33
 msgid "Search for name, members, etc..."
 msgstr "이름, 구성원 등을 검색합니다."
 
-#: src/useradmin/templates/list_groups.mako:39
-#: src/useradmin/templates/list_groups.mako:40
-#: src/useradmin/templates/list_users.mako:39
-#: src/useradmin/templates/list_users.mako:40
+#: src/useradmin/templates/list_groups.mako:37
+#: src/useradmin/templates/list_users.mako:37
 msgid "Delete"
 msgstr "삭제"
 
-#: src/useradmin/templates/list_groups.mako:49
+#: src/useradmin/templates/list_groups.mako:43
 msgid "Add/Sync LDAP group"
 msgstr "LDAP 그룹 추가/동기화"
 
-#: src/useradmin/templates/list_groups.mako:67
+#: src/useradmin/templates/list_groups.mako:54
 msgid "Group Name"
 msgstr "그룹 이름"
 
-#: src/useradmin/templates/list_groups.mako:68
+#: src/useradmin/templates/list_groups.mako:55
 msgid "Members"
 msgstr "구성원"
 
-#: src/useradmin/templates/list_groups.mako:85
+#: src/useradmin/templates/list_groups.mako:69
 #, python-format
 msgid "Edit %(groupname)s"
 msgstr "%(groupname)s 편집"
 
-#: src/useradmin/templates/list_groups.mako:101
+#: src/useradmin/templates/list_groups.mako:83
 msgid "There are no groups matching the search criteria."
 msgstr "검색 기준과 일치하는 그룹이 없습니다."
 
-#: src/useradmin/templates/list_groups.mako:129
-#: src/useradmin/templates/list_permissions.mako:91
-#: src/useradmin/templates/list_users.mako:167
+#: src/useradmin/templates/list_groups.mako:111
+#: src/useradmin/templates/list_permissions.mako:85
+#: src/useradmin/templates/list_users.mako:145
 msgid "No data available"
 msgstr "데이터를 이용할 수 없음"
 
-#: src/useradmin/templates/list_groups.mako:130
-#: src/useradmin/templates/list_permissions.mako:92
-#: src/useradmin/templates/list_users.mako:168
+#: src/useradmin/templates/list_groups.mako:112
+#: src/useradmin/templates/list_permissions.mako:86
+#: src/useradmin/templates/list_users.mako:146
 msgid "No matching records"
 msgstr "일치하는 레코드가 없음"
 
-#: src/useradmin/templates/list_permissions.mako:35
+#: src/useradmin/templates/list_permissions.mako:33
 msgid "Search for application, group, etc..."
 msgstr "애플리케이션, 그룹 등을 검색합니다."
 
-#: src/useradmin/templates/list_permissions.mako:42
+#: src/useradmin/templates/list_permissions.mako:40
 msgid "Application"
 msgstr "애플리케이션"
 
-#: src/useradmin/templates/list_permissions.mako:43
+#: src/useradmin/templates/list_permissions.mako:41
 msgid "Permission"
 msgstr "권한"
 
-#: src/useradmin/templates/list_permissions.mako:53
+#: src/useradmin/templates/list_permissions.mako:50
 msgid "Edit permission"
 msgstr "권한 편집"
 
-#: src/useradmin/templates/list_permissions.mako:69
+#: src/useradmin/templates/list_permissions.mako:64
 msgid "There are no permissions matching the search criteria."
 msgstr "검색 기준과 일치하는 권한이 없습니다."
 
-#: src/useradmin/templates/list_users.mako:35
+#: src/useradmin/templates/list_users.mako:33
 msgid "Search for name, group, etc..."
 msgstr "이름, 그룹 등을 검색합니다."
 
-#: src/useradmin/templates/list_users.mako:49
+#: src/useradmin/templates/list_users.mako:43
 msgid "Add/Sync LDAP user"
 msgstr "LDAP 사용자 추가/동기화"
 
-#: src/useradmin/templates/list_users.mako:52
+#: src/useradmin/templates/list_users.mako:44
 msgid "Sync LDAP users/groups"
 msgstr "LDAP 사용자/그룹 동기화"
 
-#: src/useradmin/templates/list_users.mako:72
+#: src/useradmin/templates/list_users.mako:56
 msgid "First Name"
 msgstr "이름"
 
-#: src/useradmin/templates/list_users.mako:73
+#: src/useradmin/templates/list_users.mako:57
 msgid "Last Name"
 msgstr "성"
 
-#: src/useradmin/templates/list_users.mako:74
+#: src/useradmin/templates/list_users.mako:58
 msgid "E-mail"
 msgstr "E-maill"
 
-#: src/useradmin/templates/list_users.mako:76
+#: src/useradmin/templates/list_users.mako:60
 msgid "Last Login"
 msgstr "마지막 로그인"
 
-#: src/useradmin/templates/list_users.mako:90
+#: src/useradmin/templates/list_users.mako:73
 #, python-format
 msgid "Edit %(username)s"
 msgstr "%(username)s 편집"
 
-#: src/useradmin/templates/list_users.mako:109
+#: src/useradmin/templates/list_users.mako:90
 msgid "There are no users matching the search criteria."
 msgstr "검색 기준과 일치하는 사용자가 없습니다."
 
-#: src/useradmin/templates/list_users.mako:124
+#: src/useradmin/templates/list_users.mako:103
 msgid "Are you sure you want to delete the selected user(s)?"
 msgstr "선택한 사용자를 삭제하시겠습니까?"
 

@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: src/metastore/forms.py:46
+#: src/metastore/forms.py:48
 #: src/metastore/templates/describe_partitions.mako:48
 msgid "Path"
 msgstr "경로"
@@ -31,46 +31,45 @@ msgstr "덮어쓰시겠습니까?"
 msgid "%(column_name)s (partition key with type %(column_type)s)"
 msgstr "%(column_name)s(유형 %(column_type)s이(가) 포함된 파티션 키)"
 
-#: src/metastore/views.py:50
+#: src/metastore/views.py:49
 msgid "You are not allowed to modify the metastore."
 msgstr "Metastore를 수정할 수 없습니다."
 
-#: src/metastore/views.py:50
-msgid "You have must have metastore:write permissions"
-msgstr "metastore:write 권한이 있어야 합니다."
+#: src/metastore/views.py:49
+msgid "You have metastore:read_only_access permissions"
+msgstr "Metastore가 있습니다. read_only_access 권한"
 
-#: src/metastore/views.py:91
+#: src/metastore/views.py:90
 #, python-format
 msgid "Failed to remove %(databases)s.  Error: %(error)s"
 msgstr "%(databases)s을(를) 제거하지 못했습니다. 오류: %(error)s"
 
-#: src/metastore/views.py:92 src/metastore/views.py:150
-#: src/metastore/views.py:199
-msgid "Hive Error"
-msgstr "Hive 오류"
+#: src/metastore/views.py:91 src/metastore/views.py:184
+msgid "Beeswax Error"
+msgstr "Beeswax 오류"
 
-#: src/metastore/views.py:94
+#: src/metastore/views.py:93
 msgid "Do you really want to delete the database(s)?"
 msgstr "데이터베이스를 삭제하시겠습니까?"
 
-#: src/metastore/views.py:198
+#: src/metastore/views.py:183
 #, python-format
 msgid "Failed to remove %(tables)s.  Error: %(error)s"
 msgstr "%(tables)s을(를) 제거하지 못했습니다. 오류: %(error)s"
 
-#: src/metastore/views.py:201
+#: src/metastore/views.py:186
 msgid "Do you really want to delete the table(s)?"
 msgstr "테이블을 삭제하시겠습니까?"
 
-#: src/metastore/views.py:215 src/metastore/views.py:225
+#: src/metastore/views.py:200 src/metastore/views.py:210
 msgid "Cannot read table"
 msgstr "테이블을 읽을 수 없음"
 
-#: src/metastore/views.py:247
+#: src/metastore/views.py:232
 msgid "Can't load the data: "
 msgstr "데이터를 로드할 수 없음: "
 
-#: src/metastore/views.py:268
+#: src/metastore/views.py:253
 #, python-format
 msgid "Table '%(table)s' is not partitioned."
 msgstr "테이블 '%(table)s'이(가) 분할되지 않았습니다."
@@ -92,35 +91,15 @@ msgstr "Metastore Manager"
 msgid "Databases"
 msgstr "데이터베이스"
 
-#: src/metastore/templates/confirm.mako:24
-#: src/metastore/templates/databases.mako:87
-#: src/metastore/templates/tables.mako:99
-msgid "Confirm action"
-msgstr "작업 확인"
-
-#: src/metastore/templates/confirm.mako:32
-#: src/metastore/templates/databases.mako:91
-#: src/metastore/templates/tables.mako:103
-msgid "Yes"
-msgstr "예"
-
-#: src/metastore/templates/confirm.mako:33
-msgid "No"
-msgstr "아니요"
-
-#: src/metastore/templates/databases.mako:32
-msgid "actions"
-msgstr "작업"
-
-#: src/metastore/templates/databases.mako:33
+#: src/metastore/templates/databases.mako:34
 msgid "Create a new database"
 msgstr "새 데이터베이스 생성"
 
-#: src/metastore/templates/databases.mako:45
+#: src/metastore/templates/databases.mako:42
 msgid "Search for database name"
 msgstr "데이터베이스 이름 검색"
 
-#: src/metastore/templates/databases.mako:50
+#: src/metastore/templates/databases.mako:47
 msgid "Drop the selected databases"
 msgstr "선택한 데이터베이스 삭제"
 
@@ -130,7 +109,7 @@ msgstr "선택한 데이터베이스 삭제"
 msgid "Drop"
 msgstr "삭제"
 
-#: src/metastore/templates/databases.mako:59
+#: src/metastore/templates/databases.mako:55
 msgid "Database Name"
 msgstr "데이터베이스 이름"
 
@@ -168,14 +147,13 @@ msgstr "테이블 파티션: %(tableName)s"
 msgid "Actions"
 msgstr "작업"
 
-#: src/metastore/templates/describe_partitions.mako:33
+#: src/metastore/templates/describe_partitions.mako:36
 msgid "Show Table"
 msgstr "테이블 표시"
 
-#: src/metastore/templates/describe_partitions.mako:69
-#, python-format
-msgid "The table %s has no partitions."
-msgstr "테이블 %s 에 파티션이 없습니다."
+#: src/metastore/templates/describe_partitions.mako:68
+msgid "Table has no partitions."
+msgstr "테이블에 파티션이 없습니다."
 
 #: src/metastore/templates/describe_table.mako:28
 #: src/metastore/templates/tables.mako:58
@@ -266,7 +244,12 @@ msgstr "예, 이 테이블 삭제"
 msgid "Tables"
 msgstr "테이블"
 
-#: src/metastore/templates/tables.mako:35
+#: src/metastore/templates/tables.mako:27
+#, python-format
+msgid "Database %s"
+msgstr "데이터베이스 %s"
+
+#: src/metastore/templates/tables.mako:34
 msgid "database"
 msgstr "데이터베이스"
 
@@ -278,20 +261,20 @@ msgstr "파일에서 새 테이블을 생성합니다."
 msgid "Create a new table manually"
 msgstr "새 테이블을 직접 생성합니다."
 
-#: src/metastore/templates/tables.mako:54
+#: src/metastore/templates/tables.mako:52
 msgid "Search for table name"
 msgstr "테이블 이름 검색"
 
-#: src/metastore/templates/tables.mako:58
-#: src/metastore/templates/tables.mako:59
+#: src/metastore/templates/tables.mako:56
+#: src/metastore/templates/tables.mako:57
 msgid "Browse the selected table"
 msgstr "선택한 테이블 찾아보기"
 
-#: src/metastore/templates/tables.mako:61
+#: src/metastore/templates/tables.mako:59
 msgid "Delete the selected tables"
 msgstr "선택한 테이블 삭제"
 
-#: src/metastore/templates/tables.mako:70
+#: src/metastore/templates/tables.mako:67
 msgid "Table Name"
 msgstr "테이블 이름"
 

@@ -135,6 +135,10 @@ class PseudoHdfs4(object):
     return self._tmppath('conf')
 
   @property
+  def hadoop_conf_dir2(self):
+    return self._tmppath('conf2')
+
+  @property
   def fs(self):
     if self._fs is None:
       if self._dfs_http_address is None:
@@ -252,13 +256,14 @@ class PseudoHdfs4(object):
     # Start MR2
     self._start_mr2(env)
 
-    # Create HDFS directories
+    # Make sure /tmp is 1777
+    self.fs.setuser(self.superuser)
     if not self.fs.exists('/tmp'):
-      self.fs.do_as_superuser(self.mkdir, '/tmp', 01777)
-    self.fs.do_as_superuser(self.fs.chmod, '/tmp', 01777)
+      self.fs.mkdir('/tmp', 01777)
+    self.fs.chmod('/tmp', 01777)
 
-    self.fs.do_as_superuser(self.fs.mkdir, '/tmp/hadoop-yarn', 01777)
-    self.fs.do_as_superuser(self.fs.chmod, '/tmp/hadoop-yarn', 01777)
+    self.fs.chmod(self._tmpdir + '/hadoop_tmp_dir/mapred', 01777)
+    self.fs.mkdir(self._tmpdir + '/hadoop_tmp_dir/mapred/staging', 01777)
 
     self.fs.do_as_superuser(self.fs.mkdir, '/tmp/hadoop-yarn/staging', 01777)
     self.fs.do_as_superuser(self.fs.chmod, '/tmp/hadoop-yarn/staging', 01777)
@@ -285,6 +290,9 @@ class PseudoHdfs4(object):
     self._nm1_proc = self._start_daemon('nodemanager', self.hadoop_conf_dir_nm1, self.mr2_env, self._get_yarn_bin(self.mr2_env))
     self._nm2_proc = self._start_daemon('nodemanager', self.hadoop_conf_dir_nm2, self.mr2_env, self._get_yarn_bin(self.mr2_env))
     self._hs_proc = self._start_daemon('historyserver', self.hadoop_conf_dir, self.mr2_env, self._get_mapred_bin(self.mr2_env))
+
+    # Start second node manager
+    self._nm2_proc = self._start_daemon('nodemanager', self.hadoop_conf_dir2, self.mr2_env, self._get_yarn_bin(self.mr2_env))
 
     # Make sure they're running
     deadline = time.time() + STARTUP_DEADLINE
@@ -408,7 +416,7 @@ class PseudoHdfs4(object):
     except KeyError:
       return os.path.join(get_run_root('ext/hadoop/hadoop'), 'bin', 'hdfs')
 
-  def _write_hdfs_site(self):
+  def _write_hdfs_site(self, confdir):
     self._dfs_http_port = find_unused_port()
     self._dfs_http_address = '%s:%s' % (self._fqdn, self._dfs_http_port)
 

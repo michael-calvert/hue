@@ -30,11 +30,7 @@ msgstr "Solr 服务器的 URL。"
 
 #: src/search/conf.py:30
 msgid "Query sent when no term is entered."
-msgstr "未输入术语时发送的查询。"
-
-#: src/search/conf.py:35
-msgid "Whether Solr requires client to perform Kerberos authentication."
-msgstr "Solr 是否需要客户端执行 Kerberos 身份验证。"
+msgstr "未输入日期时发送了查询。"
 
 #: src/search/decorators.py:35 src/search/decorators.py:49
 msgid "Permission denied. You are not an Administrator."
@@ -42,15 +38,15 @@ msgstr "权限被拒绝。您不是管理员。"
 
 #: src/search/models.py:233
 msgid "Solr index name pointing to"
-msgstr "Solr 索引名称指向"
+msgstr "Solr 索引名称（指向...）"
 
 #: src/search/models.py:234
 msgid "Friendlier name in UI"
-msgstr "UI 中更友好的名称"
+msgstr "UI 中的 Friendlier 名称"
 
 #: src/search/models.py:236
 msgid "Collection with cores data"
-msgstr "带核心数据的集合"
+msgstr "带有核心数据的集合"
 
 #: src/search/models.py:236
 msgid "Solr json"
@@ -63,7 +59,7 @@ msgstr "属性"
 
 #: src/search/models.py:239
 msgid "Hue properties (e.g. results by pages number)"
-msgstr "Hue 属性（例如，按页码排列的结果）"
+msgstr "Hue 属性（例如按页码排序的结果）"
 
 #: src/search/models.py:516
 msgid "The Solr schema requires an id field for performing the result highlighting"
@@ -75,7 +71,7 @@ msgstr " （副本）"
 
 #: src/search/views.py:142 src/search/views.py:174
 msgid "There is no collection to search."
-msgstr "没有要搜索的集合。"
+msgstr "没有可搜索的集合。"
 
 #: src/search/views.py:172
 msgid "Page saved !"
@@ -88,7 +84,7 @@ msgstr "无法下载搜索结果：%s"
 
 #: src/search/views.py:226 src/search/views.py:240
 msgid "POST request required."
-msgstr "需要 POST 请求。"
+msgstr "需要使用 POST 请求。"
 
 #: src/search/views.py:303
 msgid "This document does not have any index id."
@@ -160,11 +156,11 @@ msgstr "是"
 
 #: src/search/templates/admin_collections.mako:179
 msgid "Collection deleted successfully."
-msgstr "集合已成功删除。"
+msgstr "成功删除集合。"
 
 #: src/search/templates/admin_collections.mako:183
 msgid "Collection copied successfully."
-msgstr "集合已成功复制。"
+msgstr "成功复制集合。"
 
 #: src/search/templates/layout.mako:32
 msgid "Search page"
@@ -172,7 +168,7 @@ msgstr "搜索页面"
 
 #: src/search/templates/layout.mako:33
 msgid "Collection manager"
-msgstr "Collection Manager"
+msgstr "集合管理器"
 
 #: src/search/templates/layout.mako:40
 msgid "Search Admin"
@@ -192,11 +188,11 @@ msgstr "模板"
 
 #: src/search/templates/layout.mako:89
 msgid "1. Snippet"
-msgstr "1. 代码段"
+msgstr "1. 片段"
 
 #: src/search/templates/layout.mako:92
 msgid "2. Facets"
-msgstr "2. 层面"
+msgstr "2. 构面"
 
 #: src/search/templates/layout.mako:95
 msgid "3. Sorting"
@@ -209,19 +205,19 @@ msgstr "4. 突出显示"
 #: src/search/templates/macros.mako:197
 #, python-format
 msgid "Retweeted %s times"
-msgstr "已转推 %s 次"
+msgstr "转发 %s 次数"
 
 #: src/search/templates/macros.mako:207
 msgid "Reply"
-msgstr "回复"
+msgstr "答复"
 
 #: src/search/templates/macros.mako:213
 msgid "Retweet"
-msgstr "转推"
+msgstr "转发"
 
 #: src/search/templates/no_collections.mako:46
 msgid "It seems there is nothing to search on ..."
-msgstr "似乎没有要搜索的内容..."
+msgstr "似乎没有可搜索内容 ..."
 
 #: src/search/templates/no_collections.mako:49
 msgid "... First create a search dashboard with "
