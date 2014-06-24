@@ -14,7 +14,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from desktop.lib.django_util import render
 
 ## Views are inherited from Beeswax.
-
+def dashboard(request):
+  return render('dashboard.mako', request, {})
