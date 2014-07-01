@@ -1060,12 +1060,18 @@ a#advanced-btn:hover {
   border: 1px solid #CCCCCC;
   margin-top: 2px !important;
   padding: 0 !important;
-  display: block !important;
+  display: inline-block !important;
   cursor: default;
 }
 
 .hueCheckbox:hover {
   border-color: #999999;
+}
+
+.hueCheckboxText {
+  left: 3px;
+  position: relative;
+  top: -3px;
 }
 
 .modal form {
@@ -1659,3 +1665,42 @@ border-bottom-left-radius: 0px;
 .control-group.error .input-prepend .add-on i, .control-group.error .input-append .add-on i {
     color: #fff;
 }
+
+/*********************************************************
+ *
+ * Styles from admin_collections.mako template
+ *
+ ********************************************************/
+
+#collections {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.placeholder {
+  background-color: #F5F5F5;
+  border: 1px solid #E3E3E3;
+  height: 40px;
+}
+
+.collection-actions {
+   cursor: pointer;
+   margin: 10px 10px 0 0;
+ }
+
+/*********************************************************
+ *
+ * Misc styles that can be reused as needed
+ * - from admin_collections.mako template
+ *
+ ********************************************************/
+ .spinner {
+   color: #ddd;
+   font-size: 60px;
+ }
+
+ .pointer {
+   cursor: pointer;
+ }
