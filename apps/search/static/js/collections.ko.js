@@ -185,4 +185,20 @@ var SearchCollectionsModel = function (props) {
       }, "json");
   };
 
+  self.toggleSelectAll = function() { // duplicated from hue/desktop/libs/indexer/static/js/collections.js
+    var direction = !self.selectedCollections().length;
+    console.log('filteredCollections', self.filteredCollections);
+    ko.utils.arrayForEach(self.filteredCollections(), function(collection) {
+      collection.selected(direction);
+    });
+  };
+
+  self.toggleCollectionSelect = function(collection, e) { // duplicated from hue/desktop/libs/indexer/static/js/collections.js
+    ko.utils.arrayForEach(self.collections(), function(other_collection) {
+      if(ko.unwrap(other_collection).name() == collection.name()) {
+        other_collection.selected(!other_collection.selected());
+      }
+    });
+  };
+
 };
