@@ -1060,7 +1060,7 @@ a#advanced-btn:hover {
   border: 1px solid #CCCCCC;
   margin-top: 2px !important;
   padding: 0 !important;
-  display: inline-block !important;
+  display: block !important;
   cursor: default;
 }
 
@@ -1677,6 +1677,11 @@ border-bottom-left-radius: 0px;
   margin: 0;
   padding: 0;
   width: 100%;
+}
+
+.coll-heading {
+  position: relative;
+  top: 12px;
 }
 
 .placeholder {
