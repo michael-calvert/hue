@@ -187,7 +187,6 @@ var SearchCollectionsModel = function (props) {
 
   self.toggleSelectAll = function() { // duplicated from hue/desktop/libs/indexer/static/js/collections.js
     var direction = !self.selectedCollections().length;
-    console.log('filteredCollections', self.filteredCollections);
     ko.utils.arrayForEach(self.filteredCollections(), function(collection) {
       collection.selected(direction);
     });
