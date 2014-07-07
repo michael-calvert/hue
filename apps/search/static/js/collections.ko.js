@@ -194,10 +194,9 @@ var SearchCollectionsModel = function (props) {
 
   self.toggleCollectionSelect = function(collection, e) { // duplicated from hue/desktop/libs/indexer/static/js/collections.js
     ko.utils.arrayForEach(self.collections(), function(other_collection) {
-      if(ko.unwrap(other_collection).name() == collection.name()) {
+      if(ko.unwrap(other_collection).id() == collection.id()) {
         other_collection.selected(!other_collection.selected());
       }
     });
   };
-
 };
