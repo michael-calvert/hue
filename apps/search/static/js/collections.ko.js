@@ -20,7 +20,7 @@ var Importable = function (importable) {
   self.name = ko.observable(importable.name);
   self.selected = ko.observable(false);
   self.handleSelect = function (row, e) {
-    this.selected(!this.selected());
+    self.selected(!self.selected());
   };
 };
 
@@ -36,10 +36,10 @@ var Collection = function (coll) {
   self.hovered = ko.observable(false);
 
   self.handleSelect = function (row, e) {
-    this.selected(!this.selected());
+    self.selected(!self.selected());
   };
   self.toggleHover = function (row, e) {
-    this.hovered(!this.hovered());
+    self.hovered(!self.hovered());
   };
 }
 
@@ -110,6 +110,11 @@ var SearchCollectionsModel = function (props) {
     $(document).trigger("confirmDelete");
   };
 
+  self.markManyForDeletion = function (collections) {
+    self.collectionToDelete = collections;
+    $(document).trigger("confirmDeleteMany")
+  };
+
   self.deleteCollection = function () {
     $(document).trigger("deleting");
     $.post(self.DELETE_URL,
@@ -120,6 +125,19 @@ var SearchCollectionsModel = function (props) {
         self.updateCollections();
         $(document).trigger("collectionDeleted");
       }, "json");
+  };
+
+  self.deleteCollections = function () {
+    self.isLoading = true;
+    $(document).trigger("deleting");
+    $.post(self.DELETE_URL,
+    {
+      id: self.selectedCollections()
+    },
+    function (data) {
+      self.updateCollections();
+    }, "json");
+    $(document).trigger("collectionDeleted");
   };
 
   self.copyCollection = function (collection) {
@@ -133,6 +151,19 @@ var SearchCollectionsModel = function (props) {
         self.updateCollections();
         $(document).trigger("collectionCopied");
       }, "json");
+  };
+
+  self.copyCollections = function (collections) {
+    $(document).trigger("copying");
+    $.post(self.COPY_URL,
+    {
+      id: self.selectedCollections(),
+      //type: coll.isCoreOnly() ? "core" : "collection"
+    },
+    function (data) {
+      self.updateCollections();
+    }, "json");
+    $(document).trigger("collectionCopied");
   };
 
   self.updateCollections = function () {
