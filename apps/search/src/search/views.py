@@ -402,6 +402,7 @@ def _create_facet(collection, user, facet_id, facet_label, facet_field, widget_t
   if range_properties:
     facet_type = 'range'
     properties.update(range_properties)
+    properties['initial_gap'] = properties['gap']
   elif widget_type == 'hit-widget':
     facet_type = 'query'
   else:

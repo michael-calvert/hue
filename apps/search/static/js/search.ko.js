@@ -520,7 +520,7 @@ var Collection = function (vm, collection) {
     vm.search();
   };
 
-  self.selectTimelineFacet = function (data) { // alert(ko.mapping.toJSON(data));
+  self.selectTimelineFacet = function (data) {
     var facet = self.getFacetById(data.widget_id);
 
     facet.properties.start(data.from);
@@ -565,7 +565,7 @@ var Collection = function (vm, collection) {
         if (data.status == 0) {
           facet.properties.start(data.properties.start);
           facet.properties.end(data.properties.end);
-          facet.properties.gap(data.properties.gap);
+          facet.properties.gap(data.properties.gap); // facet.properties.gap(data.properties.initial_gap);
 
           var fq = vm.query.getFacetFilter(facet_json.id);
           if (fq != null) {

@@ -267,11 +267,15 @@ class Collection(models.Model):
     if self.enabled is not None:
       props['collection']['enabled'] = self.enabled
 
-    # tmp for dev
+    # For backward compatibility
     if 'rows' not in props['collection']['template']:
       props['collection']['template']['rows'] = 10
     if 'enabled' not in props['collection']:
-      props['collection']['enabled'] = True
+      props['collection']['enabled'] = True    
+    for facet in props['collection']['facets']:
+      properties = facet['properties']
+      if 'gap' in properties and not 'original_gap' in properties:
+        properties['initial_gap'] = properties['gap']
 
     return json.dumps(props)
 
