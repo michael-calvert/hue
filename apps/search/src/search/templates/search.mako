@@ -308,7 +308,7 @@ ${ dashboard.layout_skeleton() }
         <div class="slider-cnt" data-bind="slider: {start: properties.min, end: properties.max, gap: properties.gap, min: properties.start, max: properties.end}"></div>
       <!-- /ko -->
       <!-- ko if: properties.isDate() -->
-        <div data-bind="daterangepicker: {start: properties.start, end: properties.end, gap: properties.gap, min: properties.min, max: properties.max}"></div>
+        <div data-bind="daterangepicker: {start: properties.start, end: properties.end, initial_gap: properties.initial_gap, gap: properties.gap, min: properties.min, max: properties.max}"></div>
         <br/>
       <!-- /ko -->
     <!-- /ko -->

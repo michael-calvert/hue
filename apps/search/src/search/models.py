@@ -273,7 +273,11 @@ class Collection(models.Model):
     if 'enabled' not in props['collection']:
       props['collection']['enabled'] = True
     if 'leafletmap' not in props['collection']['template']:
-      props['collection']['template']['leafletmap'] = {'latitudeField': None, 'longitudeField': None, 'labelField': None}
+      props['collection']['template']['leafletmap'] = {'latitudeField': None, 'longitudeField': None, 'labelField': None}    
+    for facet in props['collection']['facets']:
+      properties = facet['properties']
+      if 'gap' in properties and not 'original_gap' in properties:
+        properties['initial_gap'] = properties['gap']
 
     return json.dumps(props)
 
