@@ -110,20 +110,6 @@ from django.utils.translation import ugettext as _
         margin-bottom: 80px;
       }
 
-      #jHueHdfsAutocomplete ul li {
-        cursor: pointer;
-      }
-
-      #jHueHdfsAutocomplete ul li:hover,  #jHueHdfsAutocomplete ul li.active {
-        color: #FFFFFF;
-        background: #338BB8;
-      }
-
-      #jHueHdfsAutocomplete .popover-content {
-        max-height: 200px;
-        overflow-y: auto;
-      }
-
     </style>
 
     <table class="table table-condensed datatables tablescroller-disable">
