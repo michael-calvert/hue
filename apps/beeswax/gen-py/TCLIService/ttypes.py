@@ -415,6 +415,10 @@ class TTypeQualifierValue(object):
     iprot.readStructEnd()
 
   def write(self, oprot):
+    # This is wrong, because the user can't specify the version as it is always overwritten before
+    # serializing and sent over wire.
+    # self.client_protocol = 4
+
     if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
       oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
       return
