@@ -22,6 +22,7 @@ from operator import itemgetter
 
 from desktop.lib import thrift_util
 from desktop.conf import LDAP_PASSWORD
+from desktop.conf import DEFAULT_USER
 from hadoop import cluster
 
 from TCLIService import TCLIService
@@ -43,7 +44,7 @@ from impala import conf as impala_conf
 LOG = logging.getLogger(__name__)
 
 IMPALA_RESULTSET_CACHE_SIZE = 'impala.resultset.cache.size'
-
+DEFAULT_USER = DEFAULT_USER.get()
 
 class HiveServerTable(Table):
   """
@@ -363,7 +364,7 @@ class HiveServerClient:
     }
 
     if self.impersonation_enabled:
-      kwargs.update({'username': 'hue'})
+      kwargs.update({'username': DEFAULT_USER})
 
       if self.query_server['server_name'] == 'impala': # Only when Impala accepts it
         kwargs['configuration'].update({'impala.doas.user': user.username})
@@ -371,7 +372,7 @@ class HiveServerClient:
     if self.query_server['server_name'] == 'beeswax': # All the time
       kwargs['configuration'].update({'hive.server2.proxy.user': user.username})
       if LDAP_PASSWORD.get(): # HiveServer2 supports pass-through LDAP authentication.
-        kwargs['username'] = 'hue'
+        kwargs['username'] = DEFAULT_USER
         kwargs['password'] = LDAP_PASSWORD.get()
 
     req = TOpenSessionReq(**kwargs)
