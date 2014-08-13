@@ -20,6 +20,7 @@ from desktop.lib.i18n import smart_unicode
 from desktop.views import commonheader, commonfooter
 from django.utils.translation import ugettext as _
 %>
+
 <%namespace name="components" file="components.mako" />
 
 <%
@@ -30,18 +31,18 @@ from django.utils.translation import ugettext as _
 %>
 
 ${ commonheader(_("%s : %s") % (view_or_table_noun, table.name), app_name, user) | n,unicode }
-<link rel="stylesheet" href="/metastore/static/css/metastore.css" type="text/css">
 ${ components.menubar() }
 
+<link rel="stylesheet" href="/metastore/static/css/metastore.css" type="text/css">
+
+
 <%def name="column_table(cols)">
-  <table class="table table-striped table-condensed datatables">
+  <table class="table table-striped table-condensed sampleTable">
     <thead>
-      <tr>
-        <th>&nbsp;</th>
-        <th>${_('Name')}</th>
-        <th>${_('Type')}</th>
-        <th>${_('Comment')}</th>
-      </tr>
+      <th>&nbsp;</th>
+      <th>${_('Name')}</th>
+      <th>${_('Type')}</th>
+      <th>${_('Comment')}</th>
     </thead>
     <tbody>
       % for column in cols:
