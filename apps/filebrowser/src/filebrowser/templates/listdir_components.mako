@@ -266,12 +266,13 @@ from django.utils.translation import ugettext as _
     <form id="moveForm" action="/filebrowser/move" method="POST" enctype="multipart/form-data" class="form-inline form-padding-fix">
       <div class="modal-header">
         <a href="#" class="close" data-dismiss="modal">&times;</a>
-        <h3>${_('Move:')}</h3>
+        <h3>${_('Move to:')}</h3>
       </div>
       <div class="modal-body">
         <div style="padding-left: 15px;">
           <label for="moveDestination">${_('Destination')}</label>
-          <input type="text" class="input-xlarge pathChooser" value="" name="dest_path" id="moveDestination" /><a class="btn fileChooserBtn" href="#" data-filechooser-destination="dest_path">..</a>
+          <input type="hidden" class="input-xlarge pathChooser" value="" name="dest_path" data-filechooser-destination="dest_path" id="moveDestination" />
+          <span class="destination hide" title="click to edit destination path"></span> <i id="editDestination" class="fa fa-pencil hand hide" rel="tooltip" data-original-title="${_('Edit destination path')}"></i>
         </div>
         <br/>
         <div class="fileChooserModal" class="hide"></div>
@@ -291,12 +292,13 @@ from django.utils.translation import ugettext as _
     <form id="copyForm" action="/filebrowser/copy" method="POST" enctype="multipart/form-data" class="form-inline form-padding-fix">
       <div class="modal-header">
         <a href="#" class="close" data-dismiss="modal">&times;</a>
-        <h3>${_('Copy:')}</h3>
+        <h3>${_('Copy to:')}</h3>
       </div>
       <div class="modal-body">
         <div style="padding-left: 15px;">
           <label for="copyDestination">${_('Destination')}</label>
-          <input type="text" class="input-xlarge pathChooser" value="" name="dest_path" id="copyDestination" /><a class="btn fileChooserBtn" href="#" data-filechooser-destination="dest_path">..</a>
+          <input type="hidden" class="input-xlarge pathChooser" value="" name="dest_path" data-filechooser-destination="dest_path" id="copyDestination" />
+          <span class="destination hide" title="click to edit destination path"></span> <i id="editCopyDestination" class="fa fa-pencil hand hide" rel="tooltip" data-original-title="${_('Edit destination path')}"></i>
         </div>
         <br/>
         <div class="fileChooserModal" class="hide"></div>
@@ -1070,6 +1072,35 @@ from django.utils.translation import ugettext as _
     ko.applyBindings(viewModel);
 
     $(document).ready(function () {
+      var modalFileBrowser = function (selector, editpath) {
+        var _destination = $(selector).attr("data-filechooser-destination");
+        var fileChooser = $(selector).parents().find(".fileChooserModal");
+
+        fileChooser.jHueFileChooser({
+          initialPath:$("input[name='" + _destination + "']").val(),
+          onFolderChange: function (folderPath) {
+            $("input[name='" + _destination + "']").val(folderPath);
+            $(".destination").removeClass('hide').html(folderPath);
+            $(editpath).removeClass('hide');
+          },
+          onFolderChoose: function (folderPath) {
+            $("input[name='" + _destination + "']").val(folderPath);
+            $(".destination").removeClass('hide').html(folderPath);
+            $(editpath).removeClass('hide');
+            fileChooser.slideUp();
+          },
+          selectFolder: true,
+          createFolder: true,
+          uploadFile: false
+        });
+
+        fileChooser.slideDown();
+
+        $('.destination, editpath').on('click', function () {
+          fileChooser.slideDown();
+        });
+      };
+
       $("#chownForm select[name='user']").change(function () {
         if ($(this).val() == "__other__") {
           $("input[name='user_other']").show();
@@ -1119,26 +1150,12 @@ from django.utils.translation import ugettext as _
 
       // Modal file chooser
       // The file chooser should be at least 2 levels deeper than the modal container
-      $(".fileChooserBtn").on('click', function (e) {
-        e.preventDefault();
+      $("#moveModal").on('shown', function () {
+        modalFileBrowser('#moveDestination', '#editDestination');
+      });
 
-        var _destination = $(this).attr("data-filechooser-destination");
-        var fileChooser = $(this).parent().parent().find(".fileChooserModal");
-
-        fileChooser.jHueFileChooser({
-          initialPath:$("input[name='" + _destination + "']").val(),
-          onFolderChange:function (folderPath) {
-            $("input[name='" + _destination + "']").val(folderPath);
-          },
-          onFolderChoose:function (folderPath) {
-            $("input[name='" + _destination + "']").val(folderPath);
-            fileChooser.slideUp();
-          },
-          selectFolder:true,
-          createFolder:true,
-          uploadFile:false
-        });
-        fileChooser.slideDown();
+      $("#copyModal").on('shown', function () {
+        modalFileBrowser('#copyDestination', '#editCopyDestination');
       });
 
       $("#renameForm").submit(function () {

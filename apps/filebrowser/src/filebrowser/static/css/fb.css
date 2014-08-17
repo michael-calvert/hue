@@ -117,3 +117,11 @@ pre a:hover {
   max-height: 200px;
   overflow-y: auto;
 }
+
+.destination {
+  background: #e5e5e5;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 1em;
+  padding: 3px;
+}
