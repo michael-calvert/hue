@@ -1745,3 +1745,28 @@ border-bottom-left-radius: 0px;
 input.no-margin {
   margin-bottom: 0;
 }
+
+/****************************************************
+ *
+ * Styles for opaque layover messages
+ * Example is "Drop files anywhere" layover
+ *
+*****************************************************/
+.hoverMsg {
+  background: #000;
+  display: none;
+  height: 100%;
+  opacity: .5;
+  position: absolute;
+  width: 100%;
+  top:0;
+  z-index: 10000;
+}
+
+.hoverText {
+  color: #fff;
+  font-size: 4em;
+  position: relative;
+  text-align: center;
+  top: 35%;
+}
