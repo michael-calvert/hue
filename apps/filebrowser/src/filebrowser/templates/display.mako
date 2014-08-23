@@ -44,12 +44,12 @@ ${ fb_components.menubar() }
           <div class="pull-right">
             <div class="form-inline inline">
               <span>${_('Page')}</span>
-              <input type="text" data-bind="value: page, valueUpdate: 'afterkeydown', event: { change: pageChanged }" style="width: 40px; text-align: center"/>
+              <input type="text" data-bind="value: page, valueUpdate: 'afterkeydown', event: { change: pageChanged }" class="pagination-input"/>
               <span data-bind="visible: totalPages() > MAX_PAGES_TO_ENABLE_SCROLLING || viewModel.mode() == 'binary'">
-              to <input type="text" data-bind="value: upperPage, valueUpdate: 'afterkeydown', event: { change: upperPageChanged }" style="width: 40px; text-align: center"/></span>
+              to <input type="text" data-bind="value: upperPage, valueUpdate: 'afterkeydown', event: { change: upperPageChanged }" class="pagination-input" /></span>
               of <span data-bind="text: totalPages"></span>
             </div>
-            <div class="pagination inline">
+            <div class="pagination-form inline">
               <ul>
                 <li class="first-page prev disabled"><a href="javascript:void(0);" data-bind="click: firstPage" title="${_('First page')}"><i class="fa fa-fast-backward"></i></a></li>
                 <li class="previous-page disabled"><a href="javascript:void(0);" data-bind="click: previousPage" title="${_('Previous page')}"><i class="fa fa-backward"></i></a></li>

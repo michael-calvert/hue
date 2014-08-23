@@ -457,7 +457,7 @@ from django.utils.translation import ugettext as _
     };
 
     var resetActionbar = function() {
-      $(".actionbar").attr("style", "min-width: 1190px");
+      $(".actionbar").attr("style", "min-width: 1180px");
       $(".actionbar").data("originalWidth", $(".actionbar").width());
       $(".actionbarGhost").addClass("hide");
     };
@@ -544,7 +544,7 @@ from django.utils.translation import ugettext as _
       }
 
       self.page = ko.observable(new Page(page));
-      self.recordsPerPageChoices = ["15", "30", "45", "60", "100", "200"],
+      self.recordsPerPageChoices = ["15", "30", "45", "60", "100", "200", "1000"],
       self.recordsPerPage = ko.observable($.cookie("hueFilebrowserRecordsPerPage"));
       self.targetPageNum = ko.observable(1);
       self.targetPath = ko.observable("${current_request_path}");
