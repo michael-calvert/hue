@@ -416,14 +416,14 @@ from django.utils.translation import ugettext as _
   <script id="fileTemplate" type="text/html">
     <tr style="cursor: pointer" data-bind="event: { mouseover: toggleHover, mouseout: toggleHover}">
       <td class="center" data-bind="click: handleSelect" style="cursor: default">
-        <div data-bind="visible: name !== '..', css: {hueCheckbox: name !== '..', 'fa': name !== '..', 'fa-check': selected}"></div>
+        <div data-bind="visible: name != '..', css: {hueCheckbox: name != '..', 'fa': name != '..', 'fa-check': selected}"></div>
       </td>
-      <td data-bind="click: $root.viewFile" class="left"><i data-bind="css: {'fa': true, 'fa-play': $.inArray(name, ['workflow.xml', 'coordinator.xml', 'bundle.xml']) > -1, 'fa-file-o': type === 'file', 'fa-folder': type !== 'file', 'fa-folder-open': type !== 'file' && hovered}"></i></td>
+      <td data-bind="click: $root.viewFile" class="left"><i data-bind="css: {'fa': true, 'fa-play': $.inArray(name, ['workflow.xml', 'coordinator.xml', 'bundle.xml']) > -1, 'fa-file-o': type == 'file', 'fa-folder': type != 'file', 'fa-folder-open': type != 'file' && hovered}"></i></td>
       <td data-bind="click: $root.viewFile, attr: {'title': tooltip}" rel="tooltip">
-        <!-- ko if: name === '..' -->
+        <!-- ko if: name == '..' -->
         <a href="#" data-bind="click: $root.viewFile"><i class="fa fa-level-up"></i></a>
         <!-- /ko -->
-        <!-- ko if: name !== '..' -->
+        <!-- ko if: name != '..' -->
         <strong><a href="#" data-bind="click: $root.viewFile, text: name"></a></strong>
         <!-- /ko -->
 
@@ -494,7 +494,7 @@ from django.utils.translation import ugettext as _
       if (viewModel) {
         var files = viewModel.files();
         for (var i = 0; i < files.length; i++) {
-          if (files[i].name === newName) {
+          if (files[i].name == newName) {
             return true;
           }
         }
@@ -513,7 +513,7 @@ from django.utils.translation import ugettext as _
     };
 
     var Page = function (page) {
-      if (page !== null) {
+      if (page != null) {
         return {
           number: page.number,
           num_pages: page.num_pages,
@@ -531,11 +531,11 @@ from django.utils.translation import ugettext as _
     var File = function (file) {
       file.tooltip = "";
 
-      if (file.name === "."){
+      if (file.name == "."){
         file.tooltip = "${_('This folder')}";
       }
 
-      if (file.name === ".."){
+      if (file.name == ".."){
         file.tooltip = "${_('One level up')}";
       }
 
@@ -570,7 +570,7 @@ from django.utils.translation import ugettext as _
         url: breadcrumb.url,
         label: breadcrumb.label,
         show: function () {
-          if (this.url === null || this.url === "") {
+          if (this.url == null || this.url == "") {
             // forcing root on empty breadcrumb url
             this.url = "/";
           }
@@ -599,10 +599,10 @@ from django.utils.translation import ugettext as _
       self.searchQuery = ko.observable("");
 
       self.filesSorting = function (l, r) {
-        if (l.name === ".." && r.name === "."){
+        if (l.name == ".." && r.name == "."){
           return -1;
         }
-        else if (l.name === "." && r.name === ".."){
+        else if (l.name == "." && r.name == ".."){
           return 1;
         }
         else {
@@ -636,7 +636,7 @@ from django.utils.translation import ugettext as _
 
         el.attr("class", "sortable");
 
-        if (self.sortDescending() === true) {
+        if (self.sortDescending() == true) {
           el.addClass("sorting_desc");
         } else {
           el.addClass("sorting_asc");
@@ -657,7 +657,7 @@ from django.utils.translation import ugettext as _
 
       self.isCurrentDirSelected = ko.computed(function () {
         return ko.utils.arrayFilter(self.files(), function (file) {
-          return file.name === "." && file.selected();
+          return file.name == "." && file.selected();
         });
       }, self);
 
@@ -692,7 +692,7 @@ from django.utils.translation import ugettext as _
             return false;
           }
 
-          if (data.type !== null && data.type === "file") {
+          if (data.type != null && data.type == "file") {
             location.href = data.url;
             return false;
           }
@@ -780,7 +780,7 @@ from django.utils.translation import ugettext as _
         self.allSelected(! self.allSelected());
 
         ko.utils.arrayForEach(self.files(), function (file) {
-          if (file.name !== "." && file.name !== "..") {
+          if (file.name != "." && file.name != "..") {
             file.selected(self.allSelected());
           }
         });
@@ -797,7 +797,7 @@ from django.utils.translation import ugettext as _
       };
 
       self.viewFile = function (file) {
-        if (file.type === "dir") {
+        if (file.type == "dir") {
           // Reset page number so that we don't hit a page that doesn't exist
           self.targetPageNum(1);
           self.targetPath("${url('filebrowser.views.view', path=urlencode('/'))}" + "." + stripHashes(file.path));
@@ -897,7 +897,7 @@ from django.utils.translation import ugettext as _
         var allFileType = true;
 
         $(self.selectedFiles()).each(function (index, file) {
-          if ("dir" === file.type){
+          if ("dir" == file.type){
             allFileType = false;
           }
           paths.push(file.path);
@@ -1038,9 +1038,9 @@ from django.utils.translation import ugettext as _
           },
           onComplete:function (id, fileName, response) {
             num_of_pending_uploads--;
-            if (response.status !== 0) {
+            if (response.status != 0) {
               $(document).trigger("error", "${ _('Error: ') }" + response['data']);
-            } else if (num_of_pending_uploads === 0) {
+            } else if (num_of_pending_uploads == 0) {
               location = "/filebrowser/view" + self.currentPath();
             }
           },
@@ -1088,7 +1088,7 @@ from django.utils.translation import ugettext as _
           },
           onComplete:function (id, fileName, responseJSON) {
             num_of_pending_uploads--;
-            if (num_of_pending_uploads === 0) {
+            if (num_of_pending_uploads == 0) {
               location = "/filebrowser/view" + self.currentPath();
             }
           },
@@ -1241,7 +1241,7 @@ from django.utils.translation import ugettext as _
       }
 
       $("#chownForm select[name='user']").change(function () {
-        if ($(this).val() === "__other__") {
+        if ($(this).val() == "__other__") {
           $("input[name='user_other']").show();
         } else {
           $("input[name='user_other']").hide();
@@ -1249,7 +1249,7 @@ from django.utils.translation import ugettext as _
       });
 
       $("#chownForm select[name='group']").change(function () {
-        if ($(this).val() === "__other__") {
+        if ($(this).val() == "__other__") {
           $("input[name='group_other']").show();
         } else {
           $("input[name='group_other']").hide();
@@ -1257,18 +1257,18 @@ from django.utils.translation import ugettext as _
       });
 
       $("#chownForm").submit(function () {
-        if ($("#chownForm select[name='user']").val() === null) {
+        if ($("#chownForm select[name='user']").val() == null) {
           $("#chownRequired").find(".label").text("${_('User is required.')}");
           $("#chownRequired").show();
           resetPrimaryButtonsStatus(); //globally available
           return false;
-        } else if ($("#chownForm select[name='group']").val() === null) {
+        } else if ($("#chownForm select[name='group']").val() == null) {
           $("#chownRequired").find(".label").text("${_('Group is required.')}");
           $("#chownRequired").show();
           resetPrimaryButtonsStatus(); //globally available
           return false;
         } else {
-          if ($("#chownForm select[name='group']").val() === "__other__" && $("input[name='group_other']").val() === "") {
+          if ($("#chownForm select[name='group']").val() == "__other__" && $("input[name='group_other']").val() == "") {
             $("#chownRequired").find(".label").text("${_('Specify another group.')}");
             $("#chownForm input[name='group_other']").addClass("fieldError");
             $("#chownRequired").show();
@@ -1276,7 +1276,7 @@ from django.utils.translation import ugettext as _
             return false;
           }
 
-          if ($("#chownForm select[name='user']").val() === "__other__" && $("input[name='user_other']").val() === "") {
+          if ($("#chownForm select[name='user']").val() == "__other__" && $("input[name='user_other']").val() == "") {
             $("#chownRequired").find(".label").text("${_('Specify another user.')}");
             $("#chownForm input[name='user_other']").addClass("fieldError");
             $("#chownRequired").show();
@@ -1312,7 +1312,7 @@ from django.utils.translation import ugettext as _
       });
 
       $("#renameForm").submit(function () {
-        if ($("#newNameInput").val() === "") {
+        if ($("#newNameInput").val() == "") {
           $("#renameNameRequiredAlert").show();
           $("#newNameInput").addClass("fieldError");
           resetPrimaryButtonsStatus(); //globally available
@@ -1336,7 +1336,7 @@ from django.utils.translation import ugettext as _
       });
 
       $("#moveForm").on("submit", function () {
-        if ($.trim($("#moveForm").find("input.pathChooser").val()) === "") {
+        if ($.trim($("#moveForm").find("input.pathChooser").val()) == "") {
           $("#moveNameRequiredAlert").show();
           $("#moveForm").find("input[name='*dest_path']").addClass("fieldError");
           resetPrimaryButtonsStatus(); //globally available
@@ -1351,7 +1351,7 @@ from django.utils.translation import ugettext as _
       });
 
       $("#copyForm").on("submit", function () {
-        if ($.trim($("#copyForm").find("input.pathChooser").val()) === "") {
+        if ($.trim($("#copyForm").find("input.pathChooser").val()) == "") {
           $("#copyNameRequiredAlert").show();
           $("#copyForm").find("input[name='*dest_path']").addClass("fieldError");
           resetPrimaryButtonsStatus(); //globally available
@@ -1380,7 +1380,7 @@ from django.utils.translation import ugettext as _
       });
 
       $("#createDirectoryForm").submit(function () {
-        if ($.trim($("#newDirectoryNameInput").val()) === "") {
+        if ($.trim($("#newDirectoryNameInput").val()) == "") {
           $("#directoryNameRequiredAlert").show();
           $("#newDirectoryNameInput").addClass("fieldError");
           resetPrimaryButtonsStatus(); //globally available
@@ -1404,7 +1404,7 @@ from django.utils.translation import ugettext as _
       });
 
       $("#createFileForm").submit(function () {
-        if ($.trim($("#newFileNameInput").val()) === "") {
+        if ($.trim($("#newFileNameInput").val()) == "") {
           $("#fileNameRequiredAlert").show();
           $("#newFileNameInput").addClass("fieldError");
           resetPrimaryButtonsStatus(); //globally available
@@ -1445,12 +1445,12 @@ from django.utils.translation import ugettext as _
 
       $("*[rel='tooltip']").tooltip({ placement:"bottom" });
 
-      if (location.hash !== null && location.hash.length > 1) {
+      if (location.hash != null && location.hash.length > 1) {
         var targetPath = "";
         var hash = location.hash.substring(1);
-        if (hash !== null && hash !== "") {
+        if (hash != null && hash != "") {
           targetPath = "${url('filebrowser.views.view', path=urlencode('/'))}";
-          if (hash.indexOf("!!") !== 0) {
+          if (hash.indexOf("!!") != 0) {
             targetPath += stripHashes(hash.substring(1));
           }
           else {
@@ -1464,11 +1464,11 @@ from django.utils.translation import ugettext as _
             viewModel.targetPageNum(1)
           }
         }
-        if (location.href.indexOf("#") === -1) {
+        if (location.href.indexOf("#") == -1) {
           viewModel.targetPageNum(1);
           targetPath = "${current_request_path}";
         }
-        if (targetPath !== "") {
+        if (targetPath != "") {
           viewModel.targetPath(targetPath);
         }
       }
@@ -1491,7 +1491,7 @@ from django.utils.translation import ugettext as _
         onEnter: function (el) {
           viewModel.targetPath("${url('filebrowser.views.view', path=urlencode('/'))}" + stripHashes(el.val().substring(1)));
           viewModel.getStats(function (data) {
-            if (data.type !== null && data.type === "file") {
+            if (data.type != null && data.type == "file") {
               location.href = data.url;
               return false;
             } else {
@@ -1520,7 +1520,7 @@ from django.utils.translation import ugettext as _
         var targetPath = "",
           hash = location.hash.substring(1);
 
-        if (hash !== null && hash !== "") {
+        if (hash != null && hash != "") {
           if (history.indexOf(hash) === -1) {
             history.push(hash);
           }
@@ -1528,7 +1528,7 @@ from django.utils.translation import ugettext as _
           $.totalStorage('history', history);
 
           targetPath = "${url('filebrowser.views.view', path=urlencode('/'))}";
-          if (hash.indexOf("!!") !== 0) {
+          if (hash.indexOf("!!") != 0) {
             targetPath += stripHashes(hash.substring(1));
           }
           else {
@@ -1546,7 +1546,7 @@ from django.utils.translation import ugettext as _
           viewModel.targetPageNum(1);
           targetPath = "${current_request_path}";
         }
-        if (targetPath !== "") {
+        if (targetPath != "") {
           viewModel.targetPath(targetPath);
           viewModel.retrieveData();
         }

@@ -39,7 +39,7 @@ from django.utils.translation import ugettext as _
         <li class="pull-right">
           <div class="dropdown history">
             <a href="javascript:void(0)" class="historyLink dropdown-toggle" title="${_('View History')}" data-toggle="dropdown" id="historyDropdown">
-              <i class="fa fa-wheelchair"></i> ${_('History')}
+              <i class="fa fa-caret-down"></i> ${_('History')}
             </a>
             <ul id="hashHistory" class="dropdown-menu" role="menu" aria-labelledby="historyDropdown"></ul>
           </div>
