@@ -146,3 +146,17 @@
   height: 4px;
   width: 30%;
 }
+
+.history {
+  padding: 0 10px 8px 0;
+  top: 10px;
+}
+
+.history:hover {
+  border-bottom: 2px solid #338bb8;
+}
+
+.history a {
+  color: #737373;
+  text-decoration: none;
+}
