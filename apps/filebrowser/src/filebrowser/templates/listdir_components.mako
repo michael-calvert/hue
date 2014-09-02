@@ -449,15 +449,17 @@ from django.utils.translation import ugettext as _
     var history = [];
 
     var showHistory = function (num) {
-      //keep last 10 items, sort the array in alpha order & remove duplicates
+      //keep last 10 items
       var num = num || -10,
-        history = $.totalStorage('history').slice(num).sort(),
+        history = $.totalStorage('history').slice(num),
         frag = $('<ul/>', {
                   'id': 'hashHistory',
                   'class': 'dropdown-menu',
                   'role': 'menu',
                   'aria-labelledby': 'historyDropdown'
                 });
+
+      $('#hashHistory').remove();
 
       history.forEach(function (item) {
         var url = '/filebrowser/#' + item,
@@ -1529,6 +1531,7 @@ from django.utils.translation import ugettext as _
         var hash = window.location.hash.substring(1);
 
         if (hash != null && hash != "") {
+          // ensure no duplicates are pushed to $.totalStorage()
           if (history.indexOf(hash) === -1) {
             history.push(hash);
             $('.history').removeClass('no-history');
