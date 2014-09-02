@@ -446,7 +446,7 @@ from django.utils.translation import ugettext as _
   <script charset="utf-8">
   (function () {
     // track hash changes for quick lookup
-    var history = [];
+    var history = $.totalStorage('history') || [];
 
     var showHistory = function (num) {
       //keep last 10 items
