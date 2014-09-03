@@ -451,7 +451,7 @@ from django.utils.translation import ugettext as _
     var showHistory = function (num) {
       //keep last 10 items
       var num = num || -10,
-        history = $.totalStorage('history').slice(num).reverse(),
+        history = $.totalStorage('history').slice(num),
         frag = $('<ul/>', {
                   'id': 'hashHistory',
                   'class': 'dropdown-menu',
@@ -1533,8 +1533,11 @@ from django.utils.translation import ugettext as _
         if (hash != null && hash != "") {
           // ensure no duplicates are pushed to $.totalStorage()
           if (history.indexOf(hash) === -1) {
-            history.push(hash);
+            history.unshift(hash);
             $('.history').removeClass('no-history');
+          }
+          else {
+            history.unshift(history.splice(history.indexOf(hash), 1)[0]);
           }
 
           $.totalStorage('history', history);
