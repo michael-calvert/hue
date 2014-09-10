@@ -108,6 +108,21 @@ class HbaseApi(object):
         'kerberos_principal_short_name': kerberos_principal_short_name,
         'use_sasl': use_sasl,
     }
+                                  transport=conf.THRIFT_TRANSPORT.get(),
+                                  mechanism=conf.MECHANISM.get())
+  @classmethod
+  def _get_security(cls):
+    principal = get_server_principal()
+    if principal:
+      kerberos_principal_short_name = principal.split('/', 1)[0]
+    else:
+      kerberos_principal_short_name = None
+    use_sasl = get_server_authentication() == 'KERBEROS'
+
+    return {
+        'kerberos_principal_short_name': kerberos_principal_short_name,
+        'use_sasl': use_sasl,
+    }
 
   def get(self, cluster, tableName, row, column, attributes):
     client = self.connectCluster(cluster)
