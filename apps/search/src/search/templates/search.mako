@@ -20,6 +20,7 @@ from django.utils.translation import ugettext as _
 %>
 
 <%namespace name="dashboard" file="common_dashboard.mako" />
+<%namespace name="tree" file="common_tree.mako" />
 
 ${ commonheader(_('Search'), "search", user, "80px") | n,unicode }
 
@@ -1204,6 +1205,8 @@ ${ dashboard.import_layout() }
 ${ dashboard.import_bindings() }
 ${ dashboard.import_charts() }
 
+${ tree.import_templates(itemClick='toggleTreeNode', iconClick='toggleTreeNode') }
+
 <script type="text/javascript" charset="utf-8">
 var viewModel;
 
@@ -1526,6 +1529,8 @@ $(document).ready(function () {
 
   viewModel = new SearchViewModel(${ collection.get_c(user) | n,unicode }, _query, ${ initial | n,unicode });
   ko.applyBindings(viewModel);
+
+  viewModel.isEditing(true);
 
   viewModel.init(function(data){
     $(".chosen-select").trigger("chosen:updated");
