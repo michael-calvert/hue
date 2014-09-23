@@ -1204,6 +1204,33 @@ $(document).ready(function () {
     }
   }
 
+  % if app_name == 'impala':
+    syncWithHive = function () {
+      // sync tables with Hive
+      hac_jsoncalls({
+        autocompleteBaseURL: "${ autocomplete_base_url_hive | n,unicode }",
+        database: viewModel.database(),
+        onDataReceived: function (data) {
+          if (data.tables) {
+            var _hiveTables = data.tables;
+            hac_getTables(viewModel.database(), function (data) {  //preload tables for the default db
+              var _impalaTables = data.split(" ");
+              var _diff = {
+                added: _hiveTables.diff(_impalaTables),
+                removed: _impalaTables.diff(_hiveTables)
+              }
+              console.log("Tables diff")
+              console.log(_diff);
+            });
+          }
+        }
+      });
+    }
+    if (viewModel.database()) {
+      syncWithHive();
+    }
+  % endif
+
   $("#expandResults").on("click", function(){
     if ($(this).find("i").hasClass("fa-expand")){
       $(this).find("i").removeClass("fa-expand").addClass("fa-compress");
