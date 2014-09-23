@@ -34,6 +34,12 @@ ${layout.menubar(section='coordinators', dashboard=True)}
   <form>
     <input type="text" id="filterInput" class="input-xlarge search-query" placeholder="${ _('Search for username, name, etc...') }">
 
+    <div class="btn-toolbar" style="display: inline; vertical-align: middle; margin-left: 10px; font-size: 12px">
+      <button class="btn bulkToolbarBtn bulk-resume" data-operation="resume" title="${ _('Resume selected') }" disabled="disabled" type="button"><i class="fa fa-play"></i> ${ _('Resume') }</button>
+      <button class="btn bulkToolbarBtn bulk-suspend" data-operation="suspend" title="${ _('Suspend selected') }" disabled="disabled" type="button"><i class="fa fa-pause"></i> ${ _('Suspend') }</button>
+      <button class="btn bulkToolbarBtn btn-danger bulk-kill disable-feedback" data-operation="kill" title="${ _('Kill selected') }" disabled="disabled" type="button"><i class="fa fa-times"></i> ${ _('Kill') }</button>
+    </div>
+
     <span class="pull-right">
       <span style="padding-right:10px;float:left;margin-top:3px">
       ${ _('Show only') }
@@ -58,7 +64,8 @@ ${layout.menubar(section='coordinators', dashboard=True)}
     <table class="table table-condensed" id="running-table">
       <thead>
         <tr>
-          <th width="12%">${ _('Next Submission') }</th>
+          <th width="1%"><div class="select-all hueCheckbox fa"></div></th>
+          <th width="11%">${ _('Next Submission') }</th>
           <th width="5%">${ _('Status') }</th>
           <th width="20%">${ _('Name') }</th>
           <th width="5%">${ _('Progress') }</th>
@@ -77,6 +84,7 @@ ${layout.menubar(section='coordinators', dashboard=True)}
       <tbody>
         <tr>
           <td><i class="fa fa-2x fa-spinner fa-spin muted"></i></td>
+          <td></td>
           <td></td>
           <td></td>
           <td></td>
@@ -188,6 +196,7 @@ ${layout.menubar(section='coordinators', dashboard=True)}
       "bLengthChange":false,
       "sDom":"<'row'r>t<'row'<'span6'i><''p>>",
       "aoColumns":[
+        { "bSortable":false },
         { "sType":"date" },
         null,
         null,
@@ -381,11 +390,11 @@ ${layout.menubar(section='coordinators', dashboard=True)}
             var nodeFound = false;
             $(data).each(function (iCoord, currentItem) {
               % if enable_cron_scheduling:
-              if ($(node).children("td").eq(7).text() == currentItem.id) {
+              if ($(node).children("td").eq(8).text() == currentItem.id) {
                  nodeFound = true;
               }
               % else:
-              if ($(node).children("td").eq(8).text() == currentItem.id) {
+              if ($(node).children("td").eq(9).text() == currentItem.id) {
                  nodeFound = true;
               }
               % endif
@@ -402,11 +411,11 @@ ${layout.menubar(section='coordinators', dashboard=True)}
             var foundRow = null;
             $(nNodes).each(function (iNode, node) {
               % if enable_cron_scheduling:
-              if ($(node).children("td").eq(7).text() == coord.id) {
+              if ($(node).children("td").eq(8).text() == coord.id) {
                 foundRow = node;
               }
               % else:
-              if ($(node).children("td").eq(8).text() == coord.id) {
+              if ($(node).children("td").eq(9).text() == coord.id) {
                 foundRow = node;
               }
               % endif
@@ -444,6 +453,7 @@ ${layout.menubar(section='coordinators', dashboard=True)}
               if (['RUNNING', 'PREP', 'WAITING', 'SUSPENDED', 'PREPSUSPENDED', 'PREPPAUSED', 'PAUSED', 'STARTED', 'FINISHING'].indexOf(coord.status) > -1) {
                 try {
                   runningTable.fnAddData([
+                    '<div class="hueCheckbox fa" data-row-selector-exclude="true"></div>',
                     emptyStringIfNull(coord.nextMaterializedTime),
                     '<span class="' + coord.statusClass + '">' + coord.status + '</span>',
                     coord.appName,
@@ -457,7 +467,7 @@ ${layout.menubar(section='coordinators', dashboard=True)}
                     % endif
                     emptyStringIfNull(coord.startTime),
                     '<a href="' + coord.absoluteUrl + '" data-row-selector="true">' + coord.id + '</a>',
-                    killCell + " " + (['RUNNING', 'PREP', 'WAITING'].indexOf(coord.status) > -1?suspendCell:resumeCell)
+                    (['RUNNING', 'PREP', 'WAITING'].indexOf(coord.status) > -1?suspendCell:resumeCell) + " " + killCell
                   ]);
                 }
                 catch (error) {
@@ -466,11 +476,11 @@ ${layout.menubar(section='coordinators', dashboard=True)}
               }
             }
             else {
-              runningTable.fnUpdate('<span class="' + coord.statusClass + '">' + coord.status + '</span>', foundRow, 1, false);
+              runningTable.fnUpdate('<span class="' + coord.statusClass + '">' + coord.status + '</span>', foundRow, 2, false);
               % if enable_cron_scheduling:
-              runningTable.fnUpdate(killCell + " " + (['RUNNING', 'PREP', 'WAITING'].indexOf(coord.status) > -1?suspendCell:resumeCell), foundRow, 9, false);
+              runningTable.fnUpdate((['RUNNING', 'PREP', 'WAITING'].indexOf(coord.status) > -1?suspendCell:resumeCell) + " " + killCell, foundRow, 10, false);
               % else:
-              runningTable.fnUpdate(killCell + " " + (['RUNNING', 'PREP', 'WAITING'].indexOf(coord.status) > -1?suspendCell:resumeCell), foundRow, 10, false);
+              runningTable.fnUpdate((['RUNNING', 'PREP', 'WAITING'].indexOf(coord.status) > -1?suspendCell:resumeCell) + " " + killCell, foundRow, 11, false);
               % endif
 
             }
@@ -553,6 +563,68 @@ ${layout.menubar(section='coordinators', dashboard=True)}
         window.setTimeout(refreshProgress, 30000);
       });
     }
+
+    $(".bulkToolbarBtn").on("click", function(){
+      bulkOperation($(this).data("operation"));
+    });
+
+    function toggleBulkButtons() {
+      if ($(".hueCheckbox.fa-check:not(.select-all)").length > 0){
+        var _allResume = true;
+        $(".hueCheckbox.fa-check:not(.select-all)").each(function(){
+          if (['RUNNING', 'PREP', 'WAITING'].indexOf($(this).parents("tr").find(".label").text()) > -1){
+            _allResume = false;
+          }
+        });
+        if (! _allResume) {
+          $(".bulk-suspend").removeAttr("disabled");
+        }
+        $(".bulk-resume").removeAttr("disabled");
+        $(".bulk-kill").removeAttr("disabled");
+      }
+      else {
+        $(".bulkToolbarBtn").attr("disabled", "disabled");
+      }
+    }
+
+    function bulkOperation(what) {
+      var _ids = [];
+      $(".hueCheckbox.fa-check:not(.select-all)").each(function(){
+        _ids.push($(this).parents("tr").find("a[data-row-selector='true']").text());
+      });
+      switch (what) {
+        case "kill":
+          console.log("Bulk kill", _ids);
+          break;
+        case "suspend":
+          console.log("Bulk suspend", _ids);
+          break;
+        case "resume":
+          console.log("Bulk resume", _ids);
+          break;
+      }
+    }
+
+    $(document).on("click", ".hueCheckbox", function(){
+      var _check = $(this);
+      if (_check.hasClass("select-all")){
+        if (_check.hasClass("fa-check")){
+          $(".hueCheckbox").removeClass("fa-check");
+        }
+        else {
+          $(".hueCheckbox").addClass("fa-check");
+        }
+      }
+      else {
+        if (_check.hasClass("fa-check")){
+          _check.removeClass("fa-check");
+        }
+        else {
+          _check.addClass("fa-check");
+        }
+      }
+      toggleBulkButtons();
+    });
   });
 </script>
 

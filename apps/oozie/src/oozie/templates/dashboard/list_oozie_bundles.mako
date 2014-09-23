@@ -34,6 +34,12 @@ ${layout.menubar(section='bundles', dashboard=True)}
   <form>
     <input type="text" id="filterInput" class="input-xlarge search-query" placeholder="${ _('Search for username, name, etc...') }">
 
+    <div class="btn-toolbar" style="display: inline; vertical-align: middle; margin-left: 10px; font-size: 12px">
+      <button class="btn bulkToolbarBtn bulk-resume" data-operation="resume" title="${ _('Resume selected') }" disabled="disabled" type="button"><i class="fa fa-play"></i> ${ _('Resume') }</button>
+      <button class="btn bulkToolbarBtn bulk-suspend" data-operation="suspend" title="${ _('Suspend selected') }" disabled="disabled" type="button"><i class="fa fa-pause"></i> ${ _('Suspend') }</button>
+      <button class="btn bulkToolbarBtn btn-danger bulk-kill disable-feedback" data-operation="kill" title="${ _('Kill selected') }" disabled="disabled" type="button"><i class="fa fa-times"></i> ${ _('Kill') }</button>
+    </div>
+
     <span class="pull-right">
       <span style="padding-right:10px;float:left;margin-top:3px">
       ${ _('Show only') }
@@ -58,7 +64,8 @@ ${layout.menubar(section='bundles', dashboard=True)}
     <table class="table table-condensed" id="running-table">
       <thead>
         <tr>
-          <th width="15%">${ _('Kickoff Time') }</th>
+          <th width="1%"><div class="select-all hueCheckbox fa"></div></th>
+          <th width="14%">${ _('Kickoff Time') }</th>
           <th width="10%">${ _('Status') }</th>
           <th width="20%">${ _('Name') }</th>
           <th width="10%">${ _('Progress') }</th>
@@ -71,6 +78,7 @@ ${layout.menubar(section='bundles', dashboard=True)}
       <tbody>
         <tr>
           <td><i class="fa fa-2x fa-spinner fa-spin muted"></i></td>
+          <td></td>
           <td></td>
           <td></td>
           <td></td>
@@ -158,6 +166,7 @@ ${layout.menubar(section='bundles', dashboard=True)}
       "bLengthChange":false,
       "sDom":"<'row'r>t<'row'<'span6'i><''p>>",
       "aoColumns":[
+        { "bSortable":false },
         { "sType":"date" },
         null,
         null,
@@ -387,6 +396,7 @@ ${layout.menubar(section='bundles', dashboard=True)}
               if (['RUNNING', 'PREP', 'WAITING', 'SUSPENDED', 'PREPSUSPENDED', 'PREPPAUSED', 'PAUSED', 'STARTED', 'FINISHING'].indexOf(bundle.status) > -1) {
                 try {
                   runningTable.fnAddData([
+                    '<div class="hueCheckbox fa" data-row-selector-exclude="true"></div>',
                     emptyStringIfNull(bundle.kickoffTime),
                     '<span class="' + bundle.statusClass + '">' + bundle.status + '</span>',
                     bundle.appName,
@@ -394,7 +404,7 @@ ${layout.menubar(section='bundles', dashboard=True)}
                     bundle.user,
                     emptyStringIfNull(bundle.created),
                     '<a href="' + bundle.absoluteUrl + '" data-row-selector="true">' + bundle.id + '</a>',
-                    killCell + " " + (['RUNNING', 'PREP', 'WAITING'].indexOf(bundle.status) > -1?suspendCell:resumeCell)
+                    (['RUNNING', 'PREP', 'WAITING'].indexOf(bundle.status) > -1?suspendCell:resumeCell) + " " + killCell
                   ]);
                 }
                 catch (error) {
@@ -404,8 +414,8 @@ ${layout.menubar(section='bundles', dashboard=True)}
 
             }
             else {
-              runningTable.fnUpdate('<span class="' + bundle.statusClass + '">' + bundle.status + '</span>', foundRow, 1, false);
-              runningTable.fnUpdate(killCell + " " + (['RUNNING', 'PREP', 'WAITING'].indexOf(bundle.status) > -1?suspendCell:resumeCell), foundRow, 7, false);
+              runningTable.fnUpdate('<span class="' + bundle.statusClass + '">' + bundle.status + '</span>', foundRow, 2, false);
+              runningTable.fnUpdate((['RUNNING', 'PREP', 'WAITING'].indexOf(bundle.status) > -1?suspendCell:resumeCell) + " " + killCell, foundRow, 8, false);
             }
           });
         }
@@ -470,6 +480,67 @@ ${layout.menubar(section='bundles', dashboard=True)}
       });
     }
 
+    $(".bulkToolbarBtn").on("click", function(){
+      bulkOperation($(this).data("operation"));
+    });
+
+    function toggleBulkButtons() {
+      if ($(".hueCheckbox.fa-check:not(.select-all)").length > 0){
+        var _allResume = true;
+        $(".hueCheckbox.fa-check:not(.select-all)").each(function(){
+          if (['RUNNING', 'PREP', 'WAITING'].indexOf($(this).parents("tr").find(".label").text()) > -1){
+            _allResume = false;
+          }
+        });
+        if (! _allResume) {
+          $(".bulk-suspend").removeAttr("disabled");
+        }
+        $(".bulk-resume").removeAttr("disabled");
+        $(".bulk-kill").removeAttr("disabled");
+      }
+      else {
+        $(".bulkToolbarBtn").attr("disabled", "disabled");
+      }
+    }
+
+    function bulkOperation(what) {
+      var _ids = [];
+      $(".hueCheckbox.fa-check:not(.select-all)").each(function(){
+        _ids.push($(this).parents("tr").find("a[data-row-selector='true']").text());
+      });
+      switch (what) {
+        case "kill":
+          console.log("Bulk kill", _ids);
+          break;
+        case "suspend":
+          console.log("Bulk suspend", _ids);
+          break;
+        case "resume":
+          console.log("Bulk resume", _ids);
+          break;
+      }
+    }
+
+    $(document).on("click", ".hueCheckbox", function(){
+      var _check = $(this);
+      if (_check.hasClass("select-all")){
+        if (_check.hasClass("fa-check")){
+          $(".hueCheckbox").removeClass("fa-check");
+        }
+        else {
+          $(".hueCheckbox").addClass("fa-check");
+        }
+      }
+      else {
+        if (_check.hasClass("fa-check")){
+          _check.removeClass("fa-check");
+        }
+        else {
+          _check.addClass("fa-check");
+        }
+      }
+      toggleBulkButtons();
+    });
   });
 </script>
 
