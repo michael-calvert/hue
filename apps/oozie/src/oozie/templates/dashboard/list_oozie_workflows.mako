@@ -86,6 +86,7 @@ ${ layout.menubar(section='workflows', dashboard=True) }
           <td></td>
           <td></td>
           <td></td>
+          <td></td>
         </tr>
       </tbody>
     </table>
