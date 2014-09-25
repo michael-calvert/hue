@@ -369,7 +369,7 @@ ${layout.menubar(section='coordinators', dashboard=True)}
     refreshCompleted();
     refreshProgress();
 
-    var numRunning = 0;
+    var numRunning = -1;
 
     function refreshRunning() {
       $.getJSON(window.location.pathname + "?format=json&type=running", function (data) {
@@ -468,9 +468,9 @@ ${layout.menubar(section='coordinators', dashboard=True)}
             else {
               runningTable.fnUpdate('<span class="' + coord.statusClass + '">' + coord.status + '</span>', foundRow, 1, false);
               % if enable_cron_scheduling:
-              runningTable.fnUpdate(killCell + " " + (['RUNNING', 'PREP', 'WAITING'].indexOf(coord.status) > -1?suspendCell:resumeCell), foundRow, 9, false);
+              runningTable.fnUpdate(killCell + " " + (['RUNNING', 'PREP', 'WAITING'].indexOf(coord.status) > -1?suspendCell:resumeCell), foundRow, 8, false);
               % else:
-              runningTable.fnUpdate(killCell + " " + (['RUNNING', 'PREP', 'WAITING'].indexOf(coord.status) > -1?suspendCell:resumeCell), foundRow, 10, false);
+              runningTable.fnUpdate(killCell + " " + (['RUNNING', 'PREP', 'WAITING'].indexOf(coord.status) > -1?suspendCell:resumeCell), foundRow, 9, false);
               % endif
 
             }
@@ -480,12 +480,12 @@ ${layout.menubar(section='coordinators', dashboard=True)}
           runningTable.fnClearTable();
         }
 
-        if (data.length != numRunning) {
+        if (data.length != numRunning && numRunning > -1) {
           refreshCompleted();
         }
         numRunning = data.length;
         % if enable_cron_scheduling:
-        renderCrons(); // utils.inc.mako
+        renderCrons("#running-table"); // utils.inc.mako
         % endif
         window.setTimeout(refreshRunning, 20000);
       });
@@ -519,7 +519,7 @@ ${layout.menubar(section='coordinators', dashboard=True)}
         });
         completedTable.fnDraw();
         % if enable_cron_scheduling:
-        renderCrons(); // utils.inc.mako
+        renderCrons("#completed-table"); // utils.inc.mako
         % endif
       });
     }
