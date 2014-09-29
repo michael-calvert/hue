@@ -160,10 +160,15 @@ ${layout.menubar(section='coordinators', dashboard=True)}
 % if enable_cron_scheduling:
 <link href="/static/css/jqCron.css" rel="stylesheet" type="text/css" />
 <script src="/static/js/jqCron.js" type="text/javascript"></script>
+
+<style type="text/css">
+  .jqCron-container {
+    display: none;
+  }
+</style>
 % endif
 
 <script type="text/javascript" charset="utf-8">
-
   var Coordinator = function (c) {
     return {
       id: c.id,
@@ -374,7 +379,7 @@ ${layout.menubar(section='coordinators', dashboard=True)}
     % endif
 
 
-    var numRunning = 0;
+    var numRunning = -1;
 
     refreshRunning = function () {
       $.getJSON(window.location.pathname + "?format=json&type=running", function (data) {
@@ -427,7 +432,7 @@ ${layout.menubar(section='coordinators', dashboard=True)}
                     '<div class="progress"><div class="bar bar-warning" style="width: 1%"></div></div>',
                     coord.user,
                     % if enable_cron_scheduling:
-                    '<div class="cron-frequency"><input class="value" type="hidden" value="'+emptyStringIfNull(coord.frequency)+'"/></div>',
+                    '<div class="cron-frequency"><span class="shownValue">'+emptyStringIfNull(coord.frequency)+'</span><input class="value" type="hidden" value="'+emptyStringIfNull(coord.frequency)+'"/></div>',
                     % else:
                     emptyStringIfNull(coord.frequency),
                     emptyStringIfNull(coord.timeUnit),
@@ -450,12 +455,12 @@ ${layout.menubar(section='coordinators', dashboard=True)}
           runningTable.fnClearTable();
         }
 
-        if (data.length != numRunning) {
+        if (data.length != numRunning && numRunning > -1) {
           refreshCompleted();
         }
         numRunning = data.length;
         % if enable_cron_scheduling:
-        renderCrons(); // utils.inc.mako
+        renderCronPopovers(); // utils.inc.mako
         % endif
         window.setTimeout(refreshRunning, 20000);
       });
@@ -474,7 +479,7 @@ ${layout.menubar(section='coordinators', dashboard=True)}
               emptyStringIfNull(coord.duration),
               coord.user,
               % if enable_cron_scheduling:
-              '<div class="cron-frequency"><input class="value" type="hidden" value="'+emptyStringIfNull(coord.frequency)+'"/></div>',
+              '<div class="cron-frequency"><span class="shownValue">'+emptyStringIfNull(coord.frequency)+'</span><input class="value" type="hidden" value="'+emptyStringIfNull(coord.frequency)+'"/></div>',
               % else:
               emptyStringIfNull(coord.frequency),
               emptyStringIfNull(coord.timeUnit),
@@ -489,7 +494,7 @@ ${layout.menubar(section='coordinators', dashboard=True)}
         });
         completedTable.fnDraw();
         % if enable_cron_scheduling:
-        renderCrons(); // utils.inc.mako
+        renderCronPopovers(); // utils.inc.mako
         % endif
       });
     }

@@ -573,6 +573,48 @@ function renderCrons() {
       }
     });
 }
+function renderCronPopovers() {
+  $(".cron-frequency:not(.initialized)").hover(function () {
+    if ($(this).find(".jqCron-container").length == 0) {
+      var _val = $(this).find(".value");
+      $(this).data("originalValue", _val.val());
+      _val.jqCron({
+        texts: {
+          i18n: cron_i18n // comes from utils.inc.mako
+        },
+        readonly: true,
+        enabled_minute: false,
+        multiple_dom: true,
+        multiple_month: true,
+        multiple_mins: true,
+        multiple_dow: true,
+        multiple_time_hours: true,
+        multiple_time_minutes: false,
+        default_period: 'day',
+        default_value: _val.val(),
+        no_reset_button: true,
+        lang: 'i18n'
+      });
+      $(this).popover({
+        title: "${ _('Cron value') }",
+        html: true,
+        trigger: "manual",
+        content: $(this).find(".jqCron-container").hasClass("jqCron-error") ? "${ _('Not a valid cron value') }" : $(this).find(".jqCron-container").html(),
+        placement: "left"
+      });
+      $(this).addClass("initialized");
+    }
+    $(this).popover("show");
+  }, function () {
+    $(".popover").hide();
+  });
+  $(".cron-frequency").hover(function () {
+    $(".popover").hide();
+    $(this).popover("show");
+  }, function () {
+    $(".popover").hide();
+  });
+}
 </%def>
 
 <%def name="bulk_dashboard_functions()">
