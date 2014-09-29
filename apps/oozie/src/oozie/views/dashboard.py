@@ -409,7 +409,7 @@ def list_oozie_info(request):
 
   return render('dashboard/list_oozie_info.mako', request, {
     'instrumentation': instrumentation,
-    'metrics': metrics,
+    'metrics': json.dumps(metrics),
     'configuration': configuration,
     'oozie_status': oozie_status,
   })

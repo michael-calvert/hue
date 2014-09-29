@@ -119,9 +119,11 @@ ${ layout.menubar(section='oozie', dashboard=True) }
     % if metrics:
     <div class="tab-pane active" id="metrics">
       <form class="form-search">
-        <input type="text" class="searchFilter input-xlarge search-query" placeholder="${_('Text Filter')}">
+        <input type="text" class="searchFilterJSON input-xlarge search-query" placeholder="${_('Text Filter')}">
+        <a class="btn btn-default expandJSON"><i class="fa fa-expand"></i> ${ _('Expand all') }</a>
+        <a class="btn btn-default collapseJSON"><i class="fa fa-compress"></i> ${ _('Collapse all') }</a>
       </form>
-      ${ metrics }
+      <div id="metricsJSON"></div>
     </div>
     % endif
 
@@ -133,7 +135,7 @@ ${ layout.menubar(section='oozie', dashboard=True) }
     </div>
 
 
-    <div style="margin-bottom: 16px">
+    <div style="margin-bottom: 16px; margin-top: 10px">
       <a href="${ url('oozie:list_oozie_bundles') }" class="btn">${ _('Back') }</a>
     </div>
 
@@ -142,9 +144,59 @@ ${ layout.menubar(section='oozie', dashboard=True) }
     </div>
   </div>
 
+  % if metrics:
+    <link rel="stylesheet" href="/static/css/jquery.jsonview.css" />
+    <script src="/static/ext/js/jquery.jsonview.js" type="text/javascript"></script>
+    <script src="/static/ext/js/jquery.highlight-4.js" type="text/javascript"></script>
+
+    <style type="text/css">
+      .highlight {
+        background-color: yellow;
+      }
+      #metricsJSON {
+        overflow-y: auto;
+      }
+    </style>
+  % endif
 
 <script>
   $(document).ready(function(){
+    % if metrics:
+      var JSON_METRICS = ${ metrics | n,unicode };
+      $("#metricsJSON").JSONView(JSON_METRICS);
+
+      $(".searchFilterJSON").jHueDelayedInput(function(){
+        $("#metricsJSON").removeHighlight();
+        $("#metricsJSON").highlight($(".searchFilterJSON").val());
+        if ($(".highlight").length > 0){
+          $("#metricsJSON").scrollTop($("#metricsJSON").scrollTop() + $(".highlight:eq(0)").offset().top - $("#metricsJSON").offset().top);
+        }
+        else {
+          $("#metricsJSON").scrollTop(0);
+        }
+      });
+
+      $(".collapseJSON").on("click", function () {
+        $("#metricsJSON").JSONView("collapse");
+      });
+
+      $(".expandJSON").on("click", function () {
+        $("#metricsJSON").JSONView("expand");
+      });
+
+      $("#metricsJSON").css("maxHeight", $(window).height() - 300);
+
+      var _resize = -1;
+      $(window).on("resize", function(){
+        window.clearTimeout(_resize);
+        _resize = window.setTimeout(function(){
+          $("#metricsJSON").css("maxHeight", $(window).height() - 300);
+        }, 200)
+      });
+
+    % endif
+
+
     $("a[data-row-selector='true']").jHueRowSelector();
 
     $("*[rel=tooltip]").tooltip();
