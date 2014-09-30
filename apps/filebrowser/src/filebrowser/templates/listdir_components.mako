@@ -406,27 +406,43 @@ from django.utils.translation import ugettext as _
 </div>
 
   <script id="fileTemplate" type="text/html">
-    <tr style="cursor: pointer" data-bind="event: { mouseover: toggleHover, mouseout: toggleHover}">
+    <tr style="cursor: pointer" data-bind="event: { mouseover: toggleHover, mouseout: toggleHover }, click: $root.viewFile, css: { 'row-selected': selected() }">
       <td class="center" data-bind="click: handleSelect" style="cursor: default">
-        <div data-bind="visible: name != '..', css: {hueCheckbox: name != '..', 'fa': name != '..', 'fa-check': selected}"></div>
+        <div data-bind="visible: name != '..', css: { hueCheckbox: name != '..', 'fa': name != '..', 'fa-check': selected }"></div>
       </td>
-      <td data-bind="click: $root.viewFile" class="left"><i data-bind="css: {'fa': true, 'fa-play': $.inArray(name, ['workflow.xml', 'coordinator.xml', 'bundle.xml']) > -1, 'fa-file-o': type == 'file', 'fa-folder': type != 'file', 'fa-folder-open': type != 'file' && hovered}"></i></td>
-      <td data-bind="click: $root.viewFile, attr: {'title': tooltip}" rel="tooltip">
+      <td class="left"><i data-bind="click: $root.viewFile, css: { 'fa': true, 'fa-play': $.inArray(name, ['workflow.xml', 'coordinator.xml', 'bundle.xml']) > -1, 'fa-file-o': type == 'file', 'fa-folder': type != 'file', 'fa-folder-open': type != 'file' && hovered }"></i></td>
+      <td data-bind="attr: {'title': tooltip}" rel="tooltip">
         <!-- ko if: name == '..' -->
         <a href="#" data-bind="click: $root.viewFile"><i class="fa fa-level-up"></i></a>
         <!-- /ko -->
         <!-- ko if: name != '..' -->
         <strong><a href="#" data-bind="click: $root.viewFile, text: name"></a></strong>
         <!-- /ko -->
-
       </td>
-      <td data-bind="click: $root.viewFile">
+      <td>
         <span data-bind="visible: type=='file', text: stats.size"></span>
       </td>
-      <td data-bind="click: $root.viewFile, text: stats.user"></td>
-      <td data-bind="click: $root.viewFile, text: stats.group"></td>
-      <td data-bind="click: $root.viewFile, text: permissions"></td>
-      <td data-bind="click: $root.viewFile, text: stats.mtime" style="white-space: nowrap;"></td>
+      <td>
+        %if is_fs_superuser:
+        <span data-bind="text: stats.user, visible: ! selected()"></span>
+        <a href="#" rel="tooltip" title="${_('Change owner')}" data-original-title="${_('Change owner')}" data-bind="text: stats.user, visible: ! $root.inTrash() && selected(), click: $root.changeOwner, enable: $root.selectedFiles().length > 0"></a>
+        %else:
+        <span data-bind="text: stats.user"></span>
+        %endif
+      </td>
+      <td>
+        %if is_fs_superuser:
+        <span data-bind="text: stats.group, visible: ! selected()"></span>
+        <a href="#" rel="tooltip" title="${_('Change group')}" data-original-title="${_('Change group')}" data-bind="text: stats.group, visible: ! $root.inTrash() && selected(), click: $root.changeOwner"></a>
+        %else:
+        <span data-bind="text: stats.group"></span>
+        %endif
+      </td>
+      <td>
+        <span data-bind="text: permissions, visible: ! selected()"></span>
+        <a href="#" rel="tooltip" title="${_('Change permissions')}" data-bind="text: permissions, visible: ! $root.inTrash() && selected(), click: $root.changePermissions" data-original-title="${_('Change permissions')}"></a>
+      </td>
+      <td data-bind="text: stats.mtime" style="white-space: nowrap;"></td>
     </tr>
   </script>
 
@@ -582,6 +598,8 @@ from django.utils.translation import ugettext as _
         },
         selected:ko.observable(false),
         handleSelect: function (row, e) {
+          e.preventDefault();
+          e.stopPropagation();
           this.selected(! this.selected());
           viewModel.allSelected(false);
         },
@@ -920,8 +938,10 @@ from django.utils.translation import ugettext as _
 
       };
 
-      self.changeOwner = function () {
+      self.changeOwner = function (data, event) {
         var paths = [];
+        event.preventDefault();
+        event.stopPropagation();
 
         $(self.selectedFiles()).each(function (index, file) {
           paths.push(file.path);
@@ -948,9 +968,12 @@ from django.utils.translation import ugettext as _
         });
       };
 
-      self.changePermissions = function () {
+      self.changePermissions = function (data, event) {
         var paths = [];
         var allFileType = true;
+
+        event.preventDefault();
+        event.stopPropagation();
 
         $(self.selectedFiles()).each(function (index, file) {
           if ("dir" == file.type){
@@ -1194,6 +1217,21 @@ from django.utils.translation import ugettext as _
 
     $(document).ready(function () {
 
+      if (getHistory().length == 0) {
+        $('.history').addClass('no-history');
+      }
+
+      $('.historyLink').on('click', function (e) {
+        if(getHistory().length > 0) {
+          showHistory();
+        } else {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+
+      // right-click context menu
+
       // Drag and drop uploads from anywhere on filebrowser screen
       if (window.FileReader) {
         var showHoverMsg = function (msg) {
@@ -1206,19 +1244,6 @@ from django.utils.translation import ugettext as _
         };
 
         var _isDraggingOverText = false;
-
-        if (getHistory().length == 0) {
-          $('.history').addClass('no-history');
-        }
-
-        $('.historyLink').on('click', function (e) {
-          if(getHistory().length > 0) {
-            showHistory();
-          } else {
-            e.preventDefault();
-            e.stopPropagation();
-          }
-        });
 
         $('.card').on('dragenter', function (e) {
           e.preventDefault();
