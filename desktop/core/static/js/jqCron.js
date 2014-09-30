@@ -164,6 +164,7 @@ var jqCronDefaultSettings = {
 					}
 					// generate new
 					settings.jquery_element = $('<span class="jqCron"></span>').uniqueId('jqCron').insertAfter($this);
+          settings.jquery_element.attr('data-originalValue', $this.val());
 				}
 				else {
 					console && console.error(settings.texts[settings.lang].error1.replace('%s', this.tagName));

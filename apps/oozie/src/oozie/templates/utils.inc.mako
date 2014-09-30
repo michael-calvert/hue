@@ -545,33 +545,55 @@ var cron_i18n = {
     weekdays: ['${_('monday')}', '${_('tuesday')}', '${_('wednesday')}', '${_('thursday')}', '${_('friday')}', '${_('saturday')}', '${_('sunday')}'],
     months: ['${_('january')}', '${_('february')}', '${_('march')}', '${_('april')}', '${_('may')}', '${_('june')}', '${_('july')}', '${_('august')}', '${_('september')}', '${_('october')}', '${_('november')}', '${_('december')}']
 }
-function renderCrons() {
-    $(".cron-frequency").each(function(){
-      var _val = $(this).find(".value");
-      $(this).data("originalValue", _val.val());
-      _val.jqCron({
+function renderCrons(limitToElement) {
+    console.log("render", limitToElement);
+    var _start = (new Date()).getTime();
+        $((limitToElement != null ? limitToElement : "") + " .cron-frequency .value").jqCron({
         texts: {
           i18n: cron_i18n // comes from utils.inc.mako
         },
         readonly: true,
-        enabled_minute: false,
-        multiple_dom: true,
-        multiple_month: true,
-        multiple_mins: true,
-        multiple_dow: true,
-        multiple_time_hours: true,
-        multiple_time_minutes: false,
-        default_period: 'day',
-        default_value: _val.val(),
-        no_reset_button: true,
         lang: 'i18n'
       })
       .jqCronGetInstance();
-      var _container = $(this).find(".jqCron-container");
-      if (_container.hasClass("jqCron-error")){
-        _container.parent().text($(this).data("originalValue"));
-      }
-    });
+
+      $((limitToElement != null ? limitToElement : "") + " .jqCron-container").each(function(cnt, item){
+        if ($(item).hasClass("jqCron-error")){
+          $(item).parent().text($(item).parent().attr("data-originalValue"));
+        }
+      });
+
+
+
+##    $(".cron-frequency").each(function(){
+##      var _val = $(this).find(".value");
+##      $(this).data("originalValue", _val.val());
+##      _val.jqCron({
+##        texts: {
+##          i18n: cron_i18n // comes from utils.inc.mako
+##        },
+##        readonly: true,
+##        enabled_minute: false,
+##        multiple_dom: true,
+##        multiple_month: true,
+##        multiple_mins: true,
+##        multiple_dow: true,
+##        multiple_time_hours: true,
+##        multiple_time_minutes: false,
+##        default_period: 'day',
+##        default_value: _val.val(),
+##        no_reset_button: true,
+##        lang: 'i18n'
+##      })
+##      .jqCronGetInstance();
+##      var _container = $(this).find(".jqCron-container");
+##      if (_container.hasClass("jqCron-error")){
+##        _container.parent().text($(this).data("originalValue"));
+##      }
+##    });
+
+  var _end = (new Date()).getTime();
+  console.log("Render time for jqCron", _end-_start);
 }
 function renderCronPopovers() {
   $(".cron-frequency:not(.initialized)").hover(function () {
