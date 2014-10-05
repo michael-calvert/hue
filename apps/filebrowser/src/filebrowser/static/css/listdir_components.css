@@ -212,3 +212,9 @@
   text-align: left;
   display: none;
 }
+
+.context-menu {
+  display: none;
+  position: absolute;
+  width: 250px;
+}

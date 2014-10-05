@@ -395,6 +395,28 @@ from django.utils.translation import ugettext as _
     </form>
   </div>
 
+  <!-- actions context menu -->
+  <ul class="context-menu dropdown-menu">
+    <li><a href="#" title="${_('Rename')}" data-bind="visible: !$root.inTrash(), click: $root.renameFile,
+    enable: $root.selectedFiles().length == 1 && isCurrentDirSelected().length == 0"><i class="fa fa-font"></i>
+    ${_('Rename')}</a></li>
+    <li><a href="#"title="${_('Move')}" data-bind="click: $root.move, enable: $root.selectedFiles().length > 0 &&
+    isCurrentDirSelected().length == 0"><i class="fa fa-random"></i> ${_('Move')}</a></li>
+    <li><a href="#" title="${_('Copy')}" data-bind="click: $root.copy, enable: $root.selectedFiles().length > 0 &&
+    isCurrentDirSelected().length == 0"><i class="fa fa-files-o"></i> ${_('Copy')}</a></li>
+    <li><a href="#" title="${_('Download')}" data-bind="visible: !$root.inTrash() && $root.selectedFiles().length == 1 && selectedFile().type == 'file', click: $root.downloadFile"><i class="fa fa-arrow-circle-o-down"></i> ${_('Download')}</a></li>
+    <li class="divider"></li>
+    %if is_fs_superuser:
+    <li><a href="#" title="${_('Change owner/group')}" data-bind="visible: !$root.inTrash(), click: $root.changeOwner, enable: $root.selectedFiles().length > 0"><i class="fa fa-user"></i> ${_('Change owner / group')}</a></li>
+    %endif
+    <li><a href="#" title="${_('Change permissions')}" data-bind="visible: !$root.inTrash(), click: $root.changePermissions, enable: $root.selectedFiles().length > 0"><i class="fa fa-list-alt"></i> ${_('Change permissions')}</a></li>
+    <li class="divider"></li>
+    <!-- ko ifnot: $root.inTrash -->
+    <li><a href="#"  data-bind="enable: $root.selectedFiles().length > 0 && isCurrentDirSelected().length == 0,
+    click: $root.trashSelected"><i class="fa fa-times"></i> ${_('Move to trash')}</a></li>
+    <!-- /ko -->
+  </ul>
+
   <div id="submit-wf-modal" class="modal hide"></div>
 
   <div id="progressStatus" class="uploadstatus alert alert-info hide">
@@ -406,7 +428,7 @@ from django.utils.translation import ugettext as _
 </div>
 
   <script id="fileTemplate" type="text/html">
-    <tr style="cursor: pointer" data-bind="event: { mouseover: toggleHover, mouseout: toggleHover}">
+    <tr style="cursor: pointer" data-bind="event: { mouseover: toggleHover, mouseout: toggleHover, contextmenu: showContextMenu }">
       <td class="center" data-bind="click: handleSelect" style="cursor: default">
         <div data-bind="visible: name != '..', css: {hueCheckbox: name != '..', 'fa': name != '..', 'fa-check': selected}"></div>
       </td>
@@ -584,6 +606,25 @@ from django.utils.translation import ugettext as _
         handleSelect: function (row, e) {
           this.selected(! this.selected());
           viewModel.allSelected(false);
+        },
+        // display the context menu when an item is right/context clicked
+        showContextMenu: function (row, e) {
+          var cm = $('.context-menu'),
+            rect = document.querySelector('body').getBoundingClientRect();
+
+          // clear out selections
+          ko.utils.arrayFilter(viewModel.files(), function (file) {
+            if (file.selected()) {
+              file.selected(false);
+            }
+          });
+
+          if ($.inArray(row.name, ['..', '.']) === -1) {
+            this.selected(true);
+            cm.css({ display: 'block', top: e.pageY - 15, left: (e.pageX < rect.right - 200 ) ? e.pageX : e.pageX - 250 });
+          } else {
+            cm.css({ display: 'none' });
+          }
         },
         hovered:ko.observable(false),
         toggleHover: function (row, e) {
@@ -1193,6 +1234,13 @@ from django.utils.translation import ugettext as _
     ko.applyBindings(viewModel);
 
     $(document).ready(function () {
+
+      $('body').on('click', function (e) {
+        var cm = $('.context-menu');
+        if (cm.is(':visible')) {
+          cm.css({ display: 'none' });
+        }
+      });
 
       // Drag and drop uploads from anywhere on filebrowser screen
       if (window.FileReader) {
