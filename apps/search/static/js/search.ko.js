@@ -781,7 +781,7 @@ var Collection = function (vm, collection) {
         if (data.status == 0) {
           facet.properties.start(data.properties.start);
           facet.properties.end(data.properties.end);
-          facet.properties.gap(data.properties.gap);
+          facet.properties.gap(data.properties.gap); // facet.properties.gap(data.properties.initial_gap);
 
           var fq = vm.query.getFacetFilter(facet_json.id);
           if (fq != null) {
