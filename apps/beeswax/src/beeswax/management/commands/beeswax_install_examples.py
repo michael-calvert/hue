@@ -64,7 +64,8 @@ class Command(NoArgsCommand):
     Document.objects.sync()
 
     if exception is not None:
-      raise exception
+      if "AlreadyExistsException" not in exception.message:
+        raise exception
 
   def _install_tables(self, django_user, app_name):
     data_dir = beeswax.conf.LOCAL_EXAMPLES_DATA_DIR.get()
