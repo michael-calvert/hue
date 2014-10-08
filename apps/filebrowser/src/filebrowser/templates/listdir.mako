@@ -59,6 +59,7 @@ ${ fb_components.menubar() }
               isCurrentDirSelected().length == 0"><i class="fa fa-random"></i> ${_('Move')}</a></li>
               <li><a href="#" title="${_('Copy')}" data-bind="click: copy, enable: selectedFiles().length > 0 &&
               isCurrentDirSelected().length == 0"><i class="fa fa-files-o"></i> ${_('Copy')}</a></li>
+              <li><a href="#" title="${_('Merge files')}" data-bind="click: $root.merge, visible: minItems()"><i class="fa fa-exchange"></i> ${_('Merge files')}</a></li>
               <li><a href="#" title="${_('Download')}" data-bind="visible: !inTrash() && selectedFiles().length == 1 && selectedFile().type == 'file', click: downloadFile"><i class="fa fa-arrow-circle-o-down"></i> ${_('Download')}</a></li>
               <li class="divider"></li>
               %if is_fs_superuser:

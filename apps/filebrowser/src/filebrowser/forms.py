@@ -140,7 +140,12 @@ class MkDirForm(forms.Form):
 class TouchForm(forms.Form):
   op = "touch"
   path = PathField(label=_("Path in which to create the file"))
-  name = PathField(label=_("File Name"))
+  files = PathField(label=_("File Name"))
+
+class ConcatForm(forms.Form):
+  op = "concat"
+  path = CharField(label=_("Destination path/filename"))
+  names = CharField(label=_("Paths/files to concatenate"))
 
 class ChownForm(forms.Form):
   op = "chown"

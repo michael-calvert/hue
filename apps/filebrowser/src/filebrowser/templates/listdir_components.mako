@@ -314,6 +314,30 @@ from django.utils.translation import ugettext as _
     </form>
   </div>
 
+  <!-- merge modal -->
+  <div id="mergeModal" class="modal hide fade">
+    <form id="mergeForm" action="/filebrowser/concat?next=${current_request_path}" method="POST" enctype="multipart/form-data" class="form-inline form-padding-fix">
+      <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a>
+        <h3>${_('Merge to:')}</h3>
+      </div>
+      <div class="modal-body">
+        <label>${_('Merged file name')} <input id="mergeName" name="path" value="" type="text" class="input-xlarge"/></label>
+        <p>Destination: <span class="mergeDest"></span></p>
+      </div>
+      <div class="modal-footer">
+        <div id="mergeNameRequiredAlert" class="hide" style="position: absolute; left: 10px;">
+          <span class="label label-important">${_('Name is required.')}</span>
+        </div>
+        <div id="mergeNameExistsAlert" class="hide" style="position: absolute; left: 10px;">
+          <span class="label label-important"><span class="newName"></span> ${_('already exists.')}</span>
+        </div>
+        <a class="btn" data-dismiss="modal">${_('Cancel')}</a>
+        <input type="submit" value="${_('Merge')}" class="btn btn-primary" />
+      </div>
+    </form>
+  </div>
+
   <!-- upload file modal -->
   <div id="uploadFileModal" class="modal hide fade">
     <div class="modal-header">
@@ -405,6 +429,7 @@ from django.utils.translation import ugettext as _
     isCurrentDirSelected().length == 0"><i class="fa fa-random"></i> ${_('Move')}</a></li>
     <li><a href="#" title="${_('Copy')}" data-bind="click: $root.copy, enable: $root.selectedFiles().length > 0 &&
     isCurrentDirSelected().length == 0"><i class="fa fa-files-o"></i> ${_('Copy')}</a></li>
+    <li><a href="#" title="${_('Merge files')}" data-bind="click: $root.merge, visible: minItems()"><i class="fa fa-exchange"></i> ${_('Merge files')}</a></li>
     <li><a href="#" title="${_('Download')}" data-bind="visible: !$root.inTrash() && $root.selectedFiles().length == 1 && selectedFile().type == 'file', click: $root.downloadFile"><i class="fa fa-arrow-circle-o-down"></i> ${_('Download')}</a></li>
     <li class="divider"></li>
     %if is_fs_superuser:
@@ -983,8 +1008,104 @@ from django.utils.translation import ugettext as _
             }
           });
         });
+      };
 
+      self.minItems = function (obj) {
+        /*
+          Determine if criteria for minimum number of items of type file are selected
 
+          Use case is to display an item in a menu if there are at least 2 files selected
+          Examples: visible: minItems() or visible: minItems({min: 1, type: 'dir'})
+
+          Expects and object as argument
+            obj.min is the minimum items needed to perform an operation
+            obj.type is the type of item expected (i.e., file, dir, etc)
+
+         */
+        var obj = obj || {},
+          min = obj.min || 2,
+          type = obj.type || 'file',
+          count = 0;
+
+        self.selectedFiles().forEach(function (i) {
+          if (i.type === type) {
+            count++;
+          }
+        });
+
+        return count >= min;
+      };
+
+      self.merge = function () {
+        var paths = [],
+          name = $('#mergeName');
+
+        $(self.selectedFiles()).each(function (index, file) {
+          if (file.type === 'file') {
+            paths.push(file.path);
+          }
+        });
+
+        // [paths] passes in list, paths only sends the last file
+        hiddenFields($("#mergeForm"), "names", [paths]);
+
+        name.on('blur', function (e) {
+          var nameAlert = $("#mergeNameRequiredAlert"),
+            existsAlert = $("#mergeNameExistsAlert");
+
+          $('.mergeDest').html(self.currentPath() + name.val());
+
+          if ($(this).val().length === 0) {
+            nameAlert.show();
+            $(this).addClass("fieldError");
+          } else {
+            nameAlert.hide();
+            $(this).removeClass("fieldError");
+          }
+
+          if (fileExists($(this).val())) {
+            existsAlert.show();
+            $(this).addClass("fieldError");
+          } else {
+            existsAlert.hide();
+            $(this).removeClass("fieldError");
+          }
+        });
+
+        name.on('focus', function (e) {
+          var nameAlert = $("#mergeNameRequiredAlert"),
+            existsAlert = $("#mergeNameExistsAlert");
+
+          nameAlert.hide();
+          existsAlert.hide();
+          $(this).removeClass("fieldError");
+        });
+
+        $('#mergeForm').on('submit', function (e) {
+          var name = $('#mergeName'),
+            fname = name.val();
+
+          if (name.val().length === 0) {
+            $("#mergeNameRequiredAlert").show();
+            name.addClass("fieldError");
+            return false;
+          }
+
+          if (fileExists(name.val())) {
+            $("#mergeNameExistsAlert").show();
+            return false;
+          }
+
+          name.val(viewModel.currentPath() + fname);
+          return true;
+        });
+
+        $("#mergeForm").attr("action", "/filebrowser/concat?next=${url('filebrowser.views.view', path=urlencode('/'))}" + "." + self.currentPath());
+
+        $("#mergeModal").modal({
+          keyboard:true,
+          show:true
+        });
       };
 
       self.changeOwner = function (data, event) {

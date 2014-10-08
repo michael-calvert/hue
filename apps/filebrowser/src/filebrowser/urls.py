@@ -48,4 +48,5 @@ urlpatterns = patterns('filebrowser.views',
   url(r'^rmtree$', 'rmtree', name='rmtree'),
   url(r'^chmod$', 'chmod', name='chmod'),
   url(r'^chown$', 'chown', name='chown'),
+  url(r'^concat', 'concat', name='concat'),
 )

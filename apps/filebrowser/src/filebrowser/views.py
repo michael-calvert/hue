@@ -61,7 +61,7 @@ from filebrowser.lib.rwx import filetype, rwx
 from filebrowser.lib import xxd
 from filebrowser.forms import RenameForm, UploadFileForm, UploadArchiveForm, MkDirForm, EditorForm, TouchForm,\
                               RenameFormSet, RmTreeFormSet, ChmodFormSet, ChownFormSet, CopyFormSet, RestoreFormSet,\
-                              TrashPurgeForm
+                              TrashPurgeForm, ConcatForm
 
 
 DEFAULT_CHUNK_SIZE_BYTES = 1024 * 4 # 4KB
@@ -991,6 +991,7 @@ def mkdir(request):
 
     return generic_op(MkDirForm, request, smart_mkdir, ["path", "name"], "path")
 
+
 def touch(request):
     def smart_touch(path, name):
         # Make sure only the filename is specified.
@@ -1000,6 +1001,19 @@ def touch(request):
         request.fs.create(os.path.join(path, name))
 
     return generic_op(TouchForm, request, smart_touch, ["path", "name"], "path")
+
+
+@require_http_methods(["POST"])
+def concat(request):
+    def smart_concat(path, name):
+        if "#" in name:
+            raise PopupException(_("Could not merge \"%s\": Hashes are not allowed in filenames." % name))
+
+        print "%%%%%%%%%%%%%%%%%%%%%%%%%%%% path", path
+        print "%%%%%%%%%%%%%%%%%%%%%%%%%%%% name", name
+    # need to see if extra path should be the desired file name, and how to create file w/ that name.
+    return generic_op(ConcatForm, request, smart_concat, ["path", "names"], None)
+
 
 @require_http_methods(["POST"])
 def rmtree(request):

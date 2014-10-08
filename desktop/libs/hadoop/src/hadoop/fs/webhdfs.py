@@ -324,6 +324,7 @@ class WebHdfs(Hdfs):
       raise IOError(errno.EEXIST, _("Path %s already exists.") % str(smart_str(original_path)))
     self.rename(path, original_path)
 
+
   def purge_trash(self):
     """
     purge_trash()
@@ -332,6 +333,7 @@ class WebHdfs(Hdfs):
     """
     for timestamped_directory in self.listdir(self.trash_path):
       self.rmtree(self.join(self.trash_path, timestamped_directory), True)
+
 
   def mkdir(self, path, mode=None):
     """
@@ -449,6 +451,26 @@ class WebHdfs(Hdfs):
     Please use read().
     """
     return File(self, path, mode)
+
+
+  def concat(self, dest, files):
+    """
+    concat(dest, files)
+
+    dest is destination path/filename
+    files are the files to concatenate
+
+    Concatenates files in hdfs similar to getMerge command
+    """
+
+    path = Hdfs.normpath(dest)
+    params = self._getparams()
+    params['op'] = "CONCAT"
+    params['sources'] = files
+    success = self._invoke_with_redirect('POST', dest, params, files)
+
+    if not success:
+      raise IOError(_("Concatenation failed %s") % path)
 
 
   def getDefaultFilePerms(self):
