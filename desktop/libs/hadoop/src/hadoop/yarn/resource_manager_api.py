@@ -45,7 +45,7 @@ def get_resource_manager():
       if _api_cache is None:
         yarn_cluster = cluster.get_cluster_conf_for_job_submission()
         if yarn_cluster is None:
-            raise PopupException(_('No Resource Manager are available.'))
+          raise PopupException(_('No Resource Manager are available.'))
         _api_cache = ResourceManagerApi(yarn_cluster.RESOURCE_MANAGER_API_URL.get(), yarn_cluster.SECURITY_ENABLED.get(), yarn_cluster.SSL_CERT_CA_VERIFY.get())
     finally:
       _api_cache_lock.release()
@@ -59,9 +59,11 @@ class ResourceManagerApi(object):
     self._root = Resource(self._client)
     self._security_enabled = security_enabled
     self._ssl_cert_ca_verify = ssl_cert_ca_verify
+
     if self._security_enabled:
       self._client.set_kerberos_auth()
-      self._client.set_verify(ssl_cert_ca_verify == 'True')
+      if ssl_cert_ca_verify:
+        self._client.set_verify(True)
 
   def __str__(self):
     return "ResourceManagerApi at %s" % (self._url,)
