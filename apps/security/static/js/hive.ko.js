@@ -795,7 +795,7 @@ var HiveViewModel = function (initial) {
     return _roles.sort();
   }, self);
 
-  self.is_sentry_admin = initial.is_sentry_admin;
+  self.is_sentry_admin = true;//initial.is_sentry_admin;
   self.availableHadoopGroups = ko.observableArray();
   self.assist = new Assist(self, initial);
 
