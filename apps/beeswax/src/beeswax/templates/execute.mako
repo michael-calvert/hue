@@ -2553,10 +2553,16 @@ function watchEvents() {
 }
 
 function cacheQueryTextEvents() {
-  codeMirror.on("change", function () {
-    $(".query").val(codeMirror.getValue());
-    $.totalStorage(hac_getTotalStorageUserPrefix() + "${app_name}_temp_query", codeMirror.getValue());
-  });
+  var _waitForCodemirrorInit = -1;
+  _waitForCodemirrorInit = window.setInterval(function () {
+    if (typeof codeMirror != "undefined") {
+      codeMirror.on("change", function () {
+        $(".query").val(codeMirror.getValue());
+        $.totalStorage(hac_getTotalStorageUserPrefix() + "${app_name}_temp_query", codeMirror.getValue());
+      });
+      window.clearInterval(_waitForCodemirrorInit);
+    }
+  }, 100);
 }
 
 function getDatabases(callback){
