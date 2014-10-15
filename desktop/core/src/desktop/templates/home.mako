@@ -365,7 +365,7 @@ ${ commonheader(_('Welcome Home'), "home", user) | n,unicode }
       <div class="clearfix"></div>
       <div style="margin-top: 20px">
         <div class="input-append">
-          <input id="documentShareTypeahead" type="text" style="width: 460px" placeholder="${_('You can type a username or a group')}">
+          <input id="documentShareTypeahead" type="text" style="width: 460px" placeholder="${_('Type a username, a group, or "Everyone"')}">
           <div class="btn-group">
             <a id="documentShareAddBtn" class="btn"><i class="fa fa-plus-circle"></i> <span data-bind="text: selectedPermLabel"></span></a>
             <a class="btn dropdown-toggle" data-toggle="dropdown">
