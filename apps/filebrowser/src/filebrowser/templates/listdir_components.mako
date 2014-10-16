@@ -1373,6 +1373,21 @@ from django.utils.translation import ugettext as _
           }
         });
 
+        $('body').on('drop', '.dropzone', function (e) {
+          var destpath;
+
+          e.stopPropagation();
+
+          if ($(e.target).hasClass('dropzone')) {
+            destpath = viewModel.currentPath() + '/' + e.currentTarget.innerHTML;
+          }
+
+          if (destpath) {
+            $('#moveDestination').val(destpath);
+            viewModel.move('drag');
+          }
+        });
+
         $('body').on('dragend', function (e) {
           _isExternalFile = true;
         });
