@@ -444,7 +444,7 @@ from django.utils.translation import ugettext as _
 </div>
 
   <script id="fileTemplate" type="text/html">
-    <tr style="cursor: pointer" data-bind="event: { mouseover: toggleHover, mouseout: toggleHover, contextmenu: showContextMenu }, click: $root.viewFile, css: { 'row-selected': selected() }">
+    <tr style="cursor: pointer" data-bind="drop: {enabled: name !== '.' && type !== 'file'}, event: { mouseover: toggleHover, mouseout: toggleHover, contextmenu: showContextMenu }, click: $root.viewFile, css: { 'row-selected': selected() }">
       <td class="center" data-bind="click: handleSelect" style="cursor: default">
         <div data-bind="visible: name != '..', css: { hueCheckbox: name != '..', 'fa': name != '..', 'fa-check': selected }"></div>
       </td>
@@ -454,7 +454,7 @@ from django.utils.translation import ugettext as _
         <a href="#" data-bind="click: $root.viewFile"><i class="fa fa-level-up"></i></a>
         <!-- /ko -->
         <!-- ko if: name != '..' -->
-        <strong><a href="#" data-bind="click: $root.viewFile, text: name"></a></strong>
+        <strong><a href="#" data-bind="drag: {value: $data}, click: $root.viewFile, text: name"></a></strong>
         <!-- /ko -->
       </td>
       <td>
@@ -487,11 +487,49 @@ from django.utils.translation import ugettext as _
   <script src="/static/js/jquery.hdfsautocomplete.js" type="text/javascript" charset="utf-8"></script>
   <script src="/static/js/jquery.hdfstree.js" type="text/javascript" charset="utf-8"></script>
   <script src="/static/ext/js/knockout-min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/static/ext/js/jquery/plugins/jquery-ui-1.10.4.draggable-droppable-sortable.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="/static/ext/js/datatables-paging-0.1.js" type="text/javascript" charset="utf-8"></script>
   <script src="/static/js/dropzone.js" type="text/javascript" charset="utf-8"></script>
 
 
   <script charset="utf-8">
+    var _dragged;
+    ko.bindingHandlers.drag = {
+        init: function(element, valueAccessor, allBindingsAccessor, viewModel) {
+            var dragElement = $(element);
+            var dragOptions = {
+                helper: 'clone',
+                revert: true,
+                revertDuration: 0,
+                start: function() {
+                    _dragged = ko.utils.unwrapObservable(valueAccessor().value);
+                },
+                cursor: 'default'
+            };
+            dragElement.draggable(dragOptions).disableSelection();
+        }
+    };
+
+    ko.bindingHandlers.drop = {
+        init: function(element, valueAccessor, allBindingsAccessor, viewModel) {
+            var dropElement = $(element);
+          if (valueAccessor().enabled){
+            var dropOptions = {
+                hoverClass: 'drag-hover',
+                drop: function(event, ui) {
+                  dropElement.fadeOut(200, function(){
+                    dropElement.fadeIn(200);
+                  });
+                  $.jHueNotify.info('Moving...');
+                    //valueAccessor().value(_dragged);
+                }
+            };
+            dropElement.droppable(dropOptions);
+          }
+        }
+    };
+
+
     var getHistory = function () {
       return $.totalStorage('hue_fb_history') || [];
     };
