@@ -39,8 +39,13 @@ def _get_docs(user):
   history_tag = DocumentTag.objects.get_history_tag(user)
   trash_tag = DocumentTag.objects.get_trash_tag(user)
   docs = itertools.chain(
-      Document.objects.get_docs(user).exclude(tags__in=[trash_tag]).filter(tags__in=[history_tag]).select_related('DocumentTag', 'User', 'DocumentPermission').order_by('-last_modified')[:500],
-      Document.objects.get_docs(user).exclude(tags__in=[history_tag]).select_related('DocumentTag', 'User', 'DocumentPermission').order_by('-last_modified')[:100]
+      Document.objects.get_docs(user).exclude(tags__in=[trash_tag])
+        .filter(tags__in=[history_tag])
+        .select_related('DocumentTag', 'User', 'DocumentPermission')
+        .order_by('-last_modified')[:500],
+      Document.objects.get_docs(user).exclude(tags__in=[history_tag])
+        .select_related('DocumentTag', 'User', 'DocumentPermission')
+        .order_by('-last_modified')[:100]
   )
   return list(docs)
 
@@ -101,6 +106,29 @@ def massaged_tags(tag, tag_doc_mapping):
     'docs': [doc.id for doc in tag_doc_mapping[tag]] # Could get with one request groupy
   }
 
+def massage_permissions(document):
+  """
+  Returns the permissions for a given document as a dictionary
+  """
+  read_perms = document.list_permissions(perm='read')
+  write_perms = document.list_permissions(perm='write')
+  return {
+    'perms': {
+        'read': {
+          'users': [{'id': perm_user.id, 'username': perm_user.username} \
+                     for perm_user in read_perms.users.all()],
+          'groups': [{'id': perm_group.id, 'name': perm_group.name} \
+                     for perm_group in read_perms.groups.all()]
+        },
+        'write': {
+          'users': [{'id': perm_user.id, 'username': perm_user.username} \
+                     for perm_user in write_perms.users.all()],
+          'groups': [{'id': perm_group.id, 'name': perm_group.name} \
+                     for perm_group in write_perms.groups.all()]
+        }
+      }
+    }
+
 def massaged_documents_for_json(documents, user):
   """
   var DOCUMENTS_DEFAULTS = {
@@ -139,41 +167,23 @@ def massaged_documents_for_json(documents, user):
     except:
       # If app of document is disabled
       url = ''
-    read_perms = document.list_permissions(perm='read')
-    write_perms = document.list_permissions(perm='write')
-    docs[document.id] = {
-      'id': document.id,
-      'contentType': html.conditional_escape(document.content_type.name),
-      'icon': document.icon,
-      'name': html.conditional_escape(document.name),
-      'url': html.conditional_escape(url),
-      'description': html.conditional_escape(document.description),
-      'tags': [{'id': tag.id, 'name': html.conditional_escape(tag.tag)} \
-               for tag in document.tags.all()],
-      'perms': {
-        'read': {
-          'users': [{'id': perm_user.id, 'username': perm_user.username} for perm_user in read_perms.users.all()],
-          'groups': [{'id': perm_group.id, 'name': perm_group.name} \
-                     for perm_group in read_perms.groups.all()]
-        },
-        'write': {
-          'users': [{'id': perm_user.id, 'username': perm_user.username} for perm_user in write_perms.users.all()],
-          'groups': [{'id': perm_group.id, 'name': perm_group.name} for perm_group in write_perms.groups.all()]
-        }
-      },
-      'owner': document.owner.username,
-      'isMine': document.owner == user,
-      'lastModified': document.last_modified.strftime("%x %X"),
-      'lastModifiedInMillis': time.mktime(document.last_modified.timetuple())
-   }
+    docs[document.id] = massage_doc_for_json(document, user)
 
   return docs
 
+def get_document(request):
+  if request.method == 'POST':
+    return Http404()
+  elif request.method == 'GET':
+    doc_id = request.GET['id']
+    doc = Document.objects.get(id=doc_id)
+    response = massage_doc_for_json(doc, request.user)
+    return HttpResponse(json.dumps(response), mimetype="application/json")
 
 def massage_doc_for_json(doc, user):
   read_perms = doc.list_permissions(perm='read')
   write_perms = doc.list_permissions(perm='write')
-  return {
+  massaged_doc = {
       'id': doc.id,
       'contentType': doc.content_type.name,
       'icon': doc.icon,
@@ -182,21 +192,15 @@ def massage_doc_for_json(doc, user):
       'description': html.conditional_escape(doc.description),
       'tags': [{'id': tag.id, 'name': html.conditional_escape(tag.tag)} \
                for tag in doc.tags.all()],
-      'perms': {
-        'read': {
-          'users': [{'id': perm_user.id, 'username': perm_user.username} for perm_user in read_perms.users.all()],
-          'groups': [{'id': perm_group.id, 'name': perm_group.name} for perm_group in read_perms.groups.all()]
-        },
-        'write': {
-          'users': [{'id': perm_user.id, 'username': perm_user.username} for perm_user in write_perms.users.all()],
-          'groups': [{'id': perm_group.id, 'name': perm_group.name} for perm_group in write_perms.groups.all()]
-        }
-      },
       'owner': doc.owner.username,
       'isMine': doc.owner.username == user.username,
       'lastModified': doc.last_modified.strftime("%x %X"),
       'lastModifiedInMillis': time.mktime(doc.last_modified.timetuple())
     }
+
+  permissions = massage_permissions(doc)
+  massaged_doc.update(permissions)
+  return massaged_doc
 
 
 def add_tag(request):
