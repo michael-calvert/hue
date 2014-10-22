@@ -76,7 +76,13 @@ ${layout.menubar(section='groups')}
               data-search="${group.name}${', '.join([group_user.username for group_user in group.user_set.all()])}">
           %if user.is_superuser:
             <td data-row-selector-exclude="true">
-              <div class="hueCheckbox groupCheck fa" data-name="${group.name}" data-row-selector-exclude="true"></div>
+              %if group.id != 1:
+                <div class="hueCheckbox groupCheck fa" data-name="${group.name}" data-row-selector-exclude="true">
+                </div>
+              %else:
+                <div class="fa" data-name="${group.name}" data-row-selector-exclude="true">
+                </div>
+              %endif
             </td>
           %endif
           <td>

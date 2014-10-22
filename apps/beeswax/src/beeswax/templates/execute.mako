@@ -2167,6 +2167,10 @@ function tryExecuteQuery() {
   logGA('query/execute');
 }
 
+function tryShareQuery() {
+  $("#documentShareModal").modal("show");
+}
+
 function tryExecuteNextStatement() {
   var query = getHighlightedQuery() || codeMirror.getValue();
 
