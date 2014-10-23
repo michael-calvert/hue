@@ -117,6 +117,9 @@ def massage_users_for_json(users, extended=False):
 def massage_groups_for_json(groups):
   simple_groups = []
   for group in groups:
+    # default group, this is the first group added to db
+    if group.id == 1:
+      group.name = 'Everyone'
     simple_groups.append({
       'id': group.id,
       'name': group.name
