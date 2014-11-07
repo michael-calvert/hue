@@ -892,9 +892,9 @@ for x in sys.stdin:
         data_buf = ""
 
 
-        assert_equal(len(target_ls), 1)
+        assert_equal(len(target_ls), 2)
 
-        for target in target_ls:
+        for target in target_ls[1]:
           target_file = self.cluster.fs.open(target_dir + '/' + target)
           data_buf += target_file.read()
           target_file.close()
