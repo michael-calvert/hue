@@ -770,8 +770,14 @@ var Collection = function (vm, collection) {
     var facet = self.getFacetById(facet_json.id);
 
     vm.query.removeFilter(ko.mapping.fromJS({'id': facet_json.id}));
-    if (facet.properties.gap() != null) { // Bar, line charts don't have gap
-      facet.properties.gap(facet.properties.initial_gap());
+    if (facet && facet.properties) {
+      if (facet.properties.gap() != null) { // Bar, line charts don't have gap
+        facet.properties.gap(facet.properties.initial_gap());
+      }
+      if (facet.properties.initial_start() != null) { // bar and line charts
+        facet.properties.start(facet.properties.initial_start());
+        facet.properties.end(facet.properties.initial_end());
+      }
     }
 
     vm.search();
