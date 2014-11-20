@@ -44,7 +44,7 @@
   <properties>
     <hadoop.version>2.4.1-mapr-1408</hadoop.version>
     <hadoop_test.version>2.4.1-mapr-1408</hadoop_test.version>
-    <hive.version>0.12-mapr</hive.version>
+    <hive.version>0.13-mapr</hive.version>
     <slf4j.version>1.6.1</slf4j.version>
     <commons-logging.version>1.0.4</commons-logging.version>
     <thrift.version>0.9.0</thrift.version>
