@@ -407,7 +407,18 @@ var ManageCollectionsViewModel = function() {
   // UI
   self.isLoading = ko.observable();
   self.hasLoadedOnce = ko.observable(false);
+  self.showCores = ko.observable(false);
   self.filteredCollections = ko.observableArray();
+  self.displayCollections = ko.computed(function() {
+    return ko.utils.arrayFilter(self.filteredCollections(), function(collection) {
+      if (self.hasCloudCollections() && ! self.showCores()){
+        return !ko.unwrap(collection).isCoreOnly();  
+      }
+      else {
+        return true;
+      }
+    });
+  });
   self.selectedCollections = ko.computed(function() {
     return ko.utils.arrayFilter(self.collections(), function(collection) {
       return collection.selected();
@@ -417,6 +428,12 @@ var ManageCollectionsViewModel = function() {
     return ko.utils.arrayFilter(self.selectedCollections(), function(collection) {
       return !ko.unwrap(collection).isCoreOnly();
     });
+  });
+  self.hasCloudCollections = ko.computed(function() {
+    var _arr = ko.utils.arrayFilter(self.collections(), function(collection) {
+      return !ko.unwrap(collection).isCoreOnly();
+    });
+    return _arr.length > 0;
   });
 
   self.toggleSelectAll = function() {
