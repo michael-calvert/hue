@@ -38,6 +38,10 @@ mkdir -p "$HUE_PID_DIR"
 
 log=$HUE_LOG_DIR/hue-$HUE_IDENT_STRING-$command-$HOSTNAME.out
 pid=$HUE_PID_DIR/hue-$HUE_IDENT_STRING-$command.pid
+secure_sh_log=$HUE_LOG_DIR/secure-sh-log.out
+
+# Generate secure keys
+nohup $HUE_HOME/bin/secure.sh >> "$secure_sh_log" 2>&1 < /dev/null &
 
 case $startStop in
   (start)
