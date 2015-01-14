@@ -34,12 +34,7 @@ fi
 }
 
 function find_certificate_key(){
-    if [[ -f $MAPR_SSL_KEYSTORE_PATH ]]; then
-        echo $(find_cluster_name)
-    else
-        log '[ERROR] No MapR SSL keystore found here: '$MAPR_SSL_KEYSTORE_PATH
-        exit 0
-    fi
+    echo $(find_cluster_name)
 }
 
 SECURE=$(find_is_secure_enabled)
@@ -48,7 +43,12 @@ log '[INFO] secure = '$SECURE
 
 if [[ $SECURE == 'true' ]]; then
     log '[INFO] Using existing ssl_keystore: '$MAPR_SSL_KEYSTORE_PATH
-    CERTIFICATEKEY=$(find_certificate_key)
+    if [[ -f $MAPR_SSL_KEYSTORE_PATH ]]; then
+        CERTIFICATEKEY=$(find_certificate_key)
+    else
+        log '[ERROR] No MapR SSL keystore found here: '$MAPR_SSL_KEYSTORE_PATH
+        exit 0
+    fi
     log '[INFO] CERTIFICATEKEY = '$CERTIFICATEKEY
 else
     log '[INFO] Done.'
