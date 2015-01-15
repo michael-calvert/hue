@@ -146,7 +146,11 @@ YARN_CLUSTERS = UnspecifiedConfigSection(
       SSL_CERT_CA_VERIFY=Config("ssl_cert_ca_verify",
                   help="In secure mode (HTTPS), if SSL certificates from Resource Manager Rest Server have to be verified against certificate authority",
                   default=False,
-                  type=coerce_bool)
+                  type=coerce_bool),
+      MECHANISM=Config("mechanism",
+                  default='none',
+                  help="Security mechanism of authentication none/GSSAPI/MAPR-SECURITY",
+                  type=str),
     )
   )
 )
