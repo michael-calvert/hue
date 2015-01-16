@@ -93,7 +93,8 @@ class HbaseApi(object):
                                   kerberos_principal=_security['kerberos_principal_short_name'],
                                   use_sasl=_security['use_sasl'],
                                   timeout_seconds=None,
-                                  transport=conf.THRIFT_TRANSPORT.get())
+                                  transport=conf.THRIFT_TRANSPORT.get(),
+                                  mechanism=conf.MECHANISM.get())
   @classmethod
   def _get_security(cls):
     principal = get_server_principal()
