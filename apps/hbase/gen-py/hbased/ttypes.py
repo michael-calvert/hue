@@ -17,7 +17,7 @@ except:
 
 
 
-class TCell(object):
+class TCell:
   """
   TCell - Used to transport a cell value (byte[]) and the timestamp it was
   stored with together as a result for get and getRow methods. This promotes
@@ -94,7 +94,7 @@ class TCell(object):
   def __ne__(self, other):
     return not (self == other)
 
-class ColumnDescriptor(object):
+class ColumnDescriptor:
   """
   An HColumnDescriptor contains information about a column family
   such as the number of versions, compression settings, etc. It is
@@ -254,7 +254,7 @@ class ColumnDescriptor(object):
   def __ne__(self, other):
     return not (self == other)
 
-class TRegionInfo(object):
+class TRegionInfo:
   """
   A TRegionInfo contains information about an HTable region.
 
@@ -388,7 +388,7 @@ class TRegionInfo(object):
   def __ne__(self, other):
     return not (self == other)
 
-class Mutation(object):
+class Mutation:
   """
   A Mutation object is used to either update or delete a column-value.
 
@@ -486,7 +486,7 @@ class Mutation(object):
   def __ne__(self, other):
     return not (self == other)
 
-class BatchMutation(object):
+class BatchMutation:
   """
   A BatchMutation object is used to apply a number of Mutations to a single row.
 
@@ -569,7 +569,7 @@ class BatchMutation(object):
   def __ne__(self, other):
     return not (self == other)
 
-class TIncrement(object):
+class TIncrement:
   """
   For increments that are not incrementColumnValue
   equivalents.
@@ -668,7 +668,7 @@ class TIncrement(object):
   def __ne__(self, other):
     return not (self == other)
 
-class TRowResult(object):
+class TRowResult:
   """
   Holds row name and then a map of columns to cells.
 
@@ -753,7 +753,7 @@ class TRowResult(object):
   def __ne__(self, other):
     return not (self == other)
 
-class TScan(object):
+class TScan:
   """
   A Scan object is used to specify scanner parameters when opening a scanner.
 

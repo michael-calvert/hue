@@ -215,15 +215,6 @@ service Hbase {
     throws (1:IOError io)
 
   /**
-   * List all the mapr tables.
-   *
-   * @return returns a list of names
-   */
-  list<string> getTableNamesByPath(1:string path)
-    throws (1:IOError io)
-
-
-  /**
    * List all the column families assoicated with a table.
    *
    * @return list of column family descriptors
@@ -921,4 +912,12 @@ service Hbase {
     1:Text row,
 
   ) throws (1:IOError io)
+
+    /**
+   * List all the mapr tables.
+   *
+   * @return returns a list of names
+   */
+  list<Text> getTableNamesByPath(1:string path)
+    throws (1:IOError io)
 }
