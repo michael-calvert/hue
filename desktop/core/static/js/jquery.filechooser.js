@@ -17,6 +17,11 @@
  * jHue fileChooser plugin
  */
 ;
+function compareByName(el1, el2){
+    if(el1.name === el2.name) return 0;
+    if (el1.name > el2.name) return 1;
+    else return -1;
+}
 (function ($, window, document, undefined) {
 
     var pluginName = "jHueFileChooser",
@@ -154,7 +159,7 @@
                   });
                 }
                 _breadcrumbs.appendTo($(_parent.element));
-
+                data.files=$(data.files).sort(compareByName);
                 $(data.files).each(function (cnt, file) {
                     var _f = $("<li>");
                     var _flink = $("<a>");
