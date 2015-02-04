@@ -191,6 +191,7 @@ ${ commonheader(None, "hbase", user) | n,unicode }
       </tr>
     </script>
 
+  <div id="jstree_mapr"></div>
     <!-- New Table Modal -->
     <form id="new_table_modal" action="createTable" method="POST" class="modal hide fade ajaxSubmit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-header">
@@ -487,7 +488,9 @@ canWrite = ${ str(can_write).lower() };
 <script src="/static/ext/js/codemirror-xml.js"></script>
 <script src="/static/ext/js/codemirror-javascript.js"></script>
 <link rel="stylesheet" href="/static/ext/css/codemirror.css">
+<script src="/hbase/static/js/jstree.min.js" type="text/javascript" charset="utf-8"></script>
 
+<script src="/hbase/static/js/maprtables.js" type="text/javascript" charset="utf-8"></script>
 <script src="/hbase/static/js/base.js" type="text/javascript" charset="utf-8"></script>
 <script src="/hbase/static/js/utils.js" type="text/javascript" charset="utf-8"></script>
 <script src="/hbase/static/js/api.js" type="text/javascript" charset="utf-8"></script>
