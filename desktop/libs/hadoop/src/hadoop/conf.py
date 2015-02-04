@@ -72,8 +72,10 @@ HDFS_CLUSTERS = UnspecifiedConfigSection(
                                    default="hdfs", type=str),
       DN_KERBEROS_PRINCIPAL=Config("dn_kerberos_principal", help="Kerberos principal for DataNode", # Unused
                                    default="hdfs", type=str),
-      SECURITY_ENABLED=Config("security_enabled", help="Is running with Kerberos authentication",
+      SECURITY_ENABLED=Config("security_enabled", help="Is running with Kerberos or MapR-securtity authentication",
                               default=False, type=coerce_bool),
+      MECHANISM=Config("mechanism", help="Security mechanism of authentication none/GSSAPI/MAPR-SECURITY",
+                       default='none', type=str),
       TEMP_DIR=Config("temp_dir", help="HDFS directory for temporary files",
                       default='/tmp', type=str),
       UMASK=Config("umask", help="Default umask for file and directory creation, specified in an octal value",
