@@ -170,7 +170,7 @@ class HiveServerTRowSet2:
     self.startRowOffset = row_set.startRowOffset
 
   def is_empty(self):
-    return not self.row_set.columns or not HiveServerTColumnValue2(self.row_set.columns[0]).val
+    return not self.row_set.columns
 
   def cols(self, col_names):
     cols_rows = []
@@ -224,21 +224,49 @@ class HiveServerTColumnValue2:
   def val(self):
     # Could directly get index from schema but would need to cache the schema
     if self.column_value.stringVal:
-      return self.column_value.stringVal.values
+      return self._get_val(self.column_value.stringVal)
     elif self.column_value.i16Val is not None:
-      return self.column_value.i16Val.values
+      return self._get_val(self.column_value.i16Val)
     elif self.column_value.i32Val is not None:
-      return self.column_value.i32Val.values
+      return self._get_val(self.column_value.i32Val)
     elif self.column_value.i64Val is not None:
-      return self.column_value.i64Val.values
+      return self._get_val(self.column_value.i64Val)
     elif self.column_value.doubleVal is not None:
-      return self.column_value.doubleVal.values
+      return self._get_val(self.column_value.doubleVal)
     elif self.column_value.boolVal is not None:
-      return self.column_value.boolVal.values
+      return self._get_val(self.column_value.boolVal)
     elif self.column_value.byteVal is not None:
-      return self.column_value.byteVal.values
+      return self._get_val(self.column_value.byteVal)
     elif self.column_value.binaryVal is not None:
-      return self.column_value.binaryVal.values
+      return self._get_val(self.column_value.binaryVal)
+
+  @classmethod
+  def _get_val(cls, column):
+    column.values = cls.set_nulls(column.values, column.nulls)
+    column.nulls = '\x00' # Clear the null value for not re-marking again the column with null at the next call
+    return column.values
+
+  @classmethod
+  def mark_nulls(cls, values, bytestring):
+    mask = bytearray(bytestring)
+
+    for n in mask:
+      yield n & 0x01
+      yield n & 0x02
+      yield n & 0x04
+      yield n & 0x08
+
+      yield n & 0x10
+      yield n & 0x20
+      yield n & 0x40
+      yield n & 0x80
+
+  @classmethod
+  def set_nulls(cls, values, bytestring):
+    if bytestring == '\x00':
+      return values
+    else:
+      return [None if is_null else value for value, is_null in zip(values, cls.mark_nulls(values, bytestring))]
 
 
 class HiveServerDataTable(DataTable):
@@ -656,7 +684,7 @@ class HiveServerClient:
 
 
   def fetch_data(self, operation_handle, orientation=TFetchOrientation.FETCH_NEXT, max_rows=1000):
-    # The client should check for hasMoreRows and fetch until the result is empty dues to a HS2 bug
+    # Fetch until the result is empty dues to a HS2 bug instead of looking at hasMoreRows
     results, schema = self.fetch_result(operation_handle, orientation, max_rows)
     return HiveServerDataTable(results, schema, operation_handle)
 
