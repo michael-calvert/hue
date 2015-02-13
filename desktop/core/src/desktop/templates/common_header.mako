@@ -360,10 +360,10 @@ from django.utils.translation import ugettext as _
        %>
        % if query_apps[1] > 1:
        <li class="dropdown">
-         <a title="${_('Query data')}" rel="navigator-tooltip" href="#" data-toggle="dropdown" class="dropdown-toggle">${_('Query Editors')} <b class="caret"></b></a>
+         <a title="${_('Query data')}" rel="navigator-tooltip" href="#" data-toggle="dropdown" class="dropdown-toggle">Query Editors <b class="caret"></b></a>
          <ul role="menu" class="dropdown-menu">
            % if 'beeswax' in apps:
-           <li><a href="/${apps['beeswax'].display_name}"><img src="${ apps['beeswax'].icon_path }" class="app-icon"/> ${_('Hive')}</a></li>
+           <li><a href="/${apps['beeswax'].display_name}"><img src="${ apps['beeswax'].icon_path }" class="app-icon"/> ${ _('Hive')}</a></li>
            % endif
            % if 'impala' in apps:
            <li><a href="/${apps['impala'].display_name}"><img src="${ apps['impala'].icon_path }" class="app-icon"/> ${_('Impala')}</a></li>

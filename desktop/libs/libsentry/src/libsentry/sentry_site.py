@@ -36,6 +36,12 @@ _CONF_SENTRY_SERVER_PRINCIPAL = 'sentry.service.server.principal'
 _CONF_SENTRY_SERVER_SECURITY_MODE = 'sentry.service.security.mode'
 _CONF_SENTRY_SERVER_ADMIN_GROUP = 'sentry.service.admin.group'
 
+_CONF_SENTRY_SERVER_ADMIN_GROUP = 'sentry.ha.enabled'
+_CONF_SENTRY_SERVER_ADMIN_GROUP = 'sentry.ha.zookeeper.security'
+_CONF_SENTRY_SERVER_ADMIN_GROUP = 'sentry.ha.zookeeper.security.quorum'
+
+#sentry.ha.zookeeper.namespace
+
 
 def reset():
   global _SITE_DICT

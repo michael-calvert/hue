@@ -15,13 +15,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from desktop.lib.exceptions_renderable import PopupException
+from django.utils.translation import ugettext as _
+
+from kazoo.client import KazooClient
+
 from libsentry.client import SentryClient
 from libsentry.conf import HOSTNAME, PORT
 
 import logging
+import json
+import threading
 
 
 LOG = logging.getLogger(__name__)
+
+
+_api_cache = None
+_api_cache_lock = threading.Lock()
+
 
 
 class SentryException(Exception):
@@ -34,7 +46,50 @@ class SentryException(Exception):
 
 
 def get_api(user):
+  if True: # if ha
+    servers = _get_server_properties()
+    if servers:
+      server = servers[0]
+    else:
+      raise PopupException(_('No Sentry servers are available.'))    
+  else:
+    server = {
+        'hostname': HOSTNAME.get(),
+        'port': PORT.get()
+    }
+  
   return SentryApi(SentryClient(HOSTNAME.get(), PORT.get(), user.username))
+
+  
+def _get_server_properties():
+  global _api_cache
+
+  if _api_cache is None:
+    _api_cache_lock.acquire()  
+    
+    try:
+      if _api_cache is None:
+        zk = KazooClient(hosts='hue-team2-1.ent.cloudera.com:2181', read_only=True)
+        zk.start()
+        
+        servers = []
+        
+        children = zk.get_children("/sentry/sentry-service/sentry-service/")
+        for c in children:        
+          data, stat = zk.get("/sentry/sentry-service/sentry-service/%s" % c)
+          server = json.loads(data.decode("utf-8"))
+          servers.append({'hostname': server['address'], 'port': server['port']})
+        
+        #{"serviceType":"DYNAMIC","sslPort":null,"payload":null,"registrationTimeUTC":1423780938822,"uriSpec":null,"address":"hue-team2-1.ent.cloudera.com",
+        # "name":"sentry-service","id":"640ee35c-2323-42e3-a5a2-7f6ca2b5d22d","port":8038}
+
+        zk.stop()
+
+        _api_cache = servers
+    finally:
+      _api_cache_lock.release()
+
+  return _api_cache
 
 
 class SentryApi(object):
