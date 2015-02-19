@@ -202,6 +202,7 @@ def wait_for_query_to_finish(client, response, max=30.0):
 
 def is_finished(response):
   status = json.loads(response.content)
+  LOG.warning("Status: %s" % status)
   return 'error' in status or status.get('isSuccess') or status.get('isFailure')
 
 
