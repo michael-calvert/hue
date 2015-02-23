@@ -29,6 +29,7 @@ from django.http import HttpResponse
 from django.utils.translation import ugettext as _
 
 from desktop.lib.django_util import render
+from desktop.lib.exceptions_renderable import PopupException
 
 from hbase import conf
 from hbase.settings import DJANGO_APPS
@@ -133,33 +134,25 @@ def to_json(path, dirs, tables):
 
 
 def getList(request):
-
-    global dirs, tables
-
+    dirs = []
+    tables = []
     if request.GET['id'] == "#":
         return HttpResponse('[{"id" : "/", "text" : "/", "children" : true}]', content_type="application/json")
     path = request.GET['id']
     #http-fs request
-    import urllib2
-    import json
-    #get httpfs conf
-    from desktop.lib import conf
-    global_conf = conf.GLOBAL_CONFIG.get_data_dict().get('hadoop')
-    httpfs_url = global_conf['hdfs_clusters']['default']['webhdfs_url']
     try:
-        resp = urllib2.urlopen(httpfs_url +path + "?user.name=mapr&op=LISTSTATUS").read()
-        parse_json = json.loads(resp)
-        # container for directories
-        dirs = []
-        for item in parse_json.get("FileStatuses").get("FileStatus"):
-            if item.get('type') == 'DIRECTORY':
-                dirs.append(item.get('pathSuffix'))
-    except:
+        if not request.fs.isdir(path):
+            raise PopupException("Not a directory: %s" % (path,))
+        stats=request.fs.listdir_stats(path)
+        dirs = [dirs.name for dirs in stats if dirs.type == 'DIRECTORY']
+    except Exception, e:
+        LOG.exception(e)
         pass
     #tables request
     try:
         tables = HbaseApi().getTableListByPath(str(request.GET['cluster']), path + ".*")
-    except:
+    except Exception, e:
+        LOG.exception(e)
         pass
     resp = to_json(path,dirs,tables)
     return HttpResponse(resp,content_type="application/json")
