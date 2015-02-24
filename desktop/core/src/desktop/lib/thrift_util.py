@@ -39,6 +39,8 @@ from desktop.lib.exceptions import StructuredException, StructuredThriftTranspor
 # The maximum depth that we will recurse through a "jsonable" structure
 # while converting to thrift. This prevents us from infinite recursion
 # in the case of circular references.
+import maprsasl
+
 MAX_RECURSION_DEPTH = 50
 
 # When a thrift call finishes, the level at which we log its duration
@@ -246,9 +248,12 @@ def connect_to_thrift(conf):
     # Thrift trivia: You can do this after the fact with
     # _grab_transport_from_wrapper(self.wrapped.transport).setTimeout(seconds*1000)
     sock.setTimeout(conf.timeout_seconds * 1000.0)
+  saslClients = {'MAPR-SECURITY': maprsasl.MaprSasl}
   if conf.use_sasl:
     def sasl_factory():
-      saslc = sasl.Client()
+      if conf.mechanism in saslClients:
+          saslc = saslClients[conf.mechanism]()
+      else: saslc = sasl.Client()
       saslc.setAttr("host", str(conf.host))
       saslc.setAttr("service", str(conf.kerberos_principal))
       if conf.mechanism == 'PLAIN':

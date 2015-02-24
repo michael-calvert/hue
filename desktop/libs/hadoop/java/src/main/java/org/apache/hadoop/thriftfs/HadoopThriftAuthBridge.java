@@ -20,17 +20,21 @@ package org.apache.hadoop.thriftfs;
 import java.security.PrivilegedAction;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
+import javax.security.auth.callback.CallbackHandler;
 import javax.security.sasl.SaslException;
 
 import java.io.IOException;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.util.Map;
 
+import com.mapr.security.callback.MaprSaslCallbackHandler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.security.SaslRpcServer.AuthMethod;
 import org.apache.hadoop.security.*;
 import org.apache.hadoop.security.UserGroupInformation.AuthenticationMethod;
+import org.apache.hadoop.security.rpcauth.RpcAuthMethod;
+import org.apache.hadoop.security.rpcauth.RpcAuthRegistry;
 import org.apache.thrift.TException;
 import org.apache.thrift.transport.TSaslClientTransport;
 import org.apache.thrift.transport.TSaslServerTransport;
@@ -163,7 +167,7 @@ class HadoopThriftAuthBridge {
 
     public Server(UserGroupInformation serverUgi) throws TTransportException {
       this.realUgi = serverUgi;
-      if (realUgi == null || !realUgi.hasKerberosCredentials()) {
+      if (realUgi == null) {
         throw new TTransportException("UGI " + realUgi + " has no kerberos credentials");
       }
 
@@ -172,49 +176,45 @@ class HadoopThriftAuthBridge {
       }
     }
 
-    /**
-     * Create a TTransportFactory that, upon connection of a client socket,
-     * negotiates a Kerberized SASL transport. The resulting TTransportFactory
-     * can be passed as both the input and output transport factory when
-     * instantiating a TThreadPoolServer, for example.
-     *
-     */
-    public TTransportFactory createTransportFactory(Configuration conf) throws TTransportException
-    {
-      // Parse out the kerberos principal, host, realm.
-      String kerberosName = realUgi.getUserName();
-      final String names[] = SaslRpcServer.splitKerberosName(kerberosName);
-      if (names.length != 3) {
-        throw new TTransportException("Kerberos principal should have 3 parts: " + kerberosName);
-      }
-
-      TSaslServerTransport.Factory transFactory = new TSaslServerTransport.Factory();
-      if (SASL_PROPS_FIELD != null) {
-        // hadoop 2.3.x and earlier way of finding the sasl property settings       	
-      	transFactory.addServerDefinition(
-            AuthMethod.KERBEROS.getMechanismName(),
-            names[0], names[1],  // two parts of kerberos principal
-            SASL_PROPS,
-            new SaslRpcServer.SaslGssCallbackHandler());
-      }
-      else {
-        // 2.4 and later way of finding SASL_PROPS property due to change from HADOOP-10221,HADOOP-10451
-      	Map<String, String> saslProps = new TreeMap<String, String>();
-        try {
-          Configurable saslPropertiesResolver = (Configurable) RES_GET_INSTANCE_METHOD.invoke(null,
-              conf);
+    public TTransportFactory createTransportFactory(Configuration conf) throws Exception {
+      Map<String, String> saslProps = SASL_PROPS;;
+      RpcAuthMethod authMethod = RpcAuthRegistry.getAuthMethod(realUgi.getAuthenticationMethod());
+      String mechanism = authMethod.getMechanismName();
+      String protocol = authMethod.getProtocol();
+      String serverId = authMethod.getServerId();
+      if (AuthMethod.KERBEROS.getMechanismName().equals(mechanism)) {
+        String kerberosName = realUgi.getUserName();
+        final String names[] = SaslRpcServer.splitKerberosName(kerberosName);
+        if (names.length != 3) {
+          throw new TTransportException("Kerberos principal should have 3 parts: " + kerberosName);
+        }
+        protocol = names[0];
+        serverId = names[1];
+        if (SASL_PROPS_FIELD == null) {
+          Configurable saslPropertiesResolver = (Configurable) RES_GET_INSTANCE_METHOD.invoke(null, conf);
           saslPropertiesResolver.setConf(conf);
           saslProps = (Map<String, String>) GET_PROP_METHOD.invoke(saslPropertiesResolver, InetAddress.getLocalHost());
-          transFactory.addServerDefinition(
-              AuthMethod.KERBEROS.getMechanismName(),
-              names[0], names[1],  // two parts of kerberos principal
-              saslProps,
-              new SaslRpcServer.SaslGssCallbackHandler());
-        } catch (Exception e) {
-          throw new IllegalStateException("Error finding hadoop SASL properties", e);
         }
       }
+      TSaslServerTransport.Factory transFactory = new TSaslServerTransport.Factory();
+      transFactory.addServerDefinition(
+              mechanism,
+              protocol, serverId,
+              saslProps,
+              createCallbackHandler(authMethod));
       return new TUGIAssumingTransportFactory(transFactory, realUgi);
+    }
+
+    private CallbackHandler createCallbackHandler(RpcAuthMethod authMethod) {
+      try {
+          Method method = authMethod.getClass().getDeclaredMethod("createCallbackHandler");
+          return (CallbackHandler) method.invoke(authMethod);
+      } catch (Exception e) {
+        LOG.warn(e);
+        String mechanism = authMethod.getMechanismName();
+        if (AuthMethod.KERBEROS.getMechanismName().equals(mechanism)) return new SaslRpcServer.SaslGssCallbackHandler();
+        return new MaprSaslCallbackHandler(realUgi.getSubject(), realUgi.getUserName());
+      }
     }
 
     /**

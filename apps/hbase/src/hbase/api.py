@@ -93,7 +93,22 @@ class HbaseApi(object):
                                   kerberos_principal=_security['kerberos_principal_short_name'],
                                   use_sasl=_security['use_sasl'],
                                   timeout_seconds=None,
-                                  transport=conf.THRIFT_TRANSPORT.get())
+                                  transport=conf.THRIFT_TRANSPORT.get(),
+                                  mechanism=conf.MECHANISM.get())
+  @classmethod
+  def _get_security(cls):
+    principal = get_server_principal()
+    if principal:
+      kerberos_principal_short_name = principal.split('/', 1)[0]
+    else:
+      kerberos_principal_short_name = None
+    use_sasl = get_server_authentication() == 'KERBEROS' or get_server_authentication() == 'MAPR-SECURITY'
+
+    return {
+        'kerberos_principal_short_name': kerberos_principal_short_name,
+        'use_sasl': use_sasl,
+    }
+
   @classmethod
   def _get_security(cls):
     principal = get_server_principal()
