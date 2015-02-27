@@ -176,7 +176,8 @@ ko.bindingHandlers.slider = {
       start: parseFloat(_options.min()),
       end: parseFloat(_options.max()),
       tooltip_split: true,
-      tooltip: 'always'
+      tooltip: 'always',
+      labels: _options.labels
     });
     _el.on("slide", function (e) {
       _options.start(e.min);
@@ -184,6 +185,11 @@ ko.bindingHandlers.slider = {
       _options.min(e.start);
       _options.max(e.end);
       _options.gap(e.step);
+      if (typeof _options.properties.initial_start == "function"){
+        _options.properties.start(_options.properties.initial_start());
+        _options.properties.end(_options.properties.initial_end());
+        _options.properties.gap(_options.properties.initial_gap());
+      }
     });
     _el.on("slideStop", function (e) {
       viewModel.search();
