@@ -128,7 +128,7 @@ def _guess_range_facet(widget_type, solr_api, collection, facet_field, propertie
 
     properties.update({
       'min': stats_min,
-      'max': stats_max,
+      'max': max(stats_max, end),
       'start': start,
       'end': end,
       'gap': gap,

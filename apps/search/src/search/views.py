@@ -479,6 +479,18 @@ def _create_facet(collection, user, facet_id, facet_label, facet_field, widget_t
     else:
       properties['scope'] = 'stack' if widget_type == 'heatmap-widget' else 'tree'
 
+  if widget_type == 'facet-widget' and properties['isDate'] and facet_type == 'range':
+    properties['sort'] = 'asc'
+    facet_type = 'range-up'
+    properties['isMathDate'] = True
+    properties['math_interval'] = 'DAYS'
+    properties['math_gap'] = 1
+    properties['math_start'] = 'NOW-%(limit)s%(math_interval)s/%(math_interval)s' % properties 
+    properties['math_end'] = 'NOW/%(math_interval)s' % properties
+
+    print properties
+    # 'gap': '+30MINUTES'
+
   return {
     'id': facet_id,
     'label': facet_label,

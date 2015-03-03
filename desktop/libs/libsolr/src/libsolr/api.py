@@ -146,6 +146,12 @@ class SolrApi(object):
               'gap': facet['properties']['gap'],
               'mincount': int(facet['properties']['mincount'])
           }
+          if facet['properties']['isMathDate']:
+            keys.update({
+                'gap': '+%(math_gap)s%(math_interval)s' % facet['properties'],
+                'start': 'NOW-%(total)s%(math_interval)s/%(math_interval)s' % {'total': facet['properties']['limit'] * facet['properties']['math_gap'], 'math_interval': facet['properties']['math_interval']}, 
+                'end': 'NOW/%(math_interval)s' % facet['properties']
+            })
           params += (
              ('facet.range', '{!key=%(key)s ex=%(field)s f.%(field)s.facet.range.start=%(start)s f.%(field)s.facet.range.end=%(end)s f.%(field)s.facet.range.gap=%(gap)s f.%(field)s.facet.mincount=%(mincount)s}%(field)s' % keys),
           )
