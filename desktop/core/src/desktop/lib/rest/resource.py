@@ -18,6 +18,7 @@ import logging
 import posixpath
 
 LOG = logging.getLogger(__name__)
+RESP_SIZE = 4 * 1024 * 1024  # 4mb
 
 
 class Resource(object):
@@ -55,6 +56,8 @@ class Resource(object):
       except Exception, ex:
         self._client.logger.exception('JSON decode error: %s' % resp.content)
         raise ex
+    elif len(resp.content) > RESP_SIZE: # if file is too big return truncated response on view
+        return resp.content[0:RESP_SIZE/2]
     else:
       return resp.content
 
