@@ -30,7 +30,7 @@ from desktop.lib.view_util import format_duration_in_millis
 
 from hadoop.yarn.clients import get_log_client
 
-from jobbrowser.models import format_unixtime_ms
+from jobbrowser.models import format_unixtime_ms, LinkJobLogs
 
 
 LOGGER = logging.getLogger(__name__)

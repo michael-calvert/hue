@@ -43,7 +43,7 @@ from hadoop.yarn.clients import get_log_client
 
 from jobbrowser import conf
 from jobbrowser.api import get_api, ApplicationNotRunning, JobExpired
-from jobbrowser.models import Job, JobLinkage, Tracker, Cluster, can_view_job, can_modify_job
+from jobbrowser.models import Job, JobLinkage, Tracker, Cluster, can_view_job, can_modify_job, LinkJobLogs
 
 import urllib2
 
@@ -443,7 +443,7 @@ def single_task_attempt_logs(request, job, taskid, attemptid):
     return context
   elif request.GET.get('format') == 'json':
     response = {
-      "logs": logs,
+      "logs": LinkJobLogs._make_links(logs),
       "isRunning": job.status.lower() in ('running', 'pending', 'prep')
     }
     return JsonResponse(response)
