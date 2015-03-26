@@ -39,12 +39,10 @@ ${ components.menubar() }
 <%def name="column_table(cols)">
   <table class="table table-striped table-condensed sampleTable">
     <thead>
-      <tr>
-        <th>&nbsp;</th>
-        <th>${_('Name')}</th>
-        <th>${_('Type')}</th>
-        <th>${_('Comment')}</th>
-      </tr>
+      <th>&nbsp;</th>
+      <th>${_('Name')}</th>
+      <th>${_('Type')}</th>
+      <th>${_('Comment')}</th>
     </thead>
     <tbody>
       % for column in cols:
