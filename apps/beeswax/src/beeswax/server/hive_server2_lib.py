@@ -68,6 +68,8 @@ class HiveServerTable(Table):
     self.table_schema = table_schema
     self.desc_results = desc_results
     self.desc_schema = desc_schema
+    
+    self.describe = HiveServerTTableSchema(self.desc_results, self.desc_schema).cols()
 
     self.describe = HiveServerTTableSchema(self.desc_results, self.desc_schema).cols()
 

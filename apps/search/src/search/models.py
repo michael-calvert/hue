@@ -289,10 +289,15 @@ class Collection(models.Model):
       if 'end' in properties and not 'initial_end' in properties:
         properties['initial_end'] = properties['end']
 
+      # And up facets facet
       if facet['widgetType'] == 'map-widget' and facet['type'] == 'field':
         facet['type'] = 'pivot'
         properties['facets'] = []
         properties['facets_form'] = {'field': '', 'mincount': 1, 'limit': 5}
+
+      # Smarter date range and up facet
+      if facet['widgetType'] == 'facet-widget' and properties['isDate'] and 'isMathDate' not in properties:
+        properties['isMathDate'] = False
 
     return json.dumps(props)
 
