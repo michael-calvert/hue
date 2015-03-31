@@ -799,8 +799,10 @@ var Collection = function (vm, collection) {
   self.selectTimelineFacet = function (data) {
     var facet = self.getFacetById(data.widget_id);
 
-    facet.properties.start(data.from);
-    facet.properties.end(data.to);
+    facet.properties.start(moment(data.from).utc().format("YYYY-MM-DD[T]HH:mm:ss[Z]"));
+    facet.properties.end(moment(data.to).utc().format("YYYY-MM-DD[T]HH:mm:ss[Z]"));
+    facet.properties.min(moment(data.from).utc().format("YYYY-MM-DD[T]HH:mm:ss[Z]"));
+    facet.properties.max(moment(data.to).utc().format("YYYY-MM-DD[T]HH:mm:ss[Z]"));
 
     vm.query.selectRangeFacet({widget_id: data.widget_id, from: data.from, to: data.to, cat: data.cat, no_refresh: true, force: true});
 
@@ -824,7 +826,7 @@ var Collection = function (vm, collection) {
   }
 
   self.rangeZoomOut = function (facet_json) {
-	var facet_id = ko.mapping.toJS(facet_json).id;
+    var facet_id = ko.mapping.toJS(facet_json).id;
     var facet = self.getFacetById(facet_id);
 
     vm.query.removeFilter(ko.mapping.fromJS({'id': facet_id}));
@@ -834,6 +836,8 @@ var Collection = function (vm, collection) {
     if (facet.properties.initial_start() != null) { // Bar and line charts
       facet.properties.start(facet.properties.initial_start());
       facet.properties.end(facet.properties.initial_end());
+      facet.properties.min(facet.properties.initial_start());
+      facet.properties.max(facet.properties.initial_end());
     }
 
     vm.search();
@@ -1072,6 +1076,7 @@ var SearchViewModel = function (collection_json, query_json, initial_json) {
 
   self.search = function (callback) {
     self.isRetrievingResults(true);
+
     $(".jHueNotify").hide();
     logGA('search');
 
@@ -1108,12 +1113,14 @@ var SearchViewModel = function (collection_json, query_json, initial_json) {
       self.getFieldAnalysis().update();
     }
 
+
     $.when.apply($, [
       $.post("/search/search", {
         collection: ko.mapping.toJSON(self.collection),
         query: ko.mapping.toJSON(self.query),
         layout: ko.mapping.toJSON(self.columns)
       }, function (data) {
+
         if (typeof callback != undefined && callback != null){
           callback(data);
         }
@@ -1173,6 +1180,8 @@ var SearchViewModel = function (collection_json, query_json, initial_json) {
           }
           self.isRetrievingResults(false);
         }
+
+
       })
       ].concat(multiQs)
     )
