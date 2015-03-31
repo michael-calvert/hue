@@ -411,7 +411,7 @@ def get_timeline(request):
 
     result['series'] = {'label': label, 'counts': response['normalized_facets'][0]['counts']}
     result['status'] = 0
-    result['message'] = ''
+    result['message'] = 'dddd'
   except Exception, e:
     result['message'] = unicode(str(e), "utf8")
 
