@@ -294,6 +294,9 @@ class Collection(models.Model):
         properties['facets'] = []
         properties['facets_form'] = {'field': '', 'mincount': 1, 'limit': 5}
 
+      if facet['widgetType'] == 'histogram-widget' and not 'group_by' in properties:
+        properties['group_by'] = 'query'
+
     return json.dumps(props)
 
   def get_default(self, user):
