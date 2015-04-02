@@ -482,6 +482,7 @@ class PseudoHdfs4(object):
   def _write_mapred_site(self):
     self._jh_port = find_unused_port()
     self._jh_web_port = find_unused_port()
+    self._jh_admin_port = find_unused_port()
     self._mr_shuffle_port = find_unused_port()
 
     mapred_configs = {
@@ -489,6 +490,7 @@ class PseudoHdfs4(object):
       'mapreduce.framework.name': 'yarn',
       'mapreduce.jobhistory.address': '%s:%s' % (self._fqdn, self._jh_port,),
       'mapreduce.jobhistory.webapp.address': '%s:%s' % (self._fqdn, self._jh_web_port,),
+      'mapreduce.jobhistory.admin.address': '%s:%s' % (self._fqdn, self._jh_admin_port,),
       'mapreduce.task.tmp.dir': self._tmppath('tasks'),
       'mapreduce.shuffle.port': self._mr_shuffle_port,
     }

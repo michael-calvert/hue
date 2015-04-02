@@ -289,10 +289,14 @@ class Collection(models.Model):
       if 'end' in properties and not 'initial_end' in properties:
         properties['initial_end'] = properties['end']
 
+      # And up facets facet
       if facet['widgetType'] == 'map-widget' and facet['type'] == 'field':
         facet['type'] = 'pivot'
         properties['facets'] = []
         properties['facets_form'] = {'field': '', 'mincount': 1, 'limit': 5}
+
+      if facet['widgetType'] == 'histogram-widget' and not 'group_by' in properties:
+        properties['group_by'] = 'query'
 
     return json.dumps(props)
 
