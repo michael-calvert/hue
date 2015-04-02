@@ -776,6 +776,11 @@ ${ dashboard.layout_skeleton() }
 
     <div style="padding-bottom: 10px; text-align: right; padding-right: 20px" data-bind="visible: counts.length > 0">
       <span data-bind="with: $root.collection.getFacetById($parent.id())">
+        <span class="facet-field-label">${ _('Chart Type') }</span>
+         <select class="input-small" data-bind="options: $root.timelineChartTypes,
+                       optionsText: 'label',
+                       optionsValue: 'value',
+                       value: properties.timelineChartType"></select>&nbsp;
         <span class="facet-field-label">${ _('Interval') }</span>
          <select class="input-small" data-bind="options: $root.intervalOptions,
                        optionsText: 'label',
@@ -789,8 +794,9 @@ ${ dashboard.layout_skeleton() }
     </div>
     <!-- ko if: $root.collection.getFacetById($parent.id()) -->
     <div data-bind="timelineChart: {datum: {counts: counts, extraSeries: (typeof extraSeries != 'undefined' ? extraSeries : []), widget_id: $parent.id(), label: label}, stacked: $root.collection.getFacetById($parent.id()).properties.stacked(), field: field, label: label, transformer: timelineChartDataTransformer,
+      type: $root.collection.getFacetById($parent.id()).properties.timelineChartType(),
       fqs: $root.query.fqs,
-      onSelectRange: function(from, to){ viewModel.collection.selectTimelineFacet({from: from, to: to, cat: field, widget_id: $parent.id()}) },
+      onSelectRange: function(from, to){ var _f = from, _t = to; if ($.isNumeric(from)) { _f = new Date(moment(from).valueOf()); _t = new Date(moment(to).valueOf()); }; viewModel.collection.selectTimelineFacet({from: _f, to: _t, cat: field, widget_id: $parent.id()}) },
       onStateChange: function(state){ $root.collection.getFacetById($parent.id()).properties.stacked(state.stacked); },
       onClick: function(d){ viewModel.query.selectRangeFacet({count: d.obj.value, widget_id: $parent.id(), from: d.obj.from, to: d.obj.to, cat: d.obj.field}) },
       onComplete: function(){ viewModel.getWidgetById(id).isLoading(false) }}" />
@@ -1756,6 +1762,17 @@ $(document).ready(function () {
   }
 
   viewModel = new SearchViewModel(${ collection.get_c(user) | n,unicode }, _query, ${ initial | n,unicode });
+
+  viewModel.timelineChartTypes = ko.observableArray([
+    {
+      value: "line",
+      label: "${ _('Lines')}"
+    },
+    {
+      value: "bar",
+      label: "${ _('Bars')}"
+  }]);
+
   ko.applyBindings(viewModel);
 
   viewModel.init(function(data){
