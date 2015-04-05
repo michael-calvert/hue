@@ -83,8 +83,12 @@ class Notebook():
 def get_api(user, snippet):
   if snippet['type'] in ('hive', 'impala', 'spark-sql'):
     return HS2Api(user)
+  elif snippet['type'] in ('jar', 'py'):
+    return SparkBatchApi(user)
   elif snippet['type'] == 'text':
     return TextApi(user)
+  elif snippet['type'] == 'jar':
+    return JarApi(user)
   else:
     return SparkApi(user)
 
@@ -103,6 +107,19 @@ class TextApi():
         'type': lang,
         'id': None
     }
+
+
+class JarApi():
+
+  def __init__(self, user):
+    self.user = user
+
+  def create_session(self, lang):
+    return {
+        'type': lang,
+        'id': None
+    }
+
 
 
 # HS2
@@ -171,7 +188,7 @@ class HS2Api():
     db = self._get_db(snippet)
 
     handle = self._get_handle(snippet)
-    operation =  db.get_operation_status(handle)
+    operation = db.get_operation_status(handle)
     status = HiveServerQueryHistory.STATE_MAP[operation.operationState]
 
     if status.index in (QueryHistory.STATE.failed.index, QueryHistory.STATE.expired.index):
@@ -402,6 +419,60 @@ class SparkApi():
 
   def close(self, snippet):
     pass
+
+  def _get_jobs(self, log):
+    return []
+
+
+class SparkBatchApi():
+
+  def __init__(self, user):
+    self.user = user
+
+  def create_session(self, lang):
+    return {
+        'type': lang,
+        'id': None
+    }
+
+  def execute(self, notebook, snippet):
+    api = get_spark_api(self.user)
+
+    properties = {
+        'file': snippet['properties'].get('app_jar'),
+        'className': snippet['properties'].get('class'),
+        'args': [arg['value'] for arg in snippet['properties'].get('arguments')],
+        'pyFiles': snippet['properties'].get('py_file'),
+        # files
+        # driverMemory
+        # driverCores
+        # executorMemory
+        # executorCores
+        # archives
+    }
+
+    response = api.submit_batch(properties)
+    return {
+        'id': response['id'],
+        'has_result_set': True,
+    }
+
+  def check_status(self, notebook, snippet):
+    api = get_spark_api(self.user)
+
+    response = api.get_batch(snippet['result']['handle']['id'])
+    return {
+        'status': response['state'],
+    }
+
+  def get_log(self, snippet):
+    api = get_spark_api(self.user)
+
+    response = api.get_batch(snippet['result']['handle']['id'])
+    return '\n'.join(response['lines'])
+
+  def _progress(self, snippet, logs):
+    return 50
 
   def _get_jobs(self, log):
     return []
