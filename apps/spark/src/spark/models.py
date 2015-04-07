@@ -87,6 +87,8 @@ def get_api(user, snippet):
     return SparkBatchApi(user)
   elif snippet['type'] == 'text':
     return TextApi(user)
+  elif snippet['type'] == 'jar':
+    return JarApi(user)
   else:
     return SparkApi(user)
 
@@ -105,6 +107,19 @@ class TextApi():
         'type': lang,
         'id': None
     }
+
+
+class JarApi():
+
+  def __init__(self, user):
+    self.user = user
+
+  def create_session(self, lang):
+    return {
+        'type': lang,
+        'id': None
+    }
+
 
 
 # HS2
