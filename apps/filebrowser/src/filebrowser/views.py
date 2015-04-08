@@ -54,6 +54,7 @@ from desktop.lib.exceptions_renderable import PopupException
 from hadoop.fs.hadoopfs import Hdfs
 from hadoop.fs.exceptions import WebHdfsException
 from hadoop.fs.fsutils import do_newfile_save, do_overwrite_save
+from hadoop import conf
 
 from filebrowser.conf import MAX_SNAPPY_DECOMPRESSION_SIZE
 from filebrowser.lib.archives import archive_factory
@@ -621,11 +622,12 @@ def read_contents(codec_type, path, fs, offset, length):
         fhandle = fs.open(path)
         stats = fs.stats(path)
 
-        # If file size more than 1GB do not show contents
-        if stats.size > 1024*1024*1024:
-            contents = 'File size is more than 1GB. Cannot be viewed here.'
-            logging.info(contents)
-            return ('none', 0, length, contents)
+        # If file size more than configured value do not show contents
+        file_size = conf.HDFS_CLUSTERS['default'].FILE_SIZE.get()
+        if file_size != 0 and stats.size > file_size*1024*1024*1024:
+            message = 'File size is more than %s GB. Cannot be viewed here : %s' % (file_size, path)
+            logging.info(message)
+            raise PopupException(message)
 
         # Auto codec detection for [gzip, avro, snappy, none]
         if not codec_type:
