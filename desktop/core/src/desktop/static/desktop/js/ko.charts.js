@@ -118,17 +118,20 @@ ko.bindingHandlers.pieChart = {
   },
   update: function (element, valueAccessor) {
     var _options = valueAccessor();
+    var _data = _options.transformer(_options.data);
     var _chart = $(element).data("chart");
     if (_chart) {
       var _d3 = d3.select($(element).find("svg")[0]);
-      var _data = _options.transformer(_options.data);
       _d3.datum(_data)
             .transition().duration(150)
             .each("end", _options.onComplete != null ? _options.onComplete : void(0))
             .call(_chart);
       _chart.update();
+      chartsNormalState();
     }
-    chartsNormalState();
+    else if (_data.length > 0) {
+      ko.bindingHandlers.pieChart.init(element, valueAccessor);
+    }
   }
 };
 
@@ -138,10 +141,10 @@ ko.bindingHandlers.barChart = {
   },
   update: function (element, valueAccessor) {
     var _options = valueAccessor();
+    var _datum = _options.transformer(_options.datum);
     var _chart = $(element).data("chart");
     if (_chart) {
       var _d3 = d3.select($(element).find("svg")[0]);
-      var _datum = _options.transformer(_options.datum);
       _d3.datum(_datum)
         .transition().duration(150)
         .each("end", function () {
@@ -149,8 +152,11 @@ ko.bindingHandlers.barChart = {
             _options.onComplete();
           }
         }).call(_chart);
+      chartsNormalState();
     }
-    chartsNormalState();
+    else if (_datum.length > 0) {
+      ko.bindingHandlers.barChart.init(element, valueAccessor);
+    }
   }
 };
 
