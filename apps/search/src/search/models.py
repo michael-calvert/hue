@@ -289,10 +289,8 @@ class Collection(models.Model):
       if 'end' in properties and not 'initial_end' in properties:
         properties['initial_end'] = properties['end']
 
-      if facet['widgetType'] == 'histogram-widget':
-        properties['timelineChartType'] = 'bar'
-        if 'extraSeries' not in properties:
-          properties['extraSeries'] = []
+      if facet['widgetType'] == 'histogram-widget' and 'extraSeries' not in properties:
+        properties['extraSeries'] = []
 
       if facet['widgetType'] == 'map-widget' and facet['type'] == 'field':
         facet['type'] = 'pivot'
