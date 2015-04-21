@@ -40,6 +40,7 @@ from liboozie.submission2 import Submission
 from liboozie.submission2 import create_directories
 
 from oozie.conf import REMOTE_SAMPLE_DIR
+from oozie.importlib.workflows import generate_v2_graph_nodes
 from oozie.utils import utc_datetime_format
 from hadoop.fs.exceptions import WebHdfsException
 
@@ -288,6 +289,15 @@ class Workflow(Job):
   @classmethod
   def get_application_path_key(cls):
     return 'oozie.wf.application.path'
+
+  @classmethod
+  def gen_workflow_data_from_xml(cls, user, oozie_workflow):
+    try:
+      node_list = generate_v2_graph_nodes(oozie_workflow.definition)
+      # Step - 2: Transform node_list to be able to call import_workflow_from_hue_3_7.dig_nodes
+    except Exception, e:
+        LOG.warn('Graph data could not be generated from Workflow %s: %s' % (oozie_workflow.id, e))
+    return []
 
 
 class Node():

@@ -288,7 +288,7 @@ def list_oozie_workflow(request, job_id):
         workflow_data = new_workflow.get_data()
         credentials = Credentials()
       else:
-        workflow_graph, full_node_list = OldWorkflow.gen_status_graph_from_xml(request.user, oozie_workflow)
+        workflow_data = Workflow.gen_workflow_data_from_xml(request.user, oozie_workflow)
     except:
       LOG.exception("Ignoring error updating Document2 record for job_id=%s", job_id)
   else:
