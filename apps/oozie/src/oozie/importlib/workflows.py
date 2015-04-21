@@ -685,3 +685,33 @@ def import_workflow(workflow, workflow_definition, metadata=None, fs=None):
     raise RuntimeError(_("Could not find any nodes in Workflow definition. Maybe it's malformed?"))
 
   return import_workflow_root(workflow, workflow_definition_root, metadata, fs)
+
+def import_workflow_v2(workflow_definition):
+  # Parse Workflow Definition
+  workflow_definition_root = etree.fromstring(workflow_definition)
+  if workflow_definition_root is None:
+    raise RuntimeError(_("Could not find any nodes in Workflow definition. Maybe it's malformed?"))
+
+  xslt_definition_fh = open("%(xslt_dir)s/workflow.xslt" % {
+      'xslt_dir': '/Users/krish/hue/apps/oozie/src/oozie/importlib/xslt2/workflows'
+  })
+
+  tag = etree.QName(workflow_definition_root.tag)
+  schema_version = tag.namespace
+
+  # Ensure namespace exists
+  if schema_version not in OOZIE_NAMESPACES:
+    raise RuntimeError(_("Tag with namespace %(namespace)s is not valid. Please use one of the following namespaces: %(namespaces)s") % {
+      'namespace': workflow_definition_root.tag,
+      'namespaces': ', '.join(OOZIE_NAMESPACES)
+    })
+
+  # Get XSLT
+  xslt = etree.parse(xslt_definition_fh)
+  xslt_definition_fh.close()
+  transform = etree.XSLT(xslt)
+
+  # Transform XML using XSLT
+  transformed_root = transform(workflow_definition_root)
+
+  return []

@@ -289,6 +289,12 @@ class Workflow(Job):
   def get_application_path_key(cls):
     return 'oozie.wf.application.path'
 
+  @classmethod
+  def gen_workflow_data_from_xml(cls, user, oozie_workflow):
+    from oozie.importlib.workflows import import_workflow_v2
+
+    return import_workflow_v2(oozie_workflow.definition)
+
 
 class Node():
   def __init__(self, data):
