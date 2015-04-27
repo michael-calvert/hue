@@ -728,25 +728,50 @@ def augment_solr_response(response, collection, query):
           normalized_facets.append(facet)
         else:
           print name, value
+#      elif category == 'terms' and name in response['facets']:
+#        value = response['facets'][name]
+#        collection_facet = get_facet_field(category, name, collection['facets'])
+#
+#        # none empty
+#
+#        countss = []
+#        buckets = []
+#        print response['facets'][name]['buckets']
+#        for bucket in response['facets'][name]['buckets']:          
+#          buckets.append(bucket['val'])
+#          if 'd2' in bucket:
+#            buckets.append(bucket['d2'])
+#          else:
+#            buckets.append(bucket['count'])
+#
+#        counts = pairwise2(facet['field'], selected_values.get(facet['id'], []), buckets)
+#        if collection_facet['properties']['sort'] == 'asc':
+#          counts.reverse()
+#        facet = {
+#          'id': collection_facet['id'],
+#          'field': facet['field'],
+#          'type': category,
+#          'label': collection_facet['label'],
+#          'counts': counts,
+#        }
+#        print facet['counts']
+#        normalized_facets.append(facet)
       elif category == 'terms' and name in response['facets']:
         value = response['facets'][name]
         collection_facet = get_facet_field(category, name, collection['facets'])
 
-        # none empty
+#[2011, 3, 2012, 4, 2013, 2, 2014, 3]
+#[
+# {'count': 3, 'exclude': True, 'selected': False, 'value': 2011, 'cat': u'year_i'}, 
+# {'count': 4, 'exclude': True, 'selected': False, 'value': 2012, 'cat': u'year_i'}, {'count': 2, 'exclude': True, 'selected': False, 'value': 2013, 'cat': u'year_i'}, {'count': 3, 'exclude': True, 'selected': False, 'value': 2014, 'cat': u'year_i'}]
 
-        countss = []
-        buckets = []
         print response['facets'][name]['buckets']
-        for bucket in response['facets'][name]['buckets']:          
-          buckets.append(bucket['val'])
-          if 'd2' in bucket:
-            buckets.append(bucket['d2'])
-          else:
-            buckets.append(bucket['count'])
+        
+        counts = _augment_stats_2d(name, facet, response['facets'][name]['buckets'], selected_values)
 
-        counts = pairwise2(facet['field'], selected_values.get(facet['id'], []), buckets)
-        if collection_facet['properties']['sort'] == 'asc':
-          counts.reverse()
+#        if collection_facet['properties']['sort'] == 'asc':
+#          counts.reverse()
+
         facet = {
           'id': collection_facet['id'],
           'field': facet['field'],
@@ -754,12 +779,15 @@ def augment_solr_response(response, collection, query):
           'label': collection_facet['label'],
           'counts': counts,
         }
-        print facet['counts']
+        
         normalized_facets.append(facet)
+ 
+    # {'count': 1, 'fq_values': [2012, u'CT'], 'selected': False, 'fq_fields': [u'year_i', u'loc_s'], 'value': u'CT', 'cat': 2012, 'exclude': True},        
 
     # Remove unnecessary facet data
     if response:
       response.pop('facet_counts')
+      response.pop('facets')
 
   # HTML escaping
   for doc in response['response']['docs']:
@@ -835,8 +863,97 @@ def _augment_pivot_2d(name, facet_id, counts, selected_values):
   return augmented
 
 
-def _augment_pivot_nd(facet_id, counts, selected_values, fields='', values=''):
+def _get_augmented(count, val, label, fq_values, fq_fields, fq_filter, _selected_values):
+    return {
+        "count": count,
+        "value": val,
+        "cat": label,
+        'selected': fq_values in _selected_values,
+        'exclude': all([f['exclude'] for f in fq_filter if f['value'] == val]),
+        'fq_fields': fq_fields,
+        'fq_values': fq_values,
+    }
 
+
+def _augment_stats_2d(name, facet, counts, selected_values):
+#    "over_time":{
+#      "buckets":[{
+#          "val":2011,
+#          "count":3},
+#        {
+#          "val":2012,
+#          "count":4},
+#        {
+#          "val":2013,
+#          "count":2},
+#        {
+#          "val":2014,
+#          "count":3}]}}}
+#
+#
+#
+#  "facets":{
+#    "count":15,
+#    "over_time":{
+#      "buckets":[{
+#          "val":2011,
+#          "count":3,
+#          "locs":{
+#            "buckets":[{
+#                "val":"CT",
+#                "count":1},
+#              {
+#                "val":"NJ",
+#                "count":1},
+#              {
+#                "val":"NY",
+#                "count":1}]}},  
+#  
+#    "over_time":{
+#      "buckets":[{
+#          "val":2011,
+#          "count":3,
+#          "locs":{
+#            "buckets":[{
+#                "val":"CT",
+#                "count":1,
+#                "aa":66000.0},  
+  
+  fq_fields = []
+  fq_values = []
+  fq_filter = []
+  _selected_values = []
+  
+  return __augment_stats_2d(counts, facet['field'], fq_fields, fq_values, fq_filter, _selected_values)
+
+
+def __augment_stats_2d(counts, label, fq_fields, fq_values, fq_filter, _selected_values):
+  augmented = []
+  
+
+  for bucket in counts:
+    val = bucket['val']
+    count = bucket['count']
+
+
+    if 'd2' in bucket:
+      if type(bucket['d2']) == dict:
+        augmented += __augment_stats_2d(bucket['d2']['buckets'], val, fq_fields + ['field'], fq_values + [val], fq_filter, _selected_values)
+      else:
+        print '--------------------'
+        augmented.append(_get_augmented(bucket['d2'], val, label, fq_values, fq_fields, fq_filter, _selected_values))
+    else:
+      augmented.append(_get_augmented(count, val, label, fq_values + [val], fq_fields + ['field'], fq_filter, _selected_values))
+  
+  print 'augmented'
+  print augmented
+  print
+  return augmented
+  # {'count': 1, 'fq_values': [2012, u'CT'], 'selected': False, 'fq_fields': [u'year_i', u'loc_s'], 'value': u'CT', 'cat': 2012, 'exclude': True},
+
+
+
+def _augment_pivot_nd(facet_id, counts, selected_values, fields='', values=''):
   for c in counts:
     fq_fields = (fields if fields else []) + [c['field']]
     fq_values = (values if values else []) + [smart_str(c['value'])]

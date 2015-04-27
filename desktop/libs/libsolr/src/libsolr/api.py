@@ -176,13 +176,19 @@ class SolrApi(object):
                 'mincount': int(facet['properties']['mincount'])
             }
             if facet['properties']['facets']: # [{u'field': u'salary_d', u'functionz': u'avg', u'limit': 10, u'mincount': 1}
-              _f['facet'] = {
-                  'd2': {
-                      'type': 'terms',
-                      'field': '%(field)s' % facet['properties']['facets'][0]
-                  } 
-              }
-                        
+              if facet['properties']['facets'][0]['functionz'] == 'count':
+                _f['facet'] = {
+                    'd2': {
+                        'type': 'terms',
+                        'field': '%(field)s' % facet['properties']['facets'][0]
+                    } 
+                }
+                if len(facet['properties']['facets']) > 1:
+                  _f['facet']['d2']['facet'] = {'d2': '%(functionz)s(%(field)s)' % facet['properties']['facets'][1]}
+              else:
+                _f['facet'] = {
+                    'd2': '%(functionz)s(%(field)s)' % facet['properties']['facets'][0] 
+                }                
           else:
             _f = {
                 'type': 'terms',

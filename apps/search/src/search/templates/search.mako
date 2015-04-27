@@ -333,7 +333,7 @@ ${ dashboard.layout_skeleton() }
     </div>
 
     <!-- ko if: type() == 'pivot' || type() == 'terms' -->
-      <div class="facet-field-tile" data-bind="visible: properties.scope() == 'tree' || properties.facets().length == 0">
+      <div class="facet-field-tile" data-bind="visible: properties.scope() == 'tree' || properties.facets().length < 3">
         <div class="facet-field-cnt">
           <span class="facet-field-label facet-field-label-fixed-width facet-field-label-fixed-width-double facet-field-label-title">
             ${ _('Add a dimension') }
@@ -350,14 +350,7 @@ ${ dashboard.layout_skeleton() }
         </div>
 
      <span class="facet-field-label">${ _('Metric') }</span>
-      <select data-bind="value: properties.facets_form.function">
-        <option value="unique" selected="selected" label="${ _('Unique Count') }">${ _('Unique Count') }</option>
-        <option value="avg" label="${ _('Average') }">${ _('Average') }</option>
-        <option value="sum" label="${ _('Sum') }">${ _('Sum') }</option>
-        <option value="min" label="${ _('Min') }">${ _('Min') }</option>
-        <option value="max" label="${ _('Max') }">${ _('Max') }</option>
-        <option value="sumsq" label="${ _('Sum of square') }">${ _('Sum of square') }</option>
-        <option value="median" label="${ _('Median') }">${ _('Median') }</option>
+      <select data-bind="options: HIT_OPTIONS, optionsText: 'label', optionsValue: 'value', value: properties.facets_form.function">
       </select>
 
         <div class="facet-field-cnt">
@@ -820,16 +813,16 @@ ${ dashboard.layout_skeleton() }
       <a href="javascript:void(0)" data-bind="click: $root.collection.rangeZoomOut"><i class="fa fa-search-minus"></i> ${ _('reset') }</a>
       <span class="facet-field-label" data-bind="visible: $root.query.multiqs().length > 1">${ _('Group by') }</span>
       <select class="input-medium" data-bind="visible: $root.query.multiqs().length > 1, options: $root.query.multiqs, optionsValue: 'id', optionsText: 'label', value: $root.query.selectedMultiq"></select>
-
     </div>
+
     <!-- ko if: $root.collection.getFacetById($parent.id()) -->
-    <div data-bind="timelineChart: {datum: {counts: counts(), extraSeries: extraSeries(), widget_id: $parent.id(), label: label()}, stacked: $root.collection.getFacetById($parent.id()).properties.stacked(), field: field, label: label(), transformer: timelineChartDataTransformer,
-      type: $root.collection.getFacetById($parent.id()).properties.timelineChartType,
-      fqs: $root.query.fqs,
-      onSelectRange: function(from, to){ $root.collection.selectTimelineFacet({from: from, to: to, cat: field, widget_id: $parent.id()}) },
-      onStateChange: function(state){ $root.collection.getFacetById($parent.id()).properties.stacked(state.stacked); },
-      onClick: function(d){ $root.query.selectRangeFacet({count: d.obj.value, widget_id: $parent.id(), from: d.obj.from, to: d.obj.to, cat: d.obj.field}) },
-      onComplete: function(){ $root.getWidgetById($parent.id()).isLoading(false) }}" />
+      <div data-bind="timelineChart: {datum: {counts: counts(), extraSeries: extraSeries(), widget_id: $parent.id(), label: label()}, stacked: $root.collection.getFacetById($parent.id()).properties.stacked(), field: field, label: label(), transformer: timelineChartDataTransformer,
+        type: $root.collection.getFacetById($parent.id()).properties.timelineChartType,
+        fqs: $root.query.fqs,
+        onSelectRange: function(from, to){ $root.collection.selectTimelineFacet({from: from, to: to, cat: field, widget_id: $parent.id()}) },
+        onStateChange: function(state){ $root.collection.getFacetById($parent.id()).properties.stacked(state.stacked); },
+        onClick: function(d){ $root.query.selectRangeFacet({count: d.obj.value, widget_id: $parent.id(), from: d.obj.from, to: d.obj.to, cat: d.obj.field}) },
+        onComplete: function(){ $root.getWidgetById($parent.id()).isLoading(false) }}" />
     <!-- /ko -->
   </div>
   <!-- /ko -->
@@ -857,7 +850,7 @@ ${ dashboard.layout_skeleton() }
         </div>
       <!-- /ko -->
       
-<div class="dimensions-header margin-bottom-10" data-bind="visible: $root.isEditing() && $data.properties.facets().length > 0">
+      <div class="dimensions-header margin-bottom-10" data-bind="visible: $root.isEditing() && $data.properties.facets().length > 0">
         <span class="muted">${ _('Selected dimensions') }</span>
       </div>
       <div data-bind="foreach: $data.properties.facets, visible: $root.isEditing">
@@ -895,6 +888,7 @@ ${ dashboard.layout_skeleton() }
       <div class="clearfix"></div>      
     </div>
 
+<!-- ko if: false -->
     <div data-bind="barChart: {datum: {counts: counts(), widget_id: $parent.id(), label: label()}, stacked: $root.collection.getFacetById($parent.id()).properties.stacked(), field: field, label: label(),
       fqs: $root.query.fqs,
       transformer: ($data.type == 'range-up' ? barChartRangeUpDataTransformer : barChartDataTransformer),
@@ -912,7 +906,24 @@ ${ dashboard.layout_skeleton() }
       },
       onSelectRange: function(from, to){ viewModel.collection.selectTimelineFacet({from: from, to: to, cat: field, widget_id: $parent.id()}) },
       onComplete: function(){ viewModel.getWidgetById($parent.id()).isLoading(false) } }"
-    />
+    >
+    </div>
+    <!-- /ko -->
+
+<!-- ko if: true -->
+      <div data-bind="barChart: {datum: {counts: counts(), widget_id: $parent.id(), label: label()}, stacked: $root.collection.getFacetById($parent.id()).properties.stacked(),
+        isPivot: true,
+        fqs: $root.query.fqs,
+        transformer: pivotChartDataTransformer,
+        onStateChange: function(state){ $root.collection.getFacetById($parent.id()).properties.stacked(state.stacked); },
+        onClick: function(d) {
+          $root.query.togglePivotFacet({facet: d.obj, widget_id: id()});
+        },
+        onComplete: function(){ viewModel.getWidgetById($parent.id()).isLoading(false) } }"
+      >
+      </div>
+      <!-- /ko -->
+
   </div>
   <!-- /ko -->
 </script>
@@ -1031,6 +1042,7 @@ ${ dashboard.layout_skeleton() }
           </div>
         </div>
       </div>
+
       <div class="clearfix"></div>
 
       <!-- ko if: properties.scope() == 'tree' -->
@@ -1045,7 +1057,6 @@ ${ dashboard.layout_skeleton() }
           onComplete: function(){ viewModel.getWidgetById($parent.id()).isLoading(false) } }"
         />
       <!-- /ko -->
-
     </div>
   </div>
   <!-- /ko -->
@@ -1098,8 +1109,8 @@ ${ dashboard.layout_skeleton() }
             </div>
           </div>
         </div>
-
       </div>
+
       <div class="clearfix"></div>
 
       <!-- ko if: properties.scope() == 'stack' -->
@@ -1534,6 +1545,7 @@ var viewModel;
 nv.dev = false;
 
 var HIT_OPTIONS = [
+  { value: "count", label: "${ _('Count') }" },
   { value: "unique", label: "${ _('Unique Count') }" },
   { value: "avg", label: "${ _('Average') }" },
   { value: "sum", label: "${ _('Sum') }" },
@@ -1544,7 +1556,7 @@ var HIT_OPTIONS = [
 ];
 
 function getHitOption(value){
-  for (var i=0;i<HIT_OPTIONS.length;i++){
+  for (var i=0; i<HIT_OPTIONS.length; i++){
     if (HIT_OPTIONS[i].value == value){
       return HIT_OPTIONS[i].label;
     }
@@ -1698,6 +1710,7 @@ function pivotChartDataTransformer(rawDatum) {
 
     var _key = Array.isArray(item.value) ? item.value[1] : item.value;
     var _category = null;
+
     _categories.forEach(function (category) {
       if (category.key == _key) {
         _category = category;
