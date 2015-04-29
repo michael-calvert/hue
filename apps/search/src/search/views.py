@@ -500,7 +500,12 @@ def _create_facet(collection, user, facet_id, facet_label, facet_field, widget_t
       properties['initial_start'] = properties['start']
       properties['initial_end'] = properties['end']
     else:
-      facet_type = 'field'
+      #facet_type = 'field'
+      facet_type = 'terms' # if 5.2+
+      # New
+      properties['facets_form'] = {'field': '', 'mincount': 1, 'limit': 10, 'function': 'count'}
+      properties['facets'] = []
+      properties['scope'] = 'stack'
 
     if widget_type == 'bucket-widget':
       facet_type = 'nested'
@@ -512,7 +517,7 @@ def _create_facet(collection, user, facet_id, facet_label, facet_field, widget_t
     properties['mincount'] = 1
     properties['facets'] = []
     properties['stacked'] = True
-    properties['facets_form'] = {'field': '', 'mincount': 1, 'limit': 5}
+    properties['facets_form'] = {'field': '', 'mincount': 1, 'limit': 5, 'function': 'count'} # todo
 
     if widget_type == 'map-widget':
       properties['scope'] = 'world'

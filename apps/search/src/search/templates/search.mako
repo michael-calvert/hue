@@ -254,6 +254,15 @@ ${ commonheader(_('Search'), "search", user, "80px") | n,unicode }
                        <i class="hcha hcha-map-chart"></i>
          </a>
    </div>
+    <div data-bind="css: { 'draggable-widget': true, 'disabled': !availableDraggableNumbers() },
+                    draggable: {data: draggableCounter(), isEnabled: availableDraggableNumbers,
+                    options: {'start': function(event, ui){lastWindowScrollPosition = $(window).scrollTop();$('.card-body').slideUp('fast');},
+                              'stop': function(event, ui){$('.card-body').slideDown('fast', function(){$(window).scrollTop(lastWindowScrollPosition)});}}}"
+         title="${_('Counter')}" rel="tooltip" data-placement="top">
+         <a data-bind="style: { cursor: $root.availableDraggableNumbers() ? 'move' : 'default' }">
+                       <i class="fa fa-tachometer"></i>
+         </a>
+    </div>
       </%def>
 </%dashboard:layout_toolbar>
 
@@ -320,7 +329,7 @@ ${ dashboard.layout_skeleton() }
       <!-- /ko -->
     <!-- /ko -->
 
-    <!-- ko if: type() == 'field' -->
+    <!-- ko if: type() == 'field' || type() == 'terms' -->
       <div class="facet-field-cnt">
         <span class="spinedit-cnt">
           <span class="facet-field-label facet-field-label-fixed-width">
@@ -829,6 +838,7 @@ ${ dashboard.layout_skeleton() }
       <a href="javascript:void(0)" data-bind="click: $root.collection.rangeZoomOut"><i class="fa fa-search-minus"></i> ${ _('reset') }</a>
       <span class="facet-field-label" data-bind="visible: $root.query.multiqs().length > 1">${ _('Group by') }</span>
       <select class="input-medium" data-bind="visible: $root.query.multiqs().length > 1, options: $root.query.multiqs, optionsValue: 'id', optionsText: 'label', value: $root.query.selectedMultiq"></select>
+
     </div>
 
     <!-- ko if: $root.collection.getFacetById($parent.id()) -->
@@ -865,6 +875,43 @@ ${ dashboard.layout_skeleton() }
           <a href="javascript:void(0)" data-bind="click: $root.collection.rangeZoomOut"><i class="fa fa-search-minus"></i> ${ _('reset') }</a>
         </div>
       <!-- /ko -->
+      
+<div class="dimensions-header margin-bottom-10" data-bind="visible: $root.isEditing() && $data.properties.facets().length > 0">
+        <span class="muted">${ _('Selected dimensions') }</span>
+      </div>
+      <div data-bind="foreach: $data.properties.facets, visible: $root.isEditing">
+        <div class="filter-box">
+          <div class="title">
+            <a data-bind="click: function() { $root.collection.removePivotFacetValue({'pivot_facet': $parent, 'value': $data}); }" class="pull-right" href="javascript:void(0)">
+              <i class="fa fa-times"></i>
+            </a>
+            <span data-bind="text: field"></span>
+            <span data-bind="text: functionz"></span>
+            &nbsp;
+          </div>
+
+          <div class="content">
+            <div class="facet-field-cnt">
+              <span class="spinedit-cnt">
+                <span class="facet-field-label facet-field-label-fixed-width">
+                  ${ _('Limit') }
+                </span>
+                <input type="text" class="input-medium" data-bind="spinedit: limit"/>
+              </span>
+            </div>
+
+            <div class="facet-field-cnt">
+              <span class="spinedit-cnt">
+                <span class="facet-field-label facet-field-label-fixed-width">
+                  ${ _('Min Count') }
+                </span>
+                <input type="text" class="input-medium" data-bind="spinedit: mincount"/>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>      
     </div>
 
     <div data-bind="barChart: {datum: {counts: counts(), widget_id: $parent.id(), label: label()}, stacked: $root.collection.getFacetById($parent.id()).properties.stacked(), field: field, label: label(),
