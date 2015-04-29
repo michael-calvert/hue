@@ -1319,3 +1319,7 @@ ko.bindingHandlers.timepicker = {
 
     }
 }
+
+ko.toJSONObject = function (koObj) {
+  return JSON.parse(ko.toJSON(koObj));
+}
