@@ -67,7 +67,7 @@ var Query = function (vm, query) {
       );
   });
 
-  self.selectedMultiq = ko.observable('query');
+  //self.selectedMultiq = ko.observable('query');
 
   self.getFacetFilter = function(widget_id) {
     var _fq = null;
@@ -81,6 +81,26 @@ var Query = function (vm, query) {
   };
 
   self.getMultiq = ko.computed(function () {
+    var histograms = vm.collection.getHistogramFacets();
+    
+    var histo_group_bys = $.grep(histograms, function(histo) { return histo.properties.group_by() != 'query'; });
+
+    if (histo_group_bys.length > 0) {
+      var aa = $.grep(histo_group_bys, function(histo) {
+        var facet = self.getFacetFilter(histo.properties.group_by());
+        return facet && facet.filter().length > 0; // Until we have Analytics subfacet, need to manually select facet items as we do one query by item.
+      });
+      alert(ko.mapping.toJSON(aa));
+      return aa.length > 0 ? 'facet' : null;
+    } else {
+      if (self.qs().length >= 2) { // Multi query boxes
+        return 'query';
+      }
+    }
+
+    return null;
+  });
+  /**self.getMultiq = ko.computed(function () {
     if (self.selectedMultiq()) {
       if (self.selectedMultiq() == 'query') {
         if (self.qs().length >= 2) {
@@ -94,7 +114,7 @@ var Query = function (vm, query) {
       }
     }
     return null;
-  });
+  });*/
 
   self.addQ = function (data) {
     self.qs.push(ko.mapping.fromJS({'q': ''}));
@@ -104,9 +124,9 @@ var Query = function (vm, query) {
     self.qs.remove(query);
   };
 
-  self.selectedMultiq.subscribe(function () { // To keep below the computed objects!
-    vm.search();
-  });
+  //self.selectedMultiq.subscribe(function () { // To keep below the computed objects!
+    //vm.search();
+  //});
 
   self.toggleFacet = function (data) {
     var fq = self.getFacetFilter(data.widget_id);
@@ -1125,7 +1145,7 @@ var SearchViewModel = function (collection_json, query_json, initial_json) {
     // Multi queries
     var multiQs = [];
     var multiQ = self.query.getMultiq();
-
+    alert(multiQ);
     if (multiQ != null) {
       var facet = {};
       var queries = [];
@@ -1133,7 +1153,7 @@ var SearchViewModel = function (collection_json, query_json, initial_json) {
       if (multiQ == 'query') {
         queries = self.query.qs();
       } else {
-        facet = self.query.getFacetFilter(self.query.selectedMultiq());
+        facet = self.query.getFacetFilter(self.query.selectedMultiq()); haa
         queries = $.map(facet.filter(), function(f) { return f.value(); });
       }
 

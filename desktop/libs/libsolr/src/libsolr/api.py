@@ -238,7 +238,7 @@ class SolrApi(object):
         )
 
     params += self._get_fq(query)
-
+    
     if collection['template']['fieldsSelected'] and collection['template']['isGridLayout']:
       fields = set(collection['template']['fieldsSelected'] + [collection['idField']] if collection['idField'] else [])
       # Add field if needed

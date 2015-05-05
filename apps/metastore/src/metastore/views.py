@@ -156,7 +156,7 @@ def describe_table(request, database, table):
     partitions = db.get_partitions(database, table, max_parts=None)
 
   try:
-    table_data = db.get_sample(database, table)
+    table_data = db.get_sample(database, table)    
   except Exception, ex:
     error_message, logs = dbms.expand_exception(ex, db)
 
