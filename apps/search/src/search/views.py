@@ -17,6 +17,7 @@
 
 import json
 import logging
+import re
 
 from django.utils.encoding import force_unicode
 from django.utils.html import escape
@@ -500,7 +501,12 @@ def _create_facet(collection, user, facet_id, facet_label, facet_field, widget_t
       properties['initial_start'] = properties['start']
       properties['initial_end'] = properties['end']
     else:
-      facet_type = 'field'
+      #facet_type = 'field'
+      facet_type = 'terms' # if 5.2+
+      # New
+      properties['facets_form'] = {'field': '', 'mincount': 1, 'limit': 10, 'function': 'count'}
+      properties['facets'] = []
+      properties['scope'] = 'stack'
 
     if widget_type == 'bucket-widget':
       facet_type = 'nested'
@@ -512,13 +518,27 @@ def _create_facet(collection, user, facet_id, facet_label, facet_field, widget_t
     properties['mincount'] = 1
     properties['facets'] = []
     properties['stacked'] = True
-    properties['facets_form'] = {'field': '', 'mincount': 1, 'limit': 5}
+    properties['facets_form'] = {'field': '', 'mincount': 1, 'limit': 5, 'function': 'count'} # todo
 
     if widget_type == 'map-widget':
       properties['scope'] = 'world'
       properties['limit'] = 100
     else:
       properties['scope'] = 'stack' if widget_type == 'heatmap-widget' else 'tree'
+
+  if widget_type == 'facet-widget' and properties['isDate'] and facet_type == 'range':
+    _range_properties = _new_range_facet(solr_api, collection, facet_field, widget_type, use_today=True)
+    _, _gap, _interval = re.split('(\d+)', _range_properties['gap'])
+    properties['sort'] = 'asc'    
+    facet_type = 'range-up'
+
+    properties['math_gap'] = int(_gap)
+    properties['math_interval'] = _interval
+    properties['math_start'] = 'NOW-%(total)s%(math_interval)s/%(math_interval)s' % {'total': properties['limit'] * properties['math_gap'], 'math_interval': properties['math_interval']} 
+    properties['math_end'] = 'NOW/%(math_interval)s' % properties
+    properties['isMathDate'] = True
+    properties['isCustom'] = False
+    # TODO update model backward compat
 
   return {
     'id': facet_id,
