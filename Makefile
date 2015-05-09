@@ -262,6 +262,7 @@ test: java-test
 
 test-slow: java-test
 	DESKTOP_DEBUG=1 $(ENV_PYTHON) $(BLD_DIR_BIN)/hue test all --with-xunit --with-cover
+	# DESKTOP_DEBUG=1 $(ENV_PYTHON) $(BLD_DIR_BIN)/hue test specific oozie.tests:TestOozieSubmissions.test_submit_spark_action
 	$(BLD_DIR_BIN)/coverage xml
 
 start-dev:
